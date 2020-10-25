@@ -6,6 +6,11 @@
 #include "Book.h"
 
 using namespace std;
+
+Book::Book() {
+
+}
+
 void Book:: setTitle(string t) {
 	title = t;
 }
