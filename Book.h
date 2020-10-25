@@ -6,7 +6,7 @@
 using namespace std;
 class Book {
 private:
-	string title;
+	string titl;
 	string author;
 	int isbn;
 	string category;
