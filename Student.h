@@ -18,10 +18,10 @@ private:
 	int penalaties = 0;
 public: 
 	Student();
-	Student(string p, string u);
+	Student(string user, string pass);
 	string getUser();
 	string getPass();
-	void setPass(string p);
-	void setUser(string u);
+	void setPass(string pass);
+	void setUser(string user);
 	void print();
 };

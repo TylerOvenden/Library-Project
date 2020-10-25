@@ -11,10 +11,10 @@ Student::Student()
 	username = "";
 	password = "";
 }
-Student::Student(string p, string u)
+Student::Student(string user, string pass)
 {
-	username = p;
-	password = u;
+	username = user;
+	password = pass;
 }
 string Student:: getUser() {
 	return username;
