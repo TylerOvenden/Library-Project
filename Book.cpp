@@ -8,7 +8,17 @@
 using namespace std;
 
 Book::Book() {
-
+	reader = "";
+	expiration = -999;
+	start = -999;
+}
+Book::Book(string title, string author, int isbn, string category, int id) {
+	Book();
+	this->title = title; 
+	this->author = author;
+	this->isbn = isbn;
+	this->category = category;
+	this->id = id;
 }
 
 void Book:: setTitle(string t) {
