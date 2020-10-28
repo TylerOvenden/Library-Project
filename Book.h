@@ -19,6 +19,7 @@ private:
 
 public:
 	Book();
+	Book(string title, string author, int isbn, string category, int id);
 	void setTitle(string t);
 	string getTitle();
 	void setAuthor(string aut);
