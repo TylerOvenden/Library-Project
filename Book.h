@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include <list>
+#include "Student.h"
 using namespace std;
 class Book {
 private:
@@ -36,4 +37,6 @@ public:
 	int getStart();
 	void setEnd(int end);
 	int getEnd();
+	void addCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow);
+	void removeCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow);
 };
