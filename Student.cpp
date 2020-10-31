@@ -16,6 +16,13 @@ Student::Student(string user, string pass)
 	username = user;
 	password = pass;
 }
+int Student::getBook() {
+
+	return books;
+}
+void Student::setBook(int b) {
+	books = b;
+}
 string Student:: getUser() {
 	return username;
 }
