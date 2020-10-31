@@ -51,9 +51,36 @@ void displayWelcomeScreen(Student user) {
 }
 
 int main() {
+	//these calls are just to test that the functions work
 
+	//books is array of all books in library
 	vector<Book> books = loadBooks();
+	//borrowed is array of user's borrowed books
+	vector<Book> borrowed;
 	vector<Student> students = loadStudents();
+
+	Book b1 = Book();
+	//test book examples first added to vector of all books
+	Book book1 = Book("book title", "jeff ", 2345, "mystery", 1990);
+	Book book2 = Book("second book", "john ", 1234, "history", 2000);
+	Book book3 = Book("third book", "jim ", 583, "science", 2004);
+	books.push_back(book1);
+	Student s = Student("wordpass", "John Doe");
+	books.push_back(book2);
+	books.push_back(book3);
+	
+	b1.addCopy(s, 1990, books, borrowed);
+	b1.addCopy(s, 2000, books, borrowed);
+	b1.addCopy(s, 2004, books, borrowed);
+
+	for (int i = 0; i < borrowed.size(); i++) {
+		cout << borrowed.at(i).getAuthor() << endl;
+	}
+	cout << "now remove books " << endl;
+	b1.removeCopy(s, 1990, books, borrowed);
+	for (int i = 0; i < borrowed.size(); i++) {
+		cout << borrowed.at(i).getAuthor() << endl;
+	}
 
 	// Ask for username and password
 	string username = promptForInput("username");
@@ -64,8 +91,8 @@ int main() {
 	// Compare username and password to all in file
 	for (int i = 0; i < students.size(); i++) {
 		Student student = students.at(i);
-		if ((student.getUser() == username) && 
-			(student.getPass() == password)){
+		if ((student.getUser() == username) &&
+			(student.getPass() == password)) {
 			authenticatedStudent = &student;
 			break;
 		}
@@ -76,7 +103,7 @@ int main() {
 		cout << "The username or password was incorrect" << endl;
 		return 0;
 	}
-	
+
 	// Code after authentication success!
 	displayWelcomeScreen(*authenticatedStudent);
 }
