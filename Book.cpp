@@ -80,7 +80,11 @@ int Book::getEnd() {
 //books is a vector of all books in the system
 //borrow is a vector of the user's books borrowed
 void Book::addCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow) {
- 
+ 	//if user has overdue books, cannot check any more out
+	if (s.getLate()) {
+		cout << "you have overdue books, cannot add any more" << endl;
+		return;
+	}
 	Book b;
 	bool search = false;
 	//searchs vector of available books for book to be borrowed
