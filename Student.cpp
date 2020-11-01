@@ -17,6 +17,7 @@ Student::Student(string user, string pass)
 {
 	username = user;
 	password = pass;
+	late = false;
 }
 int Student::getBook() {
 
@@ -36,4 +37,11 @@ void Student::setUser(string u) {
 }
 void Student::setPass(string p) {
 	password = p;
+
+}
+bool Student::getLate() {
+	return late;
+}
+void Student::setLate(bool l) {
+	late = l;
 }
