@@ -5,28 +5,22 @@
 #include <vector>
 #include "Book.h"
 #include "Student.h"
-
 using namespace std;
-
-// Creat a book with all its info
-Book::Book(string title, string author, int isbn, string category, int id/*, string bookHolder*//*, int startTime*/) {
+Book::Book() {
+	reader = "";
+//	expiration = -999;
+//	start = -999;
+}
+Book::Book(string title, string author, int isbn, string category, int id) {
 	Book();
+	this->reader = "";
 	this->title = title; 
 	this->author = author;
 	this->isbn = isbn;
 	this->category = category;
 	this->id = id;
-	reader = bookHolder;
-	//start = startTime
 }
-
-Book::Book() {
-	reader = "";
-	expiration = -999;
-	start = -999;
-}
-
-void Book::setTitle(string t) {
+void Book:: setTitle(string t) {
 	title = t;
 }
 string Book::getTitle(){ 
@@ -66,28 +60,44 @@ string Book::getRead() {
 
 
 }
-void Book::setStart(int s) {
-	start = s;
 
+
+void Book::setStart() {
+	this->start = (int) clock();        //set borrowStartTime to when the book is taken out in seconds
+	double end = start + (5 * 30);  //since 5 seconds = 1 day, 30 days = 5*30
+	setEnd(end);
 }
-int Book::getStart() {
+double Book::getStart() {
 	return start;
 
 }
-void  Book:: setEnd(int end) {
+void  Book:: setEnd(double end) {
 	expiration = end;
 
 }
-int Book::getEnd() {
+double Book::getEnd() {
 	return expiration;
 }
+//loops through vector of borrowed books
+//if current time is found to be greater than one of the expiration dates of any of the books
+//sets user's attribute of having overdue books to true
+void Book::findOverdue(Student s, vector<Book>& borrow) {
+	for (int i = 0; i < borrow.size(); i++) {
+		if ((int) clock() >= borrow.at(i).getEnd())
+		{
+			s.setLate(true);
+		}
+	
+	}
 
+
+}
 //parameters: student, the current student borrowing the book
 //id represents the unique id used to identify the book
 //books is a vector of all books in the system
 //borrow is a vector of the user's books borrowed
 void Book::addCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow) {
- 	//if user has overdue books, cannot check any more out
+	//if user has overdue books, cannot check any more out
 	if (s.getLate()) {
 		cout << "you have overdue books, cannot add any more" << endl;
 		return;
@@ -104,7 +114,7 @@ void Book::addCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow)
 			pos = i;
 			break;
 			}
-	
+
 	}
 	//if book was not found ends ends method
 	if (search == false)
@@ -130,8 +140,7 @@ void Book::addCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow)
 	b.setRead(reader);
 	//also sets the reader of the book in the vector of all books
 	books.at(pos).setRead(reader);
-	b.setStart(1);
-	b.setEnd(b.getStart() + 30);
+	b.setStart();
 	//pushs the b to the array of borrowed books by user
 	borrow.push_back(b);
 	//increases number of books borrowed
@@ -168,8 +177,6 @@ void Book::removeCopy(Student s, int id, vector<Book>& books, vector<Book>& borr
 	for (int i = 0; i < books.size(); i++) {
 		if (books.at(i).getID() == id) {
 			books.at(i).setRead("");
-			books.at(i).setStart(-999);
-			books.at(i).setEnd(-999);
 		}
 	}
 	
