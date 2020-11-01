@@ -15,7 +15,7 @@ vector<Student> loadStudents() {
 		exit(1);
 	}
 	else cout << endl << "Seccessfully opens the target file!" << endl << endl;
-	
+
 	// Import all info for a student
 	string studentName, password;
 	vector<Student> students;
@@ -86,9 +86,11 @@ void displayWelcomeScreen(Student user) {
 	//cout << "\t\t" << "6 -- My Information" << endl;
 	//cout << "\t\t" << "7 -- Change Password" << endl;
 	cout << "\t\t" << "0 -- Log Out" << endl;
+
 }
 
 int main() {
+
 	// Books is array of all books in library
 	vector<Book> books = loadBooks();
 	// Borrowed is array of user's borrowed books
@@ -125,28 +127,27 @@ int main() {
 	// This determins what prosses to use
 	cin >> userChoice;
 
-	//TODO: integrate if/case statements for borrow book, and return book
-	//TODO: connect the file's inputs insted of temp inputs
+	char input = 9;
+	int id;
 	Book b1 = Book();
-	//test book examples first added to vector of all books
-	//Book book1 = Book("book title", "jeff ", 2345, "mystery", 1990);
-	//Book book2 = Book("second book", "john ", 1234, "history", 2000);
-	//Book book3 = Book("third book", "jim ", 583, "science", 2004);
-	//books.push_back(book1);
-	Student s = Student("wordpass", "John Doe");
-	//books.push_back(book2);
-	//books.push_back(book3);
-	
-	b1.addCopy(s, 1990, books, borrowed);
-	b1.addCopy(s, 2000, books, borrowed);
-	b1.addCopy(s, 2004, books, borrowed);
+	while (input != 0){
+		b1.findOverdue(*authenticatedStudent, borrowed);
+		cout << "\nPlease select an option: ";
+		cin >> input;
 
-	for (int i = 0; i < borrowed.size(); i++) {
-		cout << borrowed.at(i).getAuthor() << endl;
-	}
-	cout << "now remove books " << endl;
-	b1.removeCopy(s, 1990, books, borrowed);
-	for (int i = 0; i < borrowed.size(); i++) {
-		cout << borrowed.at(i).getAuthor() << endl;
+		switch (input){
+		case 1:
+			cout << "enter an id " << endl;
+			cin >> id;
+			b1.addCopy(*authenticatedStudent, id, books, borrowed);
+			break;
+		case 2:
+			cout << "enter an id " << endl;
+			cin >> id;
+			b1.removeCopy(*authenticatedStudent, id, books, borrowed);
+			break;
+		case 0:
+			exit(1);
+		}
 	}
 }
