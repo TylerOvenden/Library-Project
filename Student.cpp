@@ -15,6 +15,7 @@ Student::Student(string user, string pass)
 {
 	username = user;
 	password = pass;
+	late = false;
 }
 int Student::getBook() {
 
