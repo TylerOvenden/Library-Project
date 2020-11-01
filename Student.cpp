@@ -35,3 +35,10 @@ void Student::setUser(string u) {
 void Student::setPass(string p) {
 	password = p;
 }
+bool Student::getLate() {
+	return late;
+}
+void Student::setLate(bool l) {
+	late = l;
+
+}
