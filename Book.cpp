@@ -161,6 +161,8 @@ void Book::removeCopy(Student s, int id, vector<Book>& books, vector<Book>& borr
 	for (int i = 0; i < books.size(); i++) {
 		if (books.at(i).getID() == id) {
 			books.at(i).setRead("");
+			books.at(i).setStart(-999);
+			books.at(i).setEnd(-999);
 		}
 	}
 	
