@@ -4,9 +4,8 @@
 #include <string>
 #include <list>
 #include "Student.h"
-
+#include <ctime>
 using namespace std;
-
 class Book {
 private:
 	string title;
@@ -15,15 +14,14 @@ private:
 	string category;
 	int id;
 	string reader;
-	int start;
-	int expiration;
+	double start;
+	double expiration;
 	bool borrow;
-	string bookHolder;
-
+	bool overdue;
 
 public:
 	Book();
-	Book(string title, string author, int isbn, string category, int id/*, string bookHolder*//*, int startTime*/);
+	Book(string title, string author, int isbn, string category, int id);
 	void setTitle(string t);
 	string getTitle();
 	void setAuthor(string aut);
@@ -36,10 +34,12 @@ public:
 	int getID();
 	void setRead(string read);
 	string getRead();
-	void setStart(int s);
-	int getStart();
-	void setEnd(int end);
-	int getEnd();
+	void setStart();
+	double getStart();
+	void setEnd(double end);
+	double getEnd();
+	double getDiff();
+	void findOverdue(Student s, vector<Book>& borrow);
 	void addCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow);
 	void removeCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow);
 };
