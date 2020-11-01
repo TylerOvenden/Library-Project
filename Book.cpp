@@ -5,21 +5,28 @@
 #include <vector>
 #include "Book.h"
 #include "Student.h"
+
 using namespace std;
-Book::Book() {
-	reader = "";
-	expiration = -999;
-	start = -999;
-}
-Book::Book(string title, string author, int isbn, string category, int id) {
+
+// Creat a book with all its info
+Book::Book(string title, string author, int isbn, string category, int id/*, string bookHolder*//*, int startTime*/) {
 	Book();
 	this->title = title; 
 	this->author = author;
 	this->isbn = isbn;
 	this->category = category;
 	this->id = id;
+	reader = bookHolder;
+	//start = startTime
 }
-void Book:: setTitle(string t) {
+
+Book::Book() {
+	reader = "";
+	expiration = -999;
+	start = -999;
+}
+
+void Book::setTitle(string t) {
 	title = t;
 }
 string Book::getTitle(){ 

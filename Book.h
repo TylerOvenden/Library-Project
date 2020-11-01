@@ -4,7 +4,9 @@
 #include <string>
 #include <list>
 #include "Student.h"
+
 using namespace std;
+
 class Book {
 private:
 	string title;
@@ -16,11 +18,12 @@ private:
 	int start;
 	int expiration;
 	bool borrow;
+	string bookHolder;
 
 
 public:
 	Book();
-	Book(string title, string author, int isbn, string category, int id);
+	Book(string title, string author, int isbn, string category, int id/*, string bookHolder*//*, int startTime*/);
 	void setTitle(string t);
 	string getTitle();
 	void setAuthor(string aut);

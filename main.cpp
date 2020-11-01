@@ -6,20 +6,58 @@
 using namespace std;
 
 // Load list of students from students.txt
-// todo: load student text file instead of fake student data
 vector<Student> loadStudents() {
+	// Open book txt file and check that it lodes in
+	fstream importStudent("Student.txt");
+	if (importStudent.fail())
+	{
+		cerr << endl << "Error opening input file!" << endl;
+		exit(1);
+	}
+	else cout << endl << "Seccessfully opens the target file!" << endl << endl;
+	
+	// Import all info for a student
+	string studentName, password;
 	vector<Student> students;
-	Student fakeStudent = Student("avery", "pass");
-	students.push_back(fakeStudent);
+	do {
+		importStudent >> studentName;
+		importStudent >> password;
+		Student storeStudentInfo = Student(studentName, password);
+		// Stor all books into "books" vector
+		students.push_back(storeStudentInfo);
+	} while (importStudent.eof() == 0);
+	// Retern a vector with all books
 	return students;
 }
 
 // Load list of books from book.txt
-// todo: load book text file instead of fake book data
 vector<Book> loadBooks() {
+	// Open book txt file and check that it lodes in
+	fstream importBooks("Book.txt");
+	if (importBooks.fail())
+	{
+		cerr << endl << "Error opening input file!" << endl;
+		exit(1);
+	}
+	else cout << endl << "Seccessfully opens the target file!" << endl << endl;
+
+	// Import all info for a book
+	string title, author, category/*, bookHolder*/;
+	int isbn, id/*, startTime*/;
 	vector<Book> books;
-	Book fakeBook = Book();
-	books.push_back(fakeBook);
+	do {
+		importBooks >> title;
+		importBooks >> author;
+		importBooks >> isbn;
+		importBooks >> category;
+		importBooks >> id;
+		//importBooks >> bookHolder;
+		//importBooks >> startTime
+		Book storeBookInfo = Book(title, author, isbn, category, id/*, bookHolder*/ /*, startTime*/);
+		// Stor all books into "books" vector
+		books.push_back(storeBookInfo);
+	} while (importBooks.eof() == 0);
+	// Retern a vector with all books
 	return books;
 }
 
@@ -32,55 +70,31 @@ string promptForInput(string description) {
 }
 
 void displayWelcomeScreen(Student user) {
-	cout << setfill('-') << setw(50) << " " << endl;
-	// todo: center later
-	cout << "-" << setw(48) << "Welcome to My Library!" << "-" << endl;
-	cout << setfill('-') << setw(50) << endl << endl;
+	cout << "-------------------------------------------------------------------" << endl;
+	cout << "---------------------" << "Welcome to My Library!" << "------------------------" << endl;
+	cout << "-------------------------------------------------------------------";
 
-	cout << "Welcome back, " << user.getUser() << endl << endl;
+	//TODO: fix user.getUser() so that it outputs the user's name 
+	cout << endl << endl << "Welcome back, " << user.getUser() << endl << endl;
 
 	cout << "Please choose:" << endl;
-	cout << "\t\t" << "1 -- Search Books" << endl;
+	//cout << "\t\t" << "1 -- Search Books" << endl;
 	cout << "\t\t" << "2 -- Borrow Books" << endl;
 	cout << "\t\t" << "3 -- Return Books" << endl;
-	cout << "\t\t" << "4 -- Reserve Books" << endl;
-	cout << "\t\t" << "5 -- Cancel Reservations" << endl;
-	cout << "\t\t" << "6 -- My Information" << endl;
-	cout << "\t\t" << "7 -- Change Password" << endl;
+	//cout << "\t\t" << "4 -- Reserve Books" << endl;
+	//cout << "\t\t" << "5 -- Cancel Reservations" << endl;
+	//cout << "\t\t" << "6 -- My Information" << endl;
+	//cout << "\t\t" << "7 -- Change Password" << endl;
 	cout << "\t\t" << "0 -- Log Out" << endl;
 }
 
 int main() {
-	//these calls are just to test that the functions work
-
-	//books is array of all books in library
+	// Books is array of all books in library
 	vector<Book> books = loadBooks();
-	//borrowed is array of user's borrowed books
+	// Borrowed is array of user's borrowed books
 	vector<Book> borrowed;
+	// students is array of all students in library
 	vector<Student> students = loadStudents();
-
-	Book b1 = Book();
-	//test book examples first added to vector of all books
-	Book book1 = Book("book title", "jeff ", 2345, "mystery", 1990);
-	Book book2 = Book("second book", "john ", 1234, "history", 2000);
-	Book book3 = Book("third book", "jim ", 583, "science", 2004);
-	books.push_back(book1);
-	Student s = Student("wordpass", "John Doe");
-	books.push_back(book2);
-	books.push_back(book3);
-	
-	b1.addCopy(s, 1990, books, borrowed);
-	b1.addCopy(s, 2000, books, borrowed);
-	b1.addCopy(s, 2004, books, borrowed);
-
-	for (int i = 0; i < borrowed.size(); i++) {
-		cout << borrowed.at(i).getAuthor() << endl;
-	}
-	cout << "now remove books " << endl;
-	b1.removeCopy(s, 1990, books, borrowed);
-	for (int i = 0; i < borrowed.size(); i++) {
-		cout << borrowed.at(i).getAuthor() << endl;
-	}
 
 	// Ask for username and password
 	string username = promptForInput("username");
@@ -106,4 +120,33 @@ int main() {
 
 	// Code after authentication success!
 	displayWelcomeScreen(*authenticatedStudent);
+
+	int userChoice;
+	// This determins what prosses to use
+	cin >> userChoice;
+
+	//TODO: integrate if/case statements for borrow book, and return book
+	//TODO: connect the file's inputs insted of temp inputs
+	Book b1 = Book();
+	//test book examples first added to vector of all books
+	//Book book1 = Book("book title", "jeff ", 2345, "mystery", 1990);
+	//Book book2 = Book("second book", "john ", 1234, "history", 2000);
+	//Book book3 = Book("third book", "jim ", 583, "science", 2004);
+	//books.push_back(book1);
+	Student s = Student("wordpass", "John Doe");
+	//books.push_back(book2);
+	//books.push_back(book3);
+	
+	b1.addCopy(s, 1990, books, borrowed);
+	b1.addCopy(s, 2000, books, borrowed);
+	b1.addCopy(s, 2004, books, borrowed);
+
+	for (int i = 0; i < borrowed.size(); i++) {
+		cout << borrowed.at(i).getAuthor() << endl;
+	}
+	cout << "now remove books " << endl;
+	b1.removeCopy(s, 1990, books, borrowed);
+	for (int i = 0; i < borrowed.size(); i++) {
+		cout << borrowed.at(i).getAuthor() << endl;
+	}
 }
