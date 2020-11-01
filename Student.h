@@ -16,6 +16,7 @@ private:
 //	std::vector <Book> vec;
 	int books = 0;
 	int penalaties = 0;
+	bool late;
 public: 
 	Student();
 	Student(string p, string u);
@@ -27,4 +28,6 @@ public:
 	void print();
 	int getBook();
 	void setBook(int b);
+	bool getLate();
+	void setLate(bool l);
 };
