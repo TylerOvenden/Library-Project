@@ -42,5 +42,4 @@ public:
 	void findOverdue(Student s, vector<Book>& borrow);
 	void addCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow);
 	void removeCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow);
-	void findOverdue(Student s, vector<Book>& borrow);
 };
