@@ -28,4 +28,5 @@ public:
 	void setBook(int b);
 	bool getLate();
 	void setLate(bool l);
+        void findOverdue(Student s, vector<Book>& borrow)
 };
