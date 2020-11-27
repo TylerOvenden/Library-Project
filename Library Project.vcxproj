@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -141,16 +141,21 @@
   <ItemGroup>
     <ClInclude Include="Book.h" />
     <ClInclude Include="BookFunctions.h" />
+    <ClInclude Include="Copy.h" />
+    <ClInclude Include="Reader.h" />
     <ClInclude Include="Student.h" />
+    <ClInclude Include="Teacher.h" />
+    <ClInclude Include="User.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Book.cpp" />
+    <ClCompile Include="BookFunctions.cpp" />
+    <ClCompile Include="Copy.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Reader.cpp" />
     <ClCompile Include="Student.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Book.txt" />
-    <Text Include="Student.txt" />
+    <ClCompile Include="Teacher.cpp" />
+    <ClCompile Include="User.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
