@@ -1,0 +1,5 @@
+﻿  LibraryManagementSystem.cpp
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(58,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(73,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(80,20): warning C4018: '<': signed/unsigned mismatch
+  Library Project.vcxproj -> C:\Users\Avery\OneDrive\Desktop\Library-Project\Debug\Library Project.exe

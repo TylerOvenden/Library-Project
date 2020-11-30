@@ -1,25 +1,27 @@
 #include <string>
 #include "User.h"
+
 using namespace std;
-User::User()
-{
-	username = "";
-	password = "";
-}
-User::User(string p, string u)
-{
+
+User::User() { }
+
+User::User(string p, string u) {
 	username = p;
 	password = u;
 }
-string User::getUser() {
+
+string User::getUsername() {
 	return username;
 }
-string User::getPass() {
+
+string User::getPassword() {
 	return password;
 }
-void User::setUser(string u) {
-	username = u;
+
+void User::setUsername(string username) {
+	this->username = username;
 }
-void User::setPass(string p) {
-	password = p;
+
+void User::setPassword(string password) {
+	this->password = password;
 }

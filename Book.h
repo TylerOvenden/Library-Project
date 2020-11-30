@@ -2,44 +2,77 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <list>
-#include "Student.h"
-#include <ctime>
+#include <vector>
+#include <sstream>
+
 using namespace std;
+
 class Book {
 private:
+
 	string title;
 	string author;
-	int isbn;
 	string category;
-	int id;
-	string reader;
-	double start;
-	double expiration;
-	bool borrow;
-	bool overdue;
+
+	int isbn;
+	int copyCount;
+	int favor;
 
 public:
 	Book();
-	Book(string title, string author, int isbn, string category, int id);
-	void setTitle(string t);
-	string getTitle();
-	void setAuthor(string aut);
-	string getAuthor();
-	void setISBN(int is);
+	Book(int isbn, string title, string author, string category, int copyCount, int favor);
+	
 	int getISBN();
-	void setCat(string cat);
-	string getCat();
-	void setID(int ide);
-	int getID();
-	void setRead(string read);
-	string getRead();
-	void setStart();
-	double getStart();
-	void setEnd(double end);
-	double getEnd();
-	double getDiff();
-	void findOverdue(Student s, vector<Book>& borrow);
-	void addCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow);
-	void removeCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow);
+	void setISBN(int ISBN);
+
+	string getTitle();
+	void setTitle(string title);
+
+	string getAuthor();
+	void setAuthor(string author);
+
+	string getCategory();
+	void setCategory(string category);
+
+	int getCopyCount();
+	void setCopyCount(int copyCount);
+
+	int getFavor();
+	void setFavor(int favor);
+
+	 // void addCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow);
+	 // void removeCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow);
+
+	friend istream& operator>>(istream& is, Book& book) {
+		string line;
+		getline(is, line);
+		stringstream bookStream(line);
+
+		int isbn, copyCount, favor;
+		string title, author, category;
+
+		bookStream >> isbn;
+		book.setISBN(isbn);
+		bookStream >> title;
+		book.setTitle(title);
+		bookStream >> author;
+		book.setAuthor(author);
+		bookStream >> category;
+		book.setCategory(category);
+		bookStream >> copyCount;
+		book.setCopyCount(copyCount);
+		bookStream >> favor;
+		book.setFavor(favor);
+		return is;
+	}
+
+	friend ostream& operator<<(ostream& os, Book& book) {
+		os << book.getISBN() << " ";
+		os << book.getTitle() << " ";
+		os << book.getAuthor() << " ";
+		os << book.getCategory() << " ";
+		os << book.getCopyCount() << " ";
+		os << book.getFavor() << endl;
+		return os;
+	}
 };
