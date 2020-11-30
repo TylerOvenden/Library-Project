@@ -1,17 +1,22 @@
-#pragma once
 #include <string>
 #include <vector>
 #include "Book.h"
-//#include "Student.h"
+
 using namespace std;
+
 class Copy 
 {
 private:
+	// Which book this copy belongs to
+	Book book;
+	
 	int id;
-	Book cop;
+
 	string reader;
 	string reserver;
+	
 	bool available;
+	
 	int reservedate;
 	int borrowdate;
 	int expiredate;
@@ -30,8 +35,5 @@ public:
 	void setReserveDate(int r);
 	void setBorrowDate(int r);
 	void setExpireDate(int r);
-
-
-
 };
 
