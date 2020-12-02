@@ -1,5 +1,7 @@
 #include <string>
 #include <vector>
+#include <ctime>
+#include <queue>    
 #include "Book.h"
 
 using namespace std;
@@ -16,10 +18,15 @@ private:
 	string reserver;
 	
 	bool available;
-	
+	int start;
+	int expiration;
+
+	int since; 
+
 	int reservedate;
 	int borrowdate;
 	int expiredate;
+	queue<Reader> reserved;
 
 public: 
 	Copy();
@@ -32,8 +39,32 @@ public:
 	int getReserveDate();
 	int getBorrowDate();
 	int getExpireDate();
+
+	
 	void setReserveDate(int r);
 	void setBorrowDate(int r);
 	void setExpireDate(int r);
+	
+	
+	void setStart();
+	void setEnd(int end);
+	int getEnd();
+	int getStart();
+
+	int getSince();
+	void setSince(int s);
+
+
+
+	void setID(int id);
+	int getID();
+	void addCopy(Reader r, int enteri, vector<Copy>& copies);
+	void reserveCopy(Reader r, int enteri, vector<Copy>& copies);
+	void deleteCopy(Reader r, int enteri, vector<Copy>& copies);
+	void findOverdue(Reader r, vector<Copy>& borrow);
+
+
+
 };
+
 
