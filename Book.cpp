@@ -58,8 +58,9 @@ int Book::getFavor() {
 	return this->favor;
 }
 
-void Book::setFavor(int favor) {
-	this->favor = favor;
+
+int Book::getFavor() {
+	return this->favor;
 }
 
 //parameters: student, the current student borrowing the book
@@ -72,27 +73,27 @@ void Book::setFavor(int favor) {
 //		cout << "you have overdue books, cannot add any more" << endl;
 //		return;
 //	}
-//	Book b;
-//	bool search = false;
-//	//searchs vector of available books for book to be borrowed
-//	//breaks when book is found
-//	int pos;
-//	for (int i = 0; i < books.size(); i++) {
-//		if (books.at(i).getID() == id) {
-//			search = true;
-//			b = books.at(i);
-//			pos = i;
-//			break;
-//			}
-//
-//	}
-//	//if book was not found ends ends method
-//	if (search == false)
-//	{
-//		cout << "book not found, can't borrow" << endl;
-//		return;
-//	}
-//
+/*	Book b;
+	bool search = false;
+//searchs vector of available books for book to be borrowed
+	//breaks when book is found
+	int pos;
+	for (int i = 0; i < books.size(); i++) {
+		if (books.at(i).getID() == id) {
+			search = true;
+			b = books.at(i);
+			pos = i;
+			break;
+			}
+
+	}
+	//if book was not found ends ends method
+	if (search == false)
+	{
+		cout << "book not found, can't borrow" << endl;
+		return;
+	}
+*/
 //	//if user is borrowing 5 books already, ends because it cannot borrow more
 //	int currentAmount = s.getBook();
 //	if (currentAmount == 5) {
@@ -106,49 +107,51 @@ void Book::setFavor(int favor) {
 //		return;
 //	}
 //	//sets attributes for book based on the reader & time
-//	string reader = s.getUser();
-//	b.setRead(reader);
-//	//also sets the reader of the book in the vector of all books
-//	books.at(pos).setRead(reader);
-//	b.setStart();
+	/*string reader = s.getUser();
+b.setRead(reader);
+	//also sets the reader of the book in the vector of all books
+	books.at(pos).setRead(reader);
+	b.setStart();
 //	//pushs the b to the array of borrowed books by user
-//	borrow.push_back(b);
+	borrow.push_back(b);
 //	//increases number of books borrowed
-//	s.setBook(currentAmount+1);
+	s.setBook(currentAmount+1);*/
 //
 //	cout << "successfully added!" << endl;
 //}
 
 //removes copy of book from vector of user's borrowed books by searching for id
-//void Book::removeCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow) {
-//	int pos = 0;
-//	bool found = false;
-//	//finds position of where to remove book
-//	for (int i = 0; i < borrow.size(); i++) {
-//		if (books.at(i).getID() == id) {
-//			pos = (i-1);
-//			borrow.erase(borrow.begin()+pos);
-//
-//	//decreases number of books borrowed
-//			int currentAmount = s.getBook();
-//			s.setBook(currentAmount - 1);
-//			found = true;
-//			break;
-//		}
-//	}
-//
-//	//if book was not found, nothing is removed
-//	if (!found)
-//	{
-//		cout << "book not found, can't remove" << endl;
-//		return;
-//	}
-//	//finds the book in the vector of all books & clears the reader name
-//	for (int i = 0; i < books.size(); i++) {
-//		if (books.at(i).getID() == id) {
-//			books.at(i).setRead("");
-//		}
-//	}
-//	
-//	cout << "successfully removed!" << endl;
-//}
+/*void Book::removeCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow) {
+	int pos = 0;
+bool found = false;
+	//finds position of where to remove book
+for (int i = 0; i < borrow.size(); i++) {
+		if (books.at(i).getID() == id) {
+			pos = (i-1);
+			borrow.erase(borrow.begin()+pos);
+
+	//decreases number of books borrowed
+			int currentAmount = s.getBook();
+			s.setBook(currentAmount - 1);
+			found = true;
+			break;
+		}
+	}
+
+	if book was not found, nothing is removed
+	if (!found)
+	{
+		cout << "book not found, can't remove" << endl;
+		return;
+	}
+	//finds the book in the vector of all books & clears the reader name
+	for (int i = 0; i < books.size(); i++) {
+	if (books.at(i).getID() == id) {
+			books.at(i).setRead("");
+		}
+	}
+	
+	cout << "successfully removed!" << endl;
+}
+
+*/

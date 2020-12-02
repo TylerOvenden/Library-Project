@@ -21,7 +21,7 @@ private:
 public:
 	Book();
 	Book(int isbn, string title, string author, string category, int copyCount, int favor);
-	
+
 	int getISBN();
 	void setISBN(int ISBN);
 
@@ -40,8 +40,8 @@ public:
 	int getFavor();
 	void setFavor(int favor);
 
-	 // void addCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow);
-	 // void removeCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow);
+	// void addCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow);
+	// void removeCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow);
 
 	friend istream& operator>>(istream& is, Book& book) {
 		string line;
