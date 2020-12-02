@@ -10,6 +10,18 @@ Copy::Copy() {
 
 	this->setSince(-1);
 }
+Copy::Copy(Book b, int id) {
+	this->book = b;
+	this->id = id;
+	vector<int> temp = b.getIDs();
+	temp.push_back(id);
+	b.setIDs(temp);
+
+}
+Book Copy::getBook() {
+
+	return book;
+}
 void Copy::setStart() {
 	this->start = (int)clock();        //set borrowStartTime to when the book is taken out in seconds
 }	
@@ -89,6 +101,12 @@ bool Copy::getAvail() {
 	return available;
 
 }
+void Copy::search(vector<Copy>& borrow, istream& in){
+	char c;
+	in >> c;
+
+
+}
 
 void Copy::setExpireDate(int r) {
 
@@ -146,25 +164,34 @@ void Copy::addCopy(Reader r, int enteri, vector<Copy>& copies) {
 		//breaks when book is found
 	int pos;
 	for (int i = 0; i < copies.size(); i++) {
+		//if this copy exists
 		if (copies.at(i).getID() == enteri) {
-			search = true;
+			
 			b = copies.at(i);
-			pos = i;
-			break;
+			//check if this copy is available
+			if (b.getAvail() == true)
+			{
+				b.getAvail() == false;
+				pos = i;
+				search = true;
+				break;
+			}
+			//if there are no reserved readers for the copy 
+			else {
+				cout << "this copy is not available currently" << endl;
+				return;
+			}
+				
 		}
 
 	}
-	//if book was not found ends ends method
+	//if copy was not found ends ends method
 	if (search == false)
 	{
 		cout << "copy not found, can't borrow" << endl;
 		return;
 	}
-	if (b.getAvail() == false)
-	{
-		cout << "someone else currently borrowing the copy" << endl;
-		return;
-	}
+
 
 	if (b.reserved.size() != 0) {
 		Reader temp =  b.reserved.front();
@@ -176,7 +203,7 @@ void Copy::addCopy(Reader r, int enteri, vector<Copy>& copies) {
 			b.reserved.pop();
 	
 	}
-//if there are no reserved readers for the copy 
+
 	
 		string reader = r.getUsername();
 		b.setReader(reader);

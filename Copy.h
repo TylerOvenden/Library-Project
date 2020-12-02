@@ -30,6 +30,7 @@ private:
 
 public: 
 	Copy();
+	Copy(Book b, int id);
 	void setReader(string r);
 	string getReader();
 	void setReserver(string r);
@@ -39,7 +40,7 @@ public:
 	int getReserveDate();
 	int getBorrowDate();
 	int getExpireDate();
-
+	Book getBook();
 	
 	void setReserveDate(int r);
 	void setBorrowDate(int r);
@@ -62,7 +63,8 @@ public:
 	void reserveCopy(Reader r, int enteri, vector<Copy>& copies);
 	void deleteCopy(Reader r, int enteri, vector<Copy>& copies);
 	void findOverdue(Reader r, vector<Copy>& borrow);
-
+	
+	void search(vector<Copy>& borrow, istream& in);
 
 
 };

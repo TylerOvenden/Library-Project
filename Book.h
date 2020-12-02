@@ -13,7 +13,7 @@ private:
 	string title;
 	string author;
 	string category;
-
+	vector<int> copyIDs;
 	int isbn;
 	int copyCount;
 	int favor;
@@ -37,9 +37,20 @@ public:
 	int getCopyCount();
 	void setCopyCount(int copyCount);
 
+
+	void addCopy(int id);
+
+	std::vector<int> getIDs();
+	void setIDs(vector<int> t);
+
+
 	int getFavor();
 	void setFavor(int favor);
 
+
+	void print();
+
+	
 	// void addCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow);
 	// void removeCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow);
 
@@ -75,4 +86,4 @@ public:
 		os << book.getFavor() << endl;
 		return os;
 	}
-};
+}; 
