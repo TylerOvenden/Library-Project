@@ -7,7 +7,7 @@ private:
 	string username;
 	string password;
 
-public: 
+public:
 	User();
 	User(string password, string username);
 
@@ -17,4 +17,3 @@ public:
 	void setPassword(string password);
 	void setUsername(string username);
 };
-

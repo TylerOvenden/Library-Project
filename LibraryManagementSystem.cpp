@@ -10,7 +10,7 @@ vector<Reader> LibraryManagementSystem::loadReaders() {
 
 	if (readerFile.fail()) {
 		cerr << "Error opening reader data file!" << endl;
-		exit(1); 
+		exit(1);
 	}
 
 	vector<Reader> readers;
@@ -21,7 +21,7 @@ vector<Reader> LibraryManagementSystem::loadReaders() {
 		readers.push_back(reader);
 	}
 	readerFile.close();
-	
+
 	return readers;
 }
 
@@ -85,7 +85,7 @@ bool LibraryManagementSystem::loginUser(string username, string password) {
 			user = reader;
 			return true;
 		}
-	}	
+	}
 	return false;
 }
 

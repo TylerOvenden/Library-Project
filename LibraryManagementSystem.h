@@ -1,3 +1,4 @@
+#pragma once
 #include "Book.h"
 #include "Reader.h"
 
@@ -27,4 +28,3 @@ public:
 	vector<Reader> getReaders();
 	vector<Book> getBooks();
 };
-

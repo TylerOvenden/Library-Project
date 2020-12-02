@@ -17,11 +17,11 @@ class Reader : public User {
 private:
 	ReaderType type;
 
-	int penalty;
-	
+	int penalty = 0;
+	int books = 0;
 	int maxCopies;
 	int maxBorrowDays;
-	
+
 	vector<Copy> borrowed;
 	vector<Copy> reserved;
 
@@ -30,7 +30,7 @@ public:
 
 	void setReaderType(ReaderType type);
 	ReaderType getReaderType();
-
+	void increasePenalty();
 	void setPenalty(int penalty);
 	int getPenalty();
 
@@ -39,6 +39,13 @@ public:
 
 	void setMaxBorrowDays(int maxBorrowDays);
 	int getMaxBorrowDays();
+	std::vector<Copy> getBorrow();
+	std::vector<Copy> getReserve();
+	void setBorrow(std::vector<Copy> borrow);
+	void setReserve(std::vector<Copy> reserve);
+	int getBook();
+	void setBook(int num);
+	void increaseBook();
 
 
 	friend istream& operator>>(istream& is, Reader& reader) {
@@ -53,7 +60,8 @@ public:
 		if (type == ReaderType::STUDENT) {
 			reader.setMaxBorrowDays(30);
 			reader.setMaxCopies(5);
-		} else if (type == ReaderType::TEACHER) {
+		}
+		else if (type == ReaderType::TEACHER) {
 			reader.setMaxBorrowDays(50);
 			reader.setMaxCopies(10);
 		}
@@ -79,4 +87,3 @@ public:
 		return os;
 	}
 };
-

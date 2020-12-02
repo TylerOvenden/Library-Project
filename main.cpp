@@ -48,12 +48,12 @@ int main() {
 	char input = 9;
 	int id;
 	Book b1 = Book();
-	while (input != 0){
+	while (input != 0) {
 		// b1.findOverdue(*authenticatedStudent, borrowed);
 		cout << "\nPlease select an option: ";
 		cin >> input;
 
-		switch (input){
+		switch (input) {
 		case 1:
 			cout << "enter an id " << endl;
 			cin >> id;
