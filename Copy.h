@@ -10,7 +10,7 @@
 
 using namespace std;
 class Reader;
-class Copy : public Book
+class Copy 
 {
 private:
 	// Which book this copy belongs to
@@ -18,7 +18,7 @@ private:
 	
 	int id;
 
-	string reader;
+	string reade;
 	string reserver;
 	
 	bool available;
@@ -70,7 +70,7 @@ public:
 	void findOverdue(Reader* r, vector<Copy>& borrow);
 	
 	void search(vector<Copy>& borrow, istream& in);
-	void print();
+
 
 };
 
