@@ -21,7 +21,7 @@ private:
 
 public:
 	Reader();
-
+    Reader(int type, string username, string password, int maxCopies, int maxBorrowDays);
 	void increasePenalty();
 	void setPenalty(int penalty);
 	int getPenalty();

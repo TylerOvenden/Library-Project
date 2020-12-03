@@ -27,5 +27,6 @@ public:
 	void setUsername(string username);
 
 	UserType getUserType();
+	string getUserTypeString();
 	void setUserType(UserType type);
 };

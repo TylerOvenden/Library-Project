@@ -36,6 +36,7 @@ vector<Reader> LibraryManagementSystem::loadReaders() {
 
 	vector<Reader> readers;
 	Reader reader;
+	int i = 0;
 	// Our data files always have a trailing line that we skip
 	while (readerFile.eof() == 0 && readerFile.peek() != EOF) {
 		readerFile >> reader;
@@ -77,8 +78,9 @@ void LibraryManagementSystem::saveReaders() {
 	}
 
 	for (int i = 0; i < this->readers.size(); i++) {
-		readerFile << this->readers.at(i);
+        readerFile << this->readers.at(i);
 	}
+	readerFile.close();
 }
 
 void LibraryManagementSystem::saveBooks() {
@@ -94,6 +96,7 @@ void LibraryManagementSystem::saveBooks() {
 	for (int i = 0; i < this->books.size(); i++) {
 		bookFile << this->books.at(i);
 	}
+	bookFile.close();
 }
 
 void LibraryManagementSystem::saveLibrarians() {
@@ -109,12 +112,12 @@ void LibraryManagementSystem::saveLibrarians() {
 	for (int i = 0; i < this->librarians.size(); i++) {
 		librarianFile << this->librarians.at(i);
 	}
+	librarianFile.close();
 }
 
 bool LibraryManagementSystem::loginUser(string username, string password) {
-	// Compare username and password to all in file
+	// Compare username and password of students and teachers to see if they match
 	for (int i = 0; i < readers.size(); i++) {
-		// todo: Include librarians in this check
 		User reader = readers.at(i);
 		if ((reader.getUsername() == username) &&
 			(reader.getPassword() == password)) {
@@ -122,9 +125,20 @@ bool LibraryManagementSystem::loginUser(string username, string password) {
 			return true;
 		}
 	}
+	//Compare username and password of all librarians
+	for (int i = 0; i < this->librarians.size(); i++){
+	    User librarian = this->librarians.at(i);
+	    if(librarian.getUsername() == username &&
+	       librarian.getPassword() == password){
+	        this->user = librarian;
+	        return true;
+	    }
+	}
 	return false;
 }
-
+User LibraryManagementSystem::getUser() {
+    return this->user;
+}
 bool LibraryManagementSystem::compareBooksByPopularity(Book& book1, Book& book2) {
 	return book1.getresCount() < book2.getresCount();
 }
@@ -132,7 +146,25 @@ bool LibraryManagementSystem::compareBooksByPopularity(Book& book1, Book& book2)
 vector<Reader> LibraryManagementSystem::getReaders() {
 	return this->readers;
 }
-
+void LibraryManagementSystem::setReaders(vector<Reader> readers){
+    this->readers.clear();
+    for(int i = 0; i < readers.size(); i++){
+        this->readers.push_back(readers.at(i));
+    }
+}
+vector<Librarian> LibraryManagementSystem::getLibrarian() {
+    return this->librarians;
+}
+vector<User> LibraryManagementSystem::getAllUsers() {
+    this->allUsers.clear();
+    for(int i = 0; i < readers.size(); i++){
+        allUsers.push_back(readers.at(i));
+    }
+    for(int i = 0; i < librarians.size(); i++){
+        allUsers.push_back(librarians.at(i));
+    }
+    return allUsers;
+}
 vector<Book> LibraryManagementSystem::getBooks() {
 	return this->books;
 }
@@ -177,11 +209,11 @@ void LibraryManagementSystem::displayGreeting() {
 	cout << "-------------------------------------------------------------------";
 
 	//TODO: fix user.getUser() so that it outputs the user's name 
-	cout << endl << endl << "Welcome back, " << user.getUsername() << endl << endl;
+	cout << endl << endl << "Welcome back, " << this->user.getUserTypeString() << "\n" << endl;
 }
 
 LMSMenuOption LibraryManagementSystem::promptMenuScreen() {
-	cout << "Please choose:" << endl;
+    cout << "Please choose:" << endl;
 	cout << "\t\t" << LMSMenuOption::SEARCH_BOOKS << " -- Search Books" << endl;
 	cout << "\t\t" << LMSMenuOption::BORROW_BOOKS << " -- Borrow Books" << endl;
 	cout << "\t\t" << LMSMenuOption::RETURN_BOOKS << " -- Return Books" << endl;
@@ -196,7 +228,24 @@ LMSMenuOption LibraryManagementSystem::promptMenuScreen() {
 	cin >> option;
 	return (LMSMenuOption)option;
 }
+LMSMenuOptionLibrarian LibraryManagementSystem::promptLibrarianScreen() {
+    cout << "Please choose:" << endl;
+    cout << "\t\t" << LMSMenuOptionLibrarian::SEARCH_BOOKS_LIBRARIAN << " -- Search Books" << endl;
+    cout << "\t\t" << LMSMenuOptionLibrarian::ADD_BOOKS_LIBRARIAN << " -- Add Books" << endl;
+    cout << "\t\t" << LMSMenuOptionLibrarian::DELETE_BOOKS_LIBRARIAN << " -- Delete Books" << endl;
+    cout << "\t\t" << LMSMenuOptionLibrarian::SEARCH_USERS_LIBRARIAN << " -- Search Users" << endl;
+    cout << "\t\t" << LMSMenuOptionLibrarian::ADD_USERS_LIBRARIAN << " -- Add Users" << endl;
+    cout << "\t\t" << LMSMenuOptionLibrarian::DELETE_USERS_LIBRARIAN << " -- Delete Users" << endl;
+    cout << "\t\t" << LMSMenuOptionLibrarian::MY_INFORMATION_LIBRARIAN << " -- My Information" << endl;
+    cout << "\t\t" << LMSMenuOptionLibrarian::CHANGE_PASSWORD_LIBRARIAN << " -- Change Password" << endl;
+    cout << "\t\t" << LMSMenuOptionLibrarian::LOG_OUT_LIBRARIAN << " -- Log Out" << endl;
 
+    int option;
+    cout << "Please select an option: ";
+    cin >> option;
+    return (LMSMenuOptionLibrarian)option;
+
+}
 LMSBookSearchOption LibraryManagementSystem::promptBookSearchTypeScreen() {
 	cout << "\n\nPlease choose the field you would like to search by:" << endl;
 	cout << "\t\t" << LMSBookSearchOption::SEARCH_BY_ISBN << " - Search by ISBN" << endl;

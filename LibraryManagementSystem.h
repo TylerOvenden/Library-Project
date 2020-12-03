@@ -27,7 +27,19 @@ enum LMSMenuOption {
 
 	START,
 };
+enum LMSMenuOptionLibrarian{
+    LOG_OUT_LIBRARIAN,
+    SEARCH_BOOKS_LIBRARIAN,
+    ADD_BOOKS_LIBRARIAN,
+    DELETE_BOOKS_LIBRARIAN,
+    SEARCH_USERS_LIBRARIAN,
+    ADD_USERS_LIBRARIAN,
+    DELETE_USERS_LIBRARIAN,
+    MY_INFORMATION_LIBRARIAN,
+    CHANGE_PASSWORD_LIBRARIAN,
 
+    START_LIBRARIAN
+};
 class LibraryManagementSystem {
 private:
 	User user;
@@ -35,7 +47,7 @@ private:
 	vector<Book> books;
 	vector<Reader> readers;
 	vector<Librarian> librarians;
-
+	vector<User> allUsers;
 	vector<Librarian> loadLibrarians();
 	vector<Reader> loadReaders();
 	vector<Book> loadBooks();
@@ -46,6 +58,8 @@ public:
 	LMSMenuOption promptMenuScreen();
 	LMSBookSearchOption promptBookSearchTypeScreen();
 
+	LMSMenuOptionLibrarian promptLibrarianScreen();
+
 	void displayGreeting();
 
 	void saveReaders();
@@ -54,9 +68,13 @@ public:
 
 	bool loginUser(string username, string password);
 
-	vector<Reader> getReaders();
-	vector<Book> getBooks();
+	User getUser();
 
+	vector<Reader> getReaders();
+	vector<Librarian> getLibrarian();
+	vector<Book> getBooks();
+    vector<User> getAllUsers();
+    void setReaders(vector<Reader> readers);
 	bool compareBooksByPopularity(Book& book1, Book& book2);
 	vector<Book> searchBooks(LMSBookSearchOption searchOption, string searchValue);
 };

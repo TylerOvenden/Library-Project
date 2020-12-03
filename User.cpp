@@ -15,7 +15,12 @@ void User::setUserType(UserType type) {
 }
 
 UserType User::getUserType() {
-	return this->type;
+    return this->type;
+}
+
+string User::getUserTypeString() {
+    string userTypes[] = {"Student", "Teacher", "Librarian"};
+	return userTypes[this->type];
 }
 
 string User::getUsername() {
