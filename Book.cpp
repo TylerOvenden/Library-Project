@@ -58,9 +58,25 @@ int Book::getFavor() {
 	return this->favor;
 }
 
+void Book::setFavor(int favor) {
+	this->favor = favor;
+}
 
-int Book::getFavor() {
-	return this->favor;
+queue<Reader> Book::getReservations() {
+	return this->reservations;
+}
+
+void Book::addReservations(Reader reader) {
+	this->reservations.push(reader);
+}
+
+void Book::print() {
+	cout << "Title: " << this->getTitle() << ", ";
+	cout << "Category: " << this->getCategory() << ", ";
+	cout << "Author: " << this->getAuthor() << ", ";
+	cout << "Favor: " << this->getFavor() << ", ";
+	cout << "Copies: " << this->getCopyCount() << ", ";
+	cout << "ISBN: " << this->getISBN() << endl;
 }
 
 //parameters: student, the current student borrowing the book

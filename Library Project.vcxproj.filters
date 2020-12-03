@@ -30,6 +30,15 @@
     <ClInclude Include="LibraryManagementSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Student.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Teacher.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Librarian.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Book.cpp">
@@ -50,12 +59,24 @@
     <ClCompile Include="LibraryManagementSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Student.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Teacher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Librarian.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="book.txt">
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="..\copies.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="librarian.txt">
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="reader.txt">

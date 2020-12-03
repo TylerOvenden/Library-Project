@@ -141,21 +141,28 @@
   <ItemGroup>
     <ClInclude Include="Book.h" />
     <ClInclude Include="Copy.h" />
+    <ClInclude Include="Librarian.h" />
     <ClInclude Include="LibraryManagementSystem.h" />
     <ClInclude Include="Reader.h" />
+    <ClInclude Include="Student.h" />
+    <ClInclude Include="Teacher.h" />
     <ClInclude Include="User.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Book.cpp" />
     <ClCompile Include="Copy.cpp" />
+    <ClCompile Include="Librarian.cpp" />
     <ClCompile Include="LibraryManagementSystem.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Reader.cpp" />
+    <ClCompile Include="Student.cpp" />
+    <ClCompile Include="Teacher.cpp" />
     <ClCompile Include="User.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\copies.txt" />
     <Text Include="book.txt" />
+    <Text Include="librarian.txt" />
     <Text Include="reader.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

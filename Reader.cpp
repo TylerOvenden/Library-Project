@@ -1,17 +1,6 @@
 #include "Reader.h"
 
 Reader::Reader() {
-
-
-
-}
-
-void Reader::setReaderType(ReaderType type) {
-	this->type = type;
-}
-
-ReaderType Reader::getReaderType() {
-	return this->type;
 }
 
 void Reader::setPenalty(int penalty) {
@@ -52,18 +41,18 @@ void Reader::setBook(int num) {
 
 	this->books = num;
 }
-std::vector<Copy> Reader::getBorrow() {
-	return borrowed;
-}
-std::vector<Copy> Reader::getReserve() {
-	return reserved;
-}
-void Reader::setBorrow(std::vector<Copy> borrow) {
-	this->borrowed = borrow;
-}
-void Reader::setReserve(std::vector<Copy> reserve) {
-	this->reserved = reserve;
-}
+//std::vector<Copy> Reader::getBorrow() {
+//	return borrowed;
+//}
+//std::vector<Copy> Reader::getReserve() {
+//	return reserved;
+//}
+//void Reader::setBorrow(std::vector<Copy> borrow) {
+//	this->borrowed = borrow;
+//}
+//void Reader::setReserve(std::vector<Copy> reserve) {
+//	this->reserved = reserve;
+//}
 //parameters: student, the current student borrowing the book
 //id represents the unique id used to identify the book
 //books is a vector of all books in the system

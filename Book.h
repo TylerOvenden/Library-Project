@@ -4,11 +4,15 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <queue>
+#include "Reader.h"
 
 using namespace std;
 
 class Book {
 private:
+	queue<Reader> reservations;
+	// vector<Copy> copies;
 
 	string title;
 	string author;
@@ -39,6 +43,12 @@ public:
 
 	int getFavor();
 	void setFavor(int favor);
+
+	queue<Reader> getReservations();
+	void addReservations(Reader reader);
+
+
+	void print();
 
 	// void addCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow);
 	// void removeCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow);

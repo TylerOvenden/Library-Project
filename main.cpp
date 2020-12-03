@@ -16,8 +16,9 @@ using namespace std;
 //8 date counter
 //9 store date counter
 
-string promptForInput(string description) {
-	cout << "Enter your " << description << ": ";
+// Prompt for user input
+string promptForInput(string prompt) {
+	cout << prompt;
 	string input;
 	cin >> input;
 	return input;
@@ -26,12 +27,8 @@ string promptForInput(string description) {
 int main() {
 	LibraryManagementSystem* lms = new LibraryManagementSystem();
 
-	vector<Book> books = lms->getBooks();
-	vector<Reader> readers = lms->getReaders();
-
-	// Ask for username and password
-	string username = promptForInput("username");
-	string password = promptForInput("password");
+	string username = promptForInput("Enter your username: ");
+	string password = promptForInput("Enter your password: ");
 
 	bool loginSuccess = lms->loginUser(username, password);
 	if (!loginSuccess) {
@@ -39,33 +36,29 @@ int main() {
 		return 0;
 	}
 
-	lms->displayWelcomeScreen();
+	lms->displayGreeting();
 
-	int userChoice;
-	// This determins what prosses to use
-	cin >> userChoice;
+	LMSMenuOption menuOption = LMSMenuOption::START;
+	while (menuOption != LMSMenuOption::LOG_OUT) {
+		menuOption = lms->promptMenuScreen();
 
-	char input = 9;
-	int id;
-	Book b1 = Book();
-	while (input != 0) {
-		// b1.findOverdue(*authenticatedStudent, borrowed);
-		cout << "\nPlease select an option: ";
-		cin >> input;
+		switch (menuOption) {
+		case LMSMenuOption::SEARCH_BOOKS: {
+			LMSBookSearchOption searchOption = lms->promptBookSearchTypeScreen();
+			string searchValue = promptForInput("Enter your search value: ");
 
-		switch (input) {
-		case 1:
-			cout << "enter an id " << endl;
-			cin >> id;
-			// b1.addCopy(*authenticatedStudent, id, books, borrowed);
+			vector<Book> books = lms->searchBooks(searchOption, searchValue);
+			cout << "\nSearch results:\n";
+			for (int i = 0; i < books.size(); i++) {
+				books.at(i).print();
+			};
+			cout << "\n";
 			break;
-		case 2:
-			cout << "enter an id " << endl;
-			cin >> id;
-			// b1.removeCopy(*authenticatedStudent, id, books, borrowed);
-			break;
-		case 0:
-			exit(1);
+		}
+		case LMSMenuOption::BORROW_BOOKS: {
+			int isbn = atoi(promptForInput("Enter the ISBN: ").c_str());
+			
+		}
 		}
 	}
 }

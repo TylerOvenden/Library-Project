@@ -1,9 +1,18 @@
+#pragma once
 #include <string>
 
 using namespace std;
 
+enum UserType {
+	STUDENT,
+	TEACHER,
+	LIBRARIAN
+};
+
 class User {
 private:
+	UserType type;
+
 	string username;
 	string password;
 
@@ -16,4 +25,7 @@ public:
 
 	void setPassword(string password);
 	void setUsername(string username);
+
+	UserType getUserType();
+	void setUserType(UserType type);
 };

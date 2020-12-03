@@ -10,6 +10,14 @@ User::User(string p, string u) {
 	password = u;
 }
 
+void User::setUserType(UserType type) {
+	this->type = type;
+}
+
+UserType User::getUserType() {
+	return this->type;
+}
+
 string User::getUsername() {
 	return username;
 }

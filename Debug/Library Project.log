@@ -1,5 +1,16 @@
-﻿  LibraryManagementSystem.cpp
-C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(58,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(73,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(80,20): warning C4018: '<': signed/unsigned mismatch
+﻿  Book.cpp
+  Librarian.cpp
+  LibraryManagementSystem.cpp
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(79,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(94,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(109,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(116,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(142,20): warning C4018: '<': signed/unsigned mismatch
+  main.cpp
+C:\Users\Avery\OneDrive\Desktop\Library-Project\main.cpp(52,22): warning C4018: '<': signed/unsigned mismatch
+  Reader.cpp
+  Student.cpp
+  Teacher.cpp
+  User.cpp
+  Generating Code...
   Library Project.vcxproj -> C:\Users\Avery\OneDrive\Desktop\Library-Project\Debug\Library Project.exe
