@@ -17,7 +17,7 @@ private:
 	string title;
 	string author;
 	string category;
-
+	vector<int> copyIDs;
 	int isbn;
 	int copyCount;
 	int favor;
@@ -41,12 +41,18 @@ public:
 	int getCopyCount();
 	void setCopyCount(int copyCount);
 
+
+	void addCopy(int id);
+
+	std::vector<int> getIDs();
+	void setIDs(vector<int> t);
+
+
 	int getFavor();
 	void setFavor(int favor);
 
 	queue<Reader> getReservations();
 	void addReservations(Reader reader);
-
 
 	void print();
 
@@ -85,4 +91,4 @@ public:
 		os << book.getFavor() << endl;
 		return os;
 	}
-};
+}; 

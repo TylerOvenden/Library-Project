@@ -48,12 +48,18 @@ int main() {
 			string searchValue = promptForInput("Enter your search value: ");
 
 			vector<Book> books = lms->searchBooks(searchOption, searchValue);
-			cout << "\nSearch results:\n";
-			for (int i = 0; i < books.size(); i++) {
-				books.at(i).print();
-			};
-			cout << "\n";
-			break;
+			if (books.size()) {
+				cout << "\nSearch results:\n";
+				for (int i = 0; i < books.size(); i++) {
+					books.at(i).print();
+				};
+				cout << "\n";
+				break;
+			}
+			else {
+				cout << "\nNo results found!\n" << endl;
+			}
+		
 		}
 		case LMSMenuOption::BORROW_BOOKS: {
 			int isbn = atoi(promptForInput("Enter the ISBN: ").c_str());

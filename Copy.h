@@ -1,8 +1,11 @@
+//#pragma once
+//
 //#include <string>
 //#include <vector>
 //#include <ctime>
 //#include <queue>    
 //#include "Book.h"
+//#include "Reader.h"
 //
 //using namespace std;
 //
@@ -14,8 +17,8 @@
 //	
 //	int id;
 //
-//	Reader reader;
-//	Reader reserver;
+//	string reader;
+//	string reserver;
 //	
 //	bool available;
 //	int start;
@@ -30,6 +33,7 @@
 //
 //public: 
 //	Copy();
+//	Copy(Book b, int id);
 //	void setReader(string r);
 //	string getReader();
 //	void setReserver(string r);
@@ -39,7 +43,7 @@
 //	int getReserveDate();
 //	int getBorrowDate();
 //	int getExpireDate();
-//
+//	Book getBook();
 //	
 //	void setReserveDate(int r);
 //	void setBorrowDate(int r);
@@ -58,15 +62,12 @@
 //
 //	void setID(int id);
 //	int getID();
-
-//  these should be on Book vvv
 //	void addCopy(Reader r, int enteri, vector<Copy>& copies);
 //	void reserveCopy(Reader r, int enteri, vector<Copy>& copies);
 //	void deleteCopy(Reader r, int enteri, vector<Copy>& copies);
 //	void findOverdue(Reader r, vector<Copy>& borrow);
-//
+//	
+//	void search(vector<Copy>& borrow, istream& in);
 //
 //
 //};
-//
-//
