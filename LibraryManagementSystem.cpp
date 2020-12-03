@@ -186,10 +186,10 @@ LMSMenuOption LibraryManagementSystem::promptMenuScreen() {
 	cout << "\t\t" << LMSMenuOption::BORROW_BOOKS			<< " -- Borrow Books" << endl;
 	cout << "\t\t" << LMSMenuOption::RETURN_BOOKS			<< " -- Return Books" << endl;
 	cout << "\t\t" << LMSMenuOption::RESERVE_BOOKS			<< " -- Reserve Books" << endl;
-	cout << "\t\t" << LMSMenuOption::CANCEL_RESERVATION	<< " -- Cancel Reservations" << endl;
+	cout << "\t\t" << LMSMenuOption::CANCEL_RESERVATION		<< " -- Cancel Reservations" << endl;
 	cout << "\t\t" << LMSMenuOption::INFO					<< " -- My Information" << endl;
 	cout << "\t\t" << LMSMenuOption::CHANGE_PASS			<< " -- Change Password" << endl;
-	cout << "\t\t" << LMSMenuOption::LOG_OUT			<< " -- Log Out" << endl;
+	cout << "\t\t" << LMSMenuOption::LOG_OUT				<< " -- Log Out" << endl;
 
 	int option;
 	cout << "Please select an option: ";
