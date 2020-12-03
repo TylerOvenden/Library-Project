@@ -126,7 +126,7 @@ bool LibraryManagementSystem::loginUser(string username, string password) {
 }
 
 bool LibraryManagementSystem::compareBooksByPopularity(Book& book1, Book& book2) {
-	return book1.getReservations().size() < book2.getReservations().size();
+	return book1.getresCount() < book2.getresCount();
 }
 
 vector<Reader> LibraryManagementSystem::getReaders() {
@@ -143,7 +143,7 @@ vector<Book> LibraryManagementSystem::searchBooks(LMSBookSearchOption searchOpti
 		Book book = this->books.at(i);
 
 		switch (searchOption) {
-		case LMSBookSearchOption::SEARCH_BY_AUTHOR: 
+		case LMSBookSearchOption::SEARCH_BY_AUTHOR:
 			if (searchValue == book.getAuthor()) {
 				result.push_back(book);
 			}
@@ -156,12 +156,12 @@ vector<Book> LibraryManagementSystem::searchBooks(LMSBookSearchOption searchOpti
 		case LMSBookSearchOption::SEARCH_BY_ISBN:
 			if (std::atoi(searchValue.c_str()) == book.getISBN()) {
 				result.push_back(book);
-			}			
+			}
 			break;
 		case LMSBookSearchOption::SEARCH_BY_TITLE:
 			if (searchValue == book.getTitle()) {
 				result.push_back(book);
-			}		
+			}
 			break;
 		}
 	}
@@ -182,19 +182,19 @@ void LibraryManagementSystem::displayGreeting() {
 
 LMSMenuOption LibraryManagementSystem::promptMenuScreen() {
 	cout << "Please choose:" << endl;
-	cout << "\t\t" << LMSMenuOption::SEARCH_BOOKS			<< " -- Search Books" << endl;
-	cout << "\t\t" << LMSMenuOption::BORROW_BOOKS			<< " -- Borrow Books" << endl;
-	cout << "\t\t" << LMSMenuOption::RETURN_BOOKS			<< " -- Return Books" << endl;
-	cout << "\t\t" << LMSMenuOption::RESERVE_BOOKS			<< " -- Reserve Books" << endl;
-	cout << "\t\t" << LMSMenuOption::CANCEL_RESERVATION	<< " -- Cancel Reservations" << endl;
-	cout << "\t\t" << LMSMenuOption::INFO					<< " -- My Information" << endl;
-	cout << "\t\t" << LMSMenuOption::CHANGE_PASS			<< " -- Change Password" << endl;
-	cout << "\t\t" << LMSMenuOption::LOG_OUT			<< " -- Log Out" << endl;
+	cout << "\t\t" << LMSMenuOption::SEARCH_BOOKS << " -- Search Books" << endl;
+	cout << "\t\t" << LMSMenuOption::BORROW_BOOKS << " -- Borrow Books" << endl;
+	cout << "\t\t" << LMSMenuOption::RETURN_BOOKS << " -- Return Books" << endl;
+	cout << "\t\t" << LMSMenuOption::RESERVE_BOOKS << " -- Reserve Books" << endl;
+	cout << "\t\t" << LMSMenuOption::CANCEL_RESERVATION << " -- Cancel Reservations" << endl;
+	cout << "\t\t" << LMSMenuOption::INFO << " -- My Information" << endl;
+	cout << "\t\t" << LMSMenuOption::CHANGE_PASS << " -- Change Password" << endl;
+	cout << "\t\t" << LMSMenuOption::LOG_OUT << " -- Log Out" << endl;
 
 	int option;
 	cout << "Please select an option: ";
 	cin >> option;
-	return (LMSMenuOption) option;
+	return (LMSMenuOption)option;
 }
 
 LMSBookSearchOption LibraryManagementSystem::promptBookSearchTypeScreen() {

@@ -16,8 +16,8 @@ private:
 	int maxCopies;
 	int maxBorrowDays;
 
-	//vector<Copy> borrowed;
-	//vector<Copy> reserved;
+	vector<Copy> borrowed;
+	vector<Copy> reserved;
 
 public:
 	Reader();
@@ -29,10 +29,10 @@ public:
 	int getMaxCopies();
 	void setMaxBorrowDays(int maxBorrowDays);
 	int getMaxBorrowDays();
-	//std::vector<Copy> getBorrow();
-	//std::vector<Copy> getReserve();
-	//void setBorrow(std::vector<Copy> borrow);
-	//void setReserve(std::vector<Copy> reserve);
+	std::vector<Copy> getBorrow();
+	std::vector<Copy> getReserve();
+	void setBorrow(std::vector<Copy> borrow);
+	void setReserve(std::vector<Copy> reserve);
 	int getBook();
 	void setBook(int num);
 	void increaseBook();
@@ -47,7 +47,7 @@ public:
 		string username, password, borrowingPeriod, bookIds;
 
 		readerStream >> type;
-		reader.setUserType((UserType) type);
+		reader.setUserType((UserType)type);
 		readerStream >> username;
 		reader.setUsername(username);
 		readerStream >> password;
