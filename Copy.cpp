@@ -5,7 +5,7 @@
 #include "Copy.h"
 //#include "Reader.h"
 using namespace std;
-/*
+
 Copy::Copy() {
 
 	this->setSince(-1);
@@ -16,6 +16,10 @@ Copy::Copy(Book b, int id) {
 	vector<int> temp = b.getIDs();
 	temp.push_back(id);
 	b.setIDs(temp);
+	int copies = b.getCopyCount();
+	b.setCopyCount(copies + 1);
+	this->setSince(-1);
+	this->reader = "";
 
 }
 Book Copy::getBook() {
@@ -24,19 +28,98 @@ Book Copy::getBook() {
 }
 void Copy::setStart() {
 	this->start = (int)clock();        //set borrowStartTime to when the book is taken out in seconds
-}	
+}
 int Copy::getStart() {
-	
-		return start;		
+
+	return start;
 }
 void  Copy::setEnd(int end) {
-	
-		expiration = end;		
+
+	expiration = end;
 }
 int Copy::getEnd() {
-	
-		return expiration;		
+
+	return expiration;
 }
+
+void Copy::setReader(string r) {
+	this->reader = r;
+}
+
+void Copy::setReserver(string r) {
+	this->reserver = r;
+}
+string Copy::getReader() {
+
+	return reader;
+}
+string Copy::getReserver() {
+
+	return reserver;
+}
+void Copy::setReserveDate(int r) {
+
+	reservedate = r;
+}
+void Copy::setBorrowDate(int r) {
+
+	borrowdate = r;
+}
+void Copy::setAvail(bool b) {
+
+	this->available = b;
+}
+bool Copy::getAvail() {
+	return available;
+
+}
+void Copy::search(vector<Copy>& borrow, istream& in) {
+	char c;
+	in >> c;
+
+}
+
+void Copy::setExpireDate(int r) {
+
+	expiredate = r;
+}
+int Copy::getBorrowDate() {
+	return borrowdate;
+}
+int Copy::getReserveDate() {
+	return reservedate;
+}
+
+int Copy::getExpireDate() {
+	return expiredate;
+}
+
+
+void Copy::setSince(int s) {
+	this->since = s;
+}
+
+int Copy::getSince() {
+
+	return since;
+}
+
+void Copy::setID(int i) {
+
+	id = i;
+}
+int Copy::getID() {
+	return id;
+}
+
+void Copy::print() {
+	book.print();
+	cout << "ID: " << this->getID() << endl;
+
+}
+
+/*
+
 //loops through vector of borrowed books
 //if current time is found to be greater than one of the expiration dates of any of the books
 //increases number of pentalites for reader
@@ -70,79 +153,6 @@ void Copy::findOverdue(Reader* r, vector<Copy>& borrow) {
 
 
 }
-void Copy::setReader(string r) {
-	this->reade = r;
-}
-
-void Copy::setReserver(string r) {
-	this->reserver = r;
-}
-string Copy::getReader() {
-
-	return reade;
-}
-string Copy::getReserver() {
-
-	return reserver;
-}
-void Copy::setReserveDate(int r) {
-
-	reservedate = r;
-}
-void Copy::setBorrowDate(int r) {
-
-	borrowdate = r;
-}
-void Copy::setAvail(bool b) {
-
-	this->available = b;
-}
-bool Copy::getAvail() {
-	return available;
-
-}
-void Copy::search(vector<Copy>& borrow, istream& in){
-	char c;
-	in >> c;
-
-
-}
-
-void Copy::setExpireDate(int r) {
-
-	expiredate = r;
-}
-int Copy::getBorrowDate() {
-	return borrowdate;
-}
-int Copy::getReserveDate() {
-	return reservedate;
-}
-
-int Copy::getExpireDate() {
-	return expiredate;
-}
-
-
-void Copy::setSince(int s) {
-	this->since = s;
-	//this->
-}
-
-int Copy::getSince() {
-
-	return since;
-}
-
-void Copy::setID(int i) {
-
-	id = i;
-}
-int Copy::getID() {
-	return id;
-}
-
-
 
 
 
