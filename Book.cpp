@@ -61,7 +61,7 @@ int Book::getFavor() {
 void Book::setFavor(int favor) {
 	this->favor = favor;
 }
-
+/*
 queue<Reader> Book::getReservations() {
 	return this->reservations;
 }
@@ -69,6 +69,20 @@ queue<Reader> Book::getReservations() {
 void Book::addReservations(Reader reader) {
 	this->reservations.push(reader);
 }
+*/
+
+void Book::inresCount() {
+	this->resCount++;
+}
+
+void Book::deresCount() {
+	this->resCount--;
+}
+
+int Book::getresCount() {
+	return resCount;
+}
+
 
 void Book::print() {
 	cout << "Title: " << this->getTitle() << ", ";
@@ -85,7 +99,7 @@ void Book::addCopy(int id) {
 	copyIDs.push_back(id);
 }
 
-void Book:: setIDs(vector<int> t) {
+void Book::setIDs(vector<int> t) {
 	this->copyIDs = t;
 
 }

@@ -5,13 +5,13 @@
 #include <vector>
 #include <sstream>
 #include <queue>
-#include "Reader.h"
+//#include "Reader.h"
 
 using namespace std;
 
 class Book {
 private:
-	queue<Reader> reservations;
+	//queue<Reader> reservations;
 	// vector<Copy> copies;
 
 	string title;
@@ -22,6 +22,7 @@ private:
 	int copyCount;
 	int favor;
 
+	int resCount;
 public:
 	Book();
 	Book(int isbn, string title, string author, string category, int copyCount, int favor);
@@ -50,10 +51,16 @@ public:
 
 	int getFavor();
 	void setFavor(int favor);
+	//gets number of reserved copies
+	int getresCount();
+	//increases number of reserved copies
+	void inresCount();
+	//decreases number of reserved copies
+	void deresCount();
 
-	queue<Reader> getReservations();
-	void addReservations(Reader reader);
-
+	//queue<Reader> getReservations();
+	//void addReservations(Reader reader);
+	//
 	void print();
 
 	// void addCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow);
@@ -91,4 +98,4 @@ public:
 		os << book.getFavor() << endl;
 		return os;
 	}
-}; 
+};
