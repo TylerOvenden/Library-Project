@@ -47,7 +47,8 @@ int main() {
 			LMSBookSearchOption searchOption = lms->promptBookSearchTypeScreen();
 			string searchValue = promptForInput("Enter your search value: ");
 
-			vector<Book> books = lms->searchBooks(searchOption, searchValue);
+
+			vector<Book> books = lms->displayBookSearchResultsFor(searchOption, searchValue);
 			if (books.size()) {
 				cout << "\nSearch results:\n";
 				for (int i = 0; i < books.size(); i++) {

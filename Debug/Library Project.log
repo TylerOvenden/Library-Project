@@ -1,3 +1,157 @@
-﻿  main.cpp
-C:\Users\Avery\OneDrive\Desktop\Library-Project\main.cpp(53,23): warning C4018: '<': signed/unsigned mismatch
-  Library Project.vcxproj -> C:\Users\Avery\OneDrive\Desktop\Library-Project\Debug\Library Project.exe
+﻿  Book.cpp
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(15,6): error C2143: syntax error: missing ';' before '*'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(15,6): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(15,12): error C2238: unexpected token(s) preceding ';'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(28,6): error C2061: syntax error: identifier 'Book'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(36,6): error C2143: syntax error: missing ';' before '*'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(36,6): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(36,17): error C2238: unexpected token(s) preceding ';'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(37,19): error C2061: syntax error: identifier 'Book'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.cpp(50,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.cpp(53,43): error C2661: 'Copy::Copy': no overloaded function takes 2 arguments
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.cpp(59,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.cpp(91,43): error C2084: function 'void Book::addReservations(Reader)' already has a body
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.cpp(84): message : see previous definition of 'addReservations'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.cpp(107,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.cpp(123,20): warning C4018: '<': signed/unsigned mismatch
+  Copy.cpp
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Reader.h(19,9): error C2065: 'Copy': undeclared identifier
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Reader.h(19,2): error C2923: 'std::vector': 'Copy' is not a valid template type argument for parameter '_Ty'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Reader.h(19,2): error C2976: 'std::vector': too few template arguments
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\vector(413): message : see declaration of 'std::vector'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Reader.h(20,9): error C2065: 'Copy': undeclared identifier
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Reader.h(20,2): error C2923: 'std::vector': 'Copy' is not a valid template type argument for parameter '_Ty'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Reader.h(20,2): error C2976: 'std::vector': too few template arguments
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\vector(413): message : see declaration of 'std::vector'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Reader.h(32,14): error C2065: 'Copy': undeclared identifier
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Reader.h(32,7): error C2923: 'std::vector': 'Copy' is not a valid template type argument for parameter '_Ty'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Reader.h(32,7): error C2976: 'std::vector': too few template arguments
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\vector(413): message : see declaration of 'std::vector'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Reader.h(33,14): error C2065: 'Copy': undeclared identifier
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Reader.h(33,7): error C2923: 'std::vector': 'Copy' is not a valid template type argument for parameter '_Ty'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Reader.h(33,7): error C2976: 'std::vector': too few template arguments
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\vector(413): message : see declaration of 'std::vector'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Reader.h(34,29): error C2065: 'Copy': undeclared identifier
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Reader.h(34,22): error C2923: 'std::vector': 'Copy' is not a valid template type argument for parameter '_Ty'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Reader.h(34,22): error C2976: 'std::vector': too few template arguments
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\vector(413): message : see declaration of 'std::vector'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Reader.h(35,30): error C2065: 'Copy': undeclared identifier
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Reader.h(35,23): error C2923: 'std::vector': 'Copy' is not a valid template type argument for parameter '_Ty'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Reader.h(35,23): error C2976: 'std::vector': too few template arguments
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\vector(413): message : see declaration of 'std::vector'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(15,9): error C2065: 'Copy': undeclared identifier
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(15,2): error C2923: 'std::vector': 'Copy' is not a valid template type argument for parameter '_Ty'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(15,2): error C2976: 'std::vector': too few template arguments
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\vector(413): message : see declaration of 'std::vector'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(48,14): error C2065: 'Copy': undeclared identifier
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(48,7): error C2923: 'std::vector': 'Copy' is not a valid template type argument for parameter '_Ty'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(48,7): error C2976: 'std::vector': too few template arguments
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\vector(413): message : see declaration of 'std::vector'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(54,32): error C2061: syntax error: identifier 'Copy'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(58,6): error C2143: syntax error: missing ';' before '*'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(58,6): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(58,33): error C2238: unexpected token(s) preceding ';'
+  LibraryManagementSystem.cpp
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(15,6): error C2143: syntax error: missing ';' before '*'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(15,6): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(15,12): error C2238: unexpected token(s) preceding ';'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(28,6): error C2061: syntax error: identifier 'Book'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(36,6): error C2143: syntax error: missing ';' before '*'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(36,6): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(36,17): error C2238: unexpected token(s) preceding ';'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(37,19): error C2061: syntax error: identifier 'Book'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(79,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(94,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(109,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(116,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(142,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(156,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(167,20): warning C4018: '<': signed/unsigned mismatch
+  main.cpp
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(15,6): error C2143: syntax error: missing ';' before '*'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(15,6): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(15,12): error C2238: unexpected token(s) preceding ';'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(28,6): error C2061: syntax error: identifier 'Book'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(36,6): error C2143: syntax error: missing ';' before '*'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(36,6): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(36,17): error C2238: unexpected token(s) preceding ';'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(37,19): error C2061: syntax error: identifier 'Book'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\main.cpp(51,84): error C2440: 'initializing': cannot convert from 'void' to 'std::vector<Book,std::allocator<Book>>'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\main.cpp(51,23): message : Expressions of type void cannot be converted to other types
+C:\Users\Avery\OneDrive\Desktop\Library-Project\main.cpp(54,23): warning C4018: '<': signed/unsigned mismatch
+  Reader.cpp
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(15,9): error C2065: 'Copy': undeclared identifier
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(15,2): error C2923: 'std::vector': 'Copy' is not a valid template type argument for parameter '_Ty'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(15,2): error C2976: 'std::vector': too few template arguments
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\vector(413): message : see declaration of 'std::vector'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(17,8): error C2065: 'Reader': undeclared identifier
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(17,2): error C2923: 'std::queue': 'Reader' is not a valid template type argument for parameter '_Ty'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(17,2): error C2976: 'std::queue': too few template arguments
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\queue(58): message : see declaration of 'std::queue'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(48,14): error C2065: 'Copy': undeclared identifier
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(48,7): error C2923: 'std::vector': 'Copy' is not a valid template type argument for parameter '_Ty'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(48,7): error C2976: 'std::vector': too few template arguments
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\vector(413): message : see declaration of 'std::vector'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(53,25): error C2061: syntax error: identifier 'Reader'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(54,32): error C2061: syntax error: identifier 'Copy'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(55,30): error C2061: syntax error: identifier 'Reader'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(56,8): error C2065: 'Reader': undeclared identifier
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(56,2): error C2923: 'std::queue': 'Reader' is not a valid template type argument for parameter '_Ty'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(56,2): error C2976: 'std::queue': too few template arguments
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\queue(58): message : see declaration of 'std::queue'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(58,6): error C2143: syntax error: missing ';' before '*'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(58,6): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(58,33): error C2238: unexpected token(s) preceding ';'
+  Student.cpp
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(15,9): error C2065: 'Copy': undeclared identifier
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(15,2): error C2923: 'std::vector': 'Copy' is not a valid template type argument for parameter '_Ty'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(15,2): error C2976: 'std::vector': too few template arguments
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\vector(413): message : see declaration of 'std::vector'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(17,8): error C2065: 'Reader': undeclared identifier
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(17,2): error C2923: 'std::queue': 'Reader' is not a valid template type argument for parameter '_Ty'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(17,2): error C2976: 'std::queue': too few template arguments
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\queue(58): message : see declaration of 'std::queue'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(48,14): error C2065: 'Copy': undeclared identifier
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(48,7): error C2923: 'std::vector': 'Copy' is not a valid template type argument for parameter '_Ty'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(48,7): error C2976: 'std::vector': too few template arguments
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\vector(413): message : see declaration of 'std::vector'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(53,25): error C2061: syntax error: identifier 'Reader'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(54,32): error C2061: syntax error: identifier 'Copy'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(55,30): error C2061: syntax error: identifier 'Reader'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(56,8): error C2065: 'Reader': undeclared identifier
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(56,2): error C2923: 'std::queue': 'Reader' is not a valid template type argument for parameter '_Ty'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(56,2): error C2976: 'std::queue': too few template arguments
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\queue(58): message : see declaration of 'std::queue'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(58,6): error C2143: syntax error: missing ';' before '*'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(58,6): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(58,33): error C2238: unexpected token(s) preceding ';'
+  Teacher.cpp
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(15,9): error C2065: 'Copy': undeclared identifier
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(15,2): error C2923: 'std::vector': 'Copy' is not a valid template type argument for parameter '_Ty'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(15,2): error C2976: 'std::vector': too few template arguments
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\vector(413): message : see declaration of 'std::vector'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(17,8): error C2065: 'Reader': undeclared identifier
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(17,2): error C2923: 'std::queue': 'Reader' is not a valid template type argument for parameter '_Ty'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(17,2): error C2976: 'std::queue': too few template arguments
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\queue(58): message : see declaration of 'std::queue'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(48,14): error C2065: 'Copy': undeclared identifier
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(48,7): error C2923: 'std::vector': 'Copy' is not a valid template type argument for parameter '_Ty'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(48,7): error C2976: 'std::vector': too few template arguments
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\vector(413): message : see declaration of 'std::vector'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(53,25): error C2061: syntax error: identifier 'Reader'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(54,32): error C2061: syntax error: identifier 'Copy'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(55,30): error C2061: syntax error: identifier 'Reader'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(56,8): error C2065: 'Reader': undeclared identifier
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(56,2): error C2923: 'std::queue': 'Reader' is not a valid template type argument for parameter '_Ty'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(56,2): error C2976: 'std::queue': too few template arguments
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\queue(58): message : see declaration of 'std::queue'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(58,6): error C2143: syntax error: missing ';' before '*'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(58,6): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(58,33): error C2238: unexpected token(s) preceding ';'
+  Utils.cpp
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Utils.cpp(4,30): error C2653: 'chrono': is not a class or namespace name
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Utils.cpp(4,51): error C2653: 'chrono': is not a class or namespace name
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Utils.cpp(4,39): error C2275: 'std::chrono::milliseconds': illegal use of this type as an expression
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\chrono(464): message : see declaration of 'std::chrono::milliseconds'
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Utils.cpp(5,28): error C2653: 'chrono': is not a class or namespace name
+  Generating Code...

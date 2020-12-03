@@ -5,27 +5,28 @@
 #include <vector>
 #include <sstream>
 #include <queue>
-//#include "Reader.h"
+#include "Reader.h"
+#include "Copy.h"
 
 using namespace std;
 
 class Book {
 private:
-	//queue<Reader> reservations;
-	// vector<Copy> copies;
+	vector<Copy> copies;
+
+	queue<Reader> reservations;
+	queue<long> reservationTimes;
 
 	string title;
 	string author;
 	string category;
-	vector<int> copyIDs;
+
 	int isbn;
-	int copyCount;
 	int favor;
 
-	int resCount;
 public:
 	Book();
-	Book(int isbn, string title, string author, string category, int copyCount, int favor);
+	Book(int isbn, string title, string author, string category, int favor);
 
 	int getISBN();
 	void setISBN(int ISBN);
@@ -39,32 +40,26 @@ public:
 	string getCategory();
 	void setCategory(string category);
 
+	void addCopy();
+	void removeCopy(int id);
+
 	int getCopyCount();
-	void setCopyCount(int copyCount);
 
-
-	void addCopy(int id);
-
-	std::vector<int> getIDs();
-	void setIDs(vector<int> t);
-
+	std::vector<Copy> getCopies();
 
 	int getFavor();
 	void setFavor(int favor);
-	//gets number of reserved copies
-	int getresCount();
-	//increases number of reserved copies
-	void inresCount();
-	//decreases number of reserved copies
-	void deresCount();
+	
+	void reserveFor(Reader reader);
+	void returnCopyToLibrary(Copy copy);
+	void addReservations(Reader reader);
+	queue<Reader> getReservations();
+	
+	Copy* borrowCopy(Reader reader);
 
-	//queue<Reader> getReservations();
-	//void addReservations(Reader reader);
-	//
+	string getFormattedCopyIds();
+
 	void print();
-
-	// void addCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow);
-	// void removeCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow);
 
 	friend istream& operator>>(istream& is, Book& book) {
 		string line;
@@ -82,8 +77,6 @@ public:
 		book.setAuthor(author);
 		bookStream >> category;
 		book.setCategory(category);
-		bookStream >> copyCount;
-		book.setCopyCount(copyCount);
 		bookStream >> favor;
 		book.setFavor(favor);
 		return is;
@@ -94,7 +87,6 @@ public:
 		os << book.getTitle() << " ";
 		os << book.getAuthor() << " ";
 		os << book.getCategory() << " ";
-		os << book.getCopyCount() << " ";
 		os << book.getFavor() << endl;
 		return os;
 	}

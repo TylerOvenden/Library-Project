@@ -147,6 +147,7 @@
     <ClInclude Include="Student.h" />
     <ClInclude Include="Teacher.h" />
     <ClInclude Include="User.h" />
+    <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Book.cpp" />
@@ -158,10 +159,12 @@
     <ClCompile Include="Student.cpp" />
     <ClCompile Include="Teacher.cpp" />
     <ClCompile Include="User.cpp" />
+    <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\copies.txt" />
     <Text Include="book.txt" />
+    <Text Include="example.txt" />
     <Text Include="librarian.txt" />
     <Text Include="reader.txt" />
   </ItemGroup>

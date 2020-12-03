@@ -59,4 +59,7 @@ public:
 
 	bool compareBooksByPopularity(Book& book1, Book& book2);
 	vector<Book> searchBooks(LMSBookSearchOption searchOption, string searchValue);
+	void displayBookSearchResultsFor(LMSBookSearchOption searchOption, string searchValue);
+
+	Reader* findReader(string username);
 };

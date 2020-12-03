@@ -5,12 +5,11 @@ using namespace std;
 Book::Book() {
 }
 
-Book::Book(int isbn, string title, string author, string category, int copyCount, int favor) {
+Book::Book(int isbn, string title, string author, string category, int favor) {
 	this->isbn = isbn;
 	this->title = title;
 	this->author = author;
 	this->category = category;
-	this->copyCount = copyCount;
 	this->favor = favor;
 }
 
@@ -46,12 +45,32 @@ void Book::setCategory(string category) {
 	this->category = category;
 }
 
-int Book::getCopyCount() {
-	return this->copyCount;
+void Book::addCopy() {
+	int maxId = 0;
+	for (int i = 0; i < copies.size(); i++) {
+		maxId = max(maxId, copies.at(i).getId());
+	}
+	Copy* newCopy = new Copy(maxId + 1, this);
+	this->copies.push_back(*newCopy);
 }
 
-void Book::setCopyCount(int copyCount) {
-	this->copyCount = copyCount;
+void Book::removeCopy(int copyIdToRemove) {
+	vector<Copy> updatedCopies; 
+	for (int i = 0; i < copies.size(); i++) {
+		Copy copy = copies.at(i);
+		if (copy.getId() != copyIdToRemove) {
+			updatedCopies.push_back(copy);
+		}
+	}
+	this->copies = updatedCopies;
+}
+
+int Book::getCopyCount() {
+	return this->copies.size();
+}
+
+std::vector<Copy> Book::getCopies() {
+	return this->copies;
 }
 
 int Book::getFavor() {
@@ -61,7 +80,10 @@ int Book::getFavor() {
 void Book::setFavor(int favor) {
 	this->favor = favor;
 }
-/*
+
+void Book::addReservations(Reader reader) {
+}
+
 queue<Reader> Book::getReservations() {
 	return this->reservations;
 }
@@ -69,42 +91,55 @@ queue<Reader> Book::getReservations() {
 void Book::addReservations(Reader reader) {
 	this->reservations.push(reader);
 }
-*/
 
-void Book::inresCount() {
-	this->resCount++;
+void Book::reserveFor(Reader reader) {
+	long currentTimeMs = Utils::getCurrentTimeMs();
+	this->reservations.push(reader);
+	this->reservationTimes.push(currentTimeMs);
 }
 
-void Book::deresCount() {
-	this->resCount--;
+void Book::returnCopyToLibrary(Copy copy) {
+	copy.resetReaderFields();
 }
 
-int Book::getresCount() {
-	return resCount;
+Copy* Book::borrowCopy(Reader reader) {
+	Copy* copyToBorrow = nullptr;
+	for (int i = 0; i < this->copies.size(); i++) {
+		Copy copy = this->copies.at(i);
+		if (copy.isAvailable()) {
+			copyToBorrow = &this->copies.at(i);
+		}
+	}
+
+	if (copyToBorrow != nullptr) {
+		copyToBorrow->borrowFor(reader.getUsername(), reader.getMaxBorrowDays());
+	}
+
+	return copyToBorrow;
 }
 
+string Book::getFormattedCopyIds() {
+	string copyIds;
+	for (int i = 0; i < this->copies.size(); i++) {
+		Copy copy = copies.at(i);
+		if (!copy.isAvailable()) {
+			continue;
+		}
+
+		copyIds += copy.getId();
+		if (i != this->copies.size() - 1) {
+			cout << ", ";
+		}
+	}
+	return copyIds;
+}
 
 void Book::print() {
 	cout << "Title: " << this->getTitle() << ", ";
 	cout << "Category: " << this->getCategory() << ", ";
 	cout << "Author: " << this->getAuthor() << ", ";
 	cout << "Favor: " << this->getFavor() << ", ";
-	cout << "Copies: " << this->getCopyCount() << ", ";
-	cout << "ISBN: " << this->getISBN() << endl;
+	cout << "ISBN: " << this->getISBN() << ", ";
+	cout << "Available Copy Ids: " << this->getFormattedCopyIds() << endl;
 }
 
-// can we change this to add a Copy object instead? and a Copy object can have an on ID it
-//adds id of copy when another copy of book is added
-void Book::addCopy(int id) {
-	copyIDs.push_back(id);
-}
-
-void Book::setIDs(vector<int> t) {
-	this->copyIDs = t;
-
-}
-
-std::vector<int> Book::getIDs() {
-	return copyIDs;
-
-}

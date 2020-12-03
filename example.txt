@@ -1,0 +1,13 @@
+// id isbn reader borrowDate expDate [reserver] [reserveDate] 
+
+// No reader, no reservation
+123 0 [] []
+
+// Reader, no reservation
+123 0 avery 12-03-2020T08:30 01-03-2020T08:30 [] []
+
+// Reader, with reservation
+123 0 avery 12-03-2020T08:30 01-03-2020T08:30 [bob] [12-04-2020T08:30]
+
+// Reader, with multiple reservations
+123 0 avery 12-03-2020T08:30 01-03-2020T08:30 [bob,mary] [12-04-2020T08:30,12-05-2020T08:30]

@@ -126,7 +126,8 @@ bool LibraryManagementSystem::loginUser(string username, string password) {
 }
 
 bool LibraryManagementSystem::compareBooksByPopularity(Book& book1, Book& book2) {
-	return book1.getresCount() < book2.getresCount();
+	// return book1.getresCount() < book2.getresCount();
+	return false;
 }
 
 vector<Reader> LibraryManagementSystem::getReaders() {
@@ -135,6 +136,30 @@ vector<Reader> LibraryManagementSystem::getReaders() {
 
 vector<Book> LibraryManagementSystem::getBooks() {
 	return this->books;
+}
+
+Reader* LibraryManagementSystem::findReader(string username) {
+	for (int i = 0; i < this->readers.size(); i++) {
+		Reader reader = this->readers.at(i);
+		if (reader.getUsername() == username) {
+			return &reader;
+		}
+	}
+	return nullptr;
+}
+
+void LibraryManagementSystem::displayBookSearchResultsFor(LMSBookSearchOption searchOption, string searchValue) {
+	vector<Book> books = this->searchBooks(searchOption, searchValue);
+	
+	if (books.size()) {
+		cout << "\nSearch results:\n";
+		for (int i = 0; i < books.size(); i++) {
+			books.at(i).print();
+		};
+		cout << "\n";
+	} else {
+		cout << "\nNo results found!\n" << endl;
+	}
 }
 
 vector<Book> LibraryManagementSystem::searchBooks(LMSBookSearchOption searchOption, string searchValue) {
