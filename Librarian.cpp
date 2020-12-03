@@ -46,6 +46,12 @@ vector<Reader> Librarian::addUser(vector<Reader> users) {
     }
     cout << "Enter username" << endl;
     cin >> username;
+    for(int i = 0; i < users.size(); i++){
+        if(users.at(i).getUsername() == username){
+            cout << "User already exists!" << endl;
+            return users;
+        }
+    }
     cout << "Enter password" << endl;
     cin >> password;
     Reader newReader(typeInt, username, password, maxCopies, maxBorrowDays);
@@ -53,6 +59,19 @@ vector<Reader> Librarian::addUser(vector<Reader> users) {
     return users;
 }
 
-vector<User> Librarian::deleteUser(vector<User> users) {
-    return vector<User>();
+vector<Reader> Librarian::deleteUser(vector<Reader> users) {
+    string username;
+    cout << "Enter username" << endl;
+    cin >> username;
+    Reader current;
+    for(int i = 0; i < users.size(); i++){
+        current = users.at(i);
+        if(current.getUsername() == username){
+            users.erase(users.begin() + i);
+            cout << "User deleted!" << endl;
+            return users;
+        }
+    }
+    cout << "User does not exist!" << endl;
+    return users;
 }

@@ -35,6 +35,7 @@ int main() {
     LMSBookSearchOption searchOption;
     string searchUsernametemp;
     vector<Reader> tempReader;
+    string tempPassword;
     int stayInLibrary = 1;
     while(stayInLibrary) {
         string username = promptForInput("Enter your username: ");
@@ -121,10 +122,24 @@ int main() {
                         lms->saveReaders();
                         break;
                     case LMSMenuOptionLibrarian::DELETE_USERS_LIBRARIAN:
+                        lms->setReaders(tempLibrarian.deleteUser(lms->getReaders()));
+                        lms->saveReaders();
                         break;
                     case LMSMenuOptionLibrarian::MY_INFORMATION_LIBRARIAN:
                         break;
                     case LMSMenuOptionLibrarian::CHANGE_PASSWORD_LIBRARIAN:
+                        cout << lms->getUser().getPassword() << endl;
+                        cout << "Enter new password";
+                        cin >> tempPassword;
+                        for(int i = 0; i < lms->getLibrarian().size(); i++){
+                            if(lms->getUser().getUsername() == lms->getLibrarian().at(i).getUsername()){
+                                lms->getUser().setPassword(tempPassword);
+                                lms->getLibrarian().at(i).setPassword(tempPassword);
+                            }
+                        }
+                        lms->saveLibrarians();
+                        cout << lms->getUser().getPassword() << endl;
+                        cout << "Password changed successfully!" << endl;
                         break;
                     case LMSMenuOptionLibrarian::LOG_OUT_LIBRARIAN:
                         cout << "Logging out!" << endl;

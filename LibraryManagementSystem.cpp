@@ -102,11 +102,11 @@ void LibraryManagementSystem::saveBooks() {
 void LibraryManagementSystem::saveLibrarians() {
 	ofstream librarianFile(LIBRARIAN_DATA_FILE);
 	if (librarianFile.fail()) {
-		cerr << endl << "Error opening book data file!" << endl;
+		cerr << endl << "Error opening librarian data file!" << endl;
 		exit(1);
 	}
 	else {
-		cout << endl << "Successfully opened book data file!" << endl << endl;
+		cout << endl << "Successfully opened librarian data file!" << endl << endl;
 	}
 
 	for (int i = 0; i < this->librarians.size(); i++) {
@@ -208,7 +208,6 @@ void LibraryManagementSystem::displayGreeting() {
 	cout << "---------------------" << "Welcome to My Library!" << "------------------------" << endl;
 	cout << "-------------------------------------------------------------------";
 
-	//TODO: fix user.getUser() so that it outputs the user's name 
 	cout << endl << endl << "Welcome back, " << this->user.getUserTypeString() << "\n" << endl;
 }
 

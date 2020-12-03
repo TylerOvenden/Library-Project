@@ -11,7 +11,7 @@ public:
 	Librarian();
 	void searchUser(vector<User> users, string username);
     vector<Reader> addUser(vector<Reader> users);
-    vector<User> deleteUser(vector<User> users);
+    vector<Reader> deleteUser(vector<Reader> users);
 
 	friend istream& operator>>(istream& is, Librarian& librarian) {
 		string line;
@@ -30,7 +30,7 @@ public:
 
 	friend ostream& operator<<(ostream& os, Librarian& librarian) {
 		os << librarian.getUsername() << " ";
-		os << librarian.getPassword() << " ";
+		os << librarian.getPassword() << endl;
 		return os;
 	}
 };
