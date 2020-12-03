@@ -1,12 +1,17 @@
 #pragma once
 #include <sstream>
+#include <iostream>
 #include "User.h"
-
+#include "Reader.h"
+#include <vector>
 using namespace std;
 
 class Librarian: public User {
 public:
 	Librarian();
+	void searchUser(vector<User> users, string username);
+    vector<Reader> addUser(vector<Reader> users);
+    vector<User> deleteUser(vector<User> users);
 
 	friend istream& operator>>(istream& is, Librarian& librarian) {
 		string line;

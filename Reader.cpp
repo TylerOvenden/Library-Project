@@ -2,8 +2,14 @@
 
 Reader::Reader() {
 
+}
 
-
+Reader::Reader(int type, string username, string password, int maxCopies, int maxBorrowDays) {
+    this->setUserType(static_cast<UserType>(type));
+    this->setUsername(username);
+    this->setPassword(password);
+    this->setMaxCopies(maxCopies);
+    this->setMaxBorrowDays(maxBorrowDays);
 }
 
 void Reader::setPenalty(int penalty) {
