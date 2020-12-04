@@ -14,6 +14,17 @@ void User::setUserType(UserType type) {
 	this->type = type;
 }
 
+string User::getUserTypeDisplay() {
+	switch (this->getUserType()) {
+	case UserType::STUDENT:
+		return "Student";
+	case UserType::TEACHER:
+		return "Teacher";
+	case UserType::LIBRARIAN:
+		return "Librarian";
+	}
+}
+
 UserType User::getUserType() {
 	return this->type;
 }

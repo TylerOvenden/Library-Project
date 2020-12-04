@@ -167,6 +167,7 @@
     <Text Include="example.txt" />
     <Text Include="librarian.txt" />
     <Text Include="reader.txt" />
+    <Text Include="testing.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

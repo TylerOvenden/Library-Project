@@ -3,9 +3,9 @@
 Copy::Copy() {
 }
 
-Copy::Copy(int id, Book* book) {
+Copy::Copy(int id, int isbn) {
 	this->id = id;
-	this->book = book;
+	this->isbn = isbn;
 }
 
 void Copy::setId(int id) {
@@ -24,15 +24,15 @@ void Copy::setExpiration(long expirationDate)
 {
 }
 
-Book* Copy::getBook() {
-	return this->book;
+int Copy::getISBN() {
+	return this->isbn;
 }
 
-void Copy::setReader(string reader) {
+void Copy::setReaderName(string reader) {
 	this->reader = reader;
 }
 
-string Copy::getReader() {
+string Copy::getReaderName() {
 	return this->reader;
 }
 
@@ -55,18 +55,17 @@ long Copy::getBorrowDate() {
 
 // todo: find better name
 void Copy::resetReaderFields() {
-	this->setReader("");
+	this->setReaderName("");
 	this->setBorrowDate(0);
 	this->setExpiration(0);
 }
 
 void Copy::borrowFor(string username, int maxBorrowDays) {
-
-}
-
-void Copy::addReservation(string reserver) {
-	long currentTimeMs = Utils::getCurrentTimeMs();
+	this->reader = username;
 	
+	long currentTimeMs = Utils::getCurrentTimeMs();
+	this->borrowDate = currentTimeMs;
+	this->expirationDate = currentTimeMs + (maxBorrowDays * 24 * 60 * 60 * 1000);
 }
 
 long Copy::getExpirationDate() {

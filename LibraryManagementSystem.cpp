@@ -154,6 +154,7 @@ void LibraryManagementSystem::displayBookSearchResultsFor(LMSBookSearchOption se
 	if (books.size()) {
 		cout << "\nSearch results:\n";
 		for (int i = 0; i < books.size(); i++) {
+			cout << "\t";
 			books.at(i).print();
 		};
 		cout << "\n";
@@ -201,8 +202,7 @@ void LibraryManagementSystem::displayGreeting() {
 	cout << "---------------------" << "Welcome to My Library!" << "------------------------" << endl;
 	cout << "-------------------------------------------------------------------";
 
-	//TODO: fix user.getUser() so that it outputs the user's name 
-	cout << endl << endl << "Welcome back, " << user.getUsername() << endl << endl;
+	cout << endl << endl << "Welcome back, " << user.getUserTypeDisplay() << endl << endl;
 }
 
 LMSMenuOption LibraryManagementSystem::promptMenuScreen() {

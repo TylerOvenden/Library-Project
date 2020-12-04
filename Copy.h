@@ -4,15 +4,13 @@
 #include <ctime>
 #include <iostream>
 #include <queue>   
-#include "Book.h"
 #include "Utils.h"
 
 using namespace std;
 
 class Copy {
 private:
-	// Which book this copy belongs to
-	Book* book;
+	int isbn;
 	
 	int id;
 
@@ -25,7 +23,7 @@ private:
 
 public: 
 	Copy();
-	Copy(int id, Book* book);
+	Copy(int id, int isbn);
 
 	void setId(int id);
 	int getId();
@@ -33,11 +31,11 @@ public:
 	void setBorrowDate(long borrowDate);
 	void setExpiration(long expirationDate);
 
-	Book* getBook();
-	void setBook(Book* book);
+	int getISBN();
+	void setISBN(int isbn);
 
-	void setReader(string reader);
-	string getReader();
+	void setReaderName(string reader);
+	string getReaderName();
 
 	bool isAvailable();
 	bool isOverdue();
@@ -48,8 +46,37 @@ public:
 	long getBorrowDate();
 	long getExpirationDate();
 
-	void addReservation(string reserver);
+	friend istream& operator>>(istream& is, Copy& copy) {
+		string line;
+		getline(is, line);
+		stringstream copyStream(line);
 
+		long borrowDate, expirationDate;
+		int isbn, id;
+		string  readerName;
+
+		copyStream >> isbn;
+		copy.setISBN(isbn);
+		copyStream >> borrowDate;
+		copy.setBorrowDate(borrowDate);
+		copyStream >> expirationDate;
+		copy.setExpiration(expirationDate);
+		copyStream >> id;
+		copy.setId(id);
+		copyStream >> readerName;
+		copy.setReaderName(readerName);
+		return is;
+	}
+
+	friend ostream& operator<<(ostream& os, Copy& copy) {
+		os << copy.getReaderName() << " ";
+		os << copy.getId() << " ";
+		os << copy.getISBN() << " ";
+		os << copy.getBorrowDate() << " ";
+		os << copy.getExpirationDate() << " ";
+		
+		return os;
+	}
 };
 
 

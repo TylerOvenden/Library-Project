@@ -50,7 +50,7 @@ void Book::addCopy() {
 	for (int i = 0; i < copies.size(); i++) {
 		maxId = max(maxId, copies.at(i).getId());
 	}
-	Copy* newCopy = new Copy(maxId + 1, this);
+	Copy* newCopy = new Copy(maxId + 1, this->isbn);
 	this->copies.push_back(*newCopy);
 }
 
@@ -79,9 +79,6 @@ int Book::getFavor() {
 
 void Book::setFavor(int favor) {
 	this->favor = favor;
-}
-
-void Book::addReservations(Reader reader) {
 }
 
 queue<Reader> Book::getReservations() {
