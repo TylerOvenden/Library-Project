@@ -9,32 +9,32 @@
 
 
 using namespace std;
-class Reader;
-class Copy 
+
+class Copy
 {
 private:
 	// Which book this copy belongs to
 	Book book;
-	
+
 	int id;
 
 	string reade;
 	string reserver;
-	
+
 	bool available;
 	int start;
 	int expiration;
 
-	int since; 
+	int since;
 
 	int reservedate;
 	int borrowdate;
 	int expiredate;
 
-	std::queue<Reader*> reserved;
+	queue<string> reserved;
 
-public: 
-	Copy();
+public:
+	Copy(); 
 	Copy(Book b, int id);
 	void setReader(string r);
 	string getReader();
@@ -46,12 +46,14 @@ public:
 	int getBorrowDate();
 	int getExpireDate();
 	Book getBook();
-	
+
 	void setReserveDate(int r);
 	void setBorrowDate(int r);
 	void setExpireDate(int r);
-	
-	
+
+	queue<string> getReserveQueue();
+	void setReserveQueue(queue<string> r);
+
 	void setStart();
 	void setEnd(int end);
 	int getEnd();
@@ -64,14 +66,9 @@ public:
 
 	void setID(int id);
 	int getID();
-	void addCopy(Reader* r, int enteri, vector<Copy>& copies);
-	void reserveCopy(Reader* r, int enteri, vector<Copy>& copies);
-	void deleteCopy(Reader* r, int enteri, vector<Copy>& copies);
-	void findOverdue(Reader* r, vector<Copy>& borrow);
-	
+
 	void search(vector<Copy>& borrow, istream& in);
 
 
 };
-
 

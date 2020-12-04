@@ -15,13 +15,13 @@ private:
 	int books = 0;
 	int maxCopies;
 	int maxBorrowDays;
-
+	bool overdue;
 	vector<Copy> borrowed;
 	vector<Copy> reserved;
 
 public:
 	Reader();
-    Reader(int type, string username, string password, int maxCopies, int maxBorrowDays);
+	Reader(int type, string username, string password, int maxCopies, int maxBorrowDays);
 	void increasePenalty();
 	void setPenalty(int penalty);
 	int getPenalty();
@@ -36,6 +36,16 @@ public:
 	int getBook();
 	void setBook(int num);
 	void increaseBook();
+	//methods for checking if books overdue
+	bool getOverdue();
+	void setOverdue(bool b);
+
+	void addCopy( int enteri, vector<Copy>& copies);
+	void reserveCopy( int enteri, vector<Copy>& copies);
+	void deleteCopy( int enteri, vector<Copy>& copies);
+	void findOverdue( vector<Copy>& borrow);
+
+
 
 
 	friend istream& operator>>(istream& is, Reader& reader) {
