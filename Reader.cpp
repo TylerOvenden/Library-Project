@@ -92,15 +92,18 @@ void Reader::addCopy(int enteri, vector<Copy>& copies) {
 		//breaks when book is found
 	int pos;
 	for (int i = 0; i < copies.size(); i++) {
+		c = &copies.at(i);
+		
 		//if this copy exists
-		if (copies.at(i).getID() == enteri) {
-
+		if (c->getID() == enteri) {
 			b = copies.at(i);
+			//b = copies.at(i);
 			//check if this copy is available
-			if (b.getAvail() == true)
+			if (c->getAvail() == true && c->getReader() == "" )
 			{
 				pos = i;
 				search = true;
+			
 				break; 
 			}
 			//if there are no reserved readers for the copy
@@ -111,6 +114,7 @@ void Reader::addCopy(int enteri, vector<Copy>& copies) {
 
 		}
 	}
+
 	//if copy was not found ends ends method
 	if (search == false)
 	{
@@ -118,11 +122,16 @@ void Reader::addCopy(int enteri, vector<Copy>& copies) {
 		return;
 	}
 	
-	queue<string> reserUser = b.getReserveQueue();
-	//checks if someone else reserved the book first
+	
+	queue<string> reserUser = c->getReserveQueue();
+
+	
 	if (reserUser.size() != 0) {
-		string temp = reserUser.front();
-		if (getUsername() != temp) {
+		string temp = reserUser.front();\
+			string user = getUsername();
+
+		if (user != temp) {
+
 			cout << "someone else reserved the book" << endl;
 			return;
 		}
@@ -133,7 +142,7 @@ void Reader::addCopy(int enteri, vector<Copy>& copies) {
 
 	//sets book's reader to the username
 	string reader = getUsername();
-	b.setReader(reader);
+	c->setReader(reader);
 
 
 	//also sets the reader of the book in the vector of all books
@@ -145,16 +154,19 @@ void Reader::addCopy(int enteri, vector<Copy>& copies) {
 	}
 
 	//starts checkout time for 
-	b.setStart();
-	int time = b.getStart();
-	b.setEnd(time + (5 * mult));
+	c->setStart();
+	int time = c->getStart();
+	c->setEnd(time + (5 * mult));
 
 	//pushs the b to the array of borrowed books by user, represents user checking out book
+	
+	
 	borrowed.push_back(b);
 	
-
+	
 	//book borrowed & spot not opened anymore
 	b.setAvail(false);
+	
 	b.setSince(-1);
 	b.setReserveQueue(reserUser);
 	//	//increases number of books borrowed
@@ -177,7 +189,6 @@ void Reader::findOverdue(vector<Copy>& borrow) {
 			//if so remove user from reserve list automatically
 			if ((int)clock() > temp + 25) {
 				reserUser.pop();
-
 				if (reserUser.size() != 0) {
 					borrow.at(i).setSince((int)clock());
 				}
@@ -185,14 +196,16 @@ void Reader::findOverdue(vector<Copy>& borrow) {
 					borrow.at(i).setSince(-1);
 				}
 				borrow.at(i).setReserveQueue(reserUser);
-					
+
 			}
 		}
-		//current time is after the book's expiration date
-		if ((int)clock() >= borrow.at(i).getEnd()) {
+		//checks if book is borrowed currently
+		if (borrow.at(i).getStart() != -1)
+		{
+			if ((int)clock() >= borrow.at(i).getEnd()) {
 			setOverdue(true);
 		}
-
+	}
 	}
 }
 //reserve copy of book for user if copy exists
@@ -209,13 +222,18 @@ void Reader::reserveCopy(int enteri, vector<Copy>& copies) {
 		//breaks when book is found
 	int pos;
 	for (int i = 0; i < copies.size(); i++) {
+		
+		
 		if (copies.at(i).getID() == enteri) {
 			search = true;
+			c = &copies.at(i);
 			b = copies.at(i);
-			queue<string> reserUser = b.getReserveQueue();
+			queue<string> reserUser = c->getReserveQueue();
+		//	new string(getUsername())
 			reserUser.push(getUsername());
 			reserved.push_back(b);
-			b.setReserveQueue(reserUser);
+			cout << "size: " << reserUser.size() << endl;
+			c->setReserveQueue(reserUser);
 			break;
 		}
 	}
@@ -229,6 +247,11 @@ void Reader::reserveCopy(int enteri, vector<Copy>& copies) {
 	
 	
 	cout << "copy reserved" << endl;
+	queue<string> reserUser = c->getReserveQueue();
+	cout << "size: " << reserUser.size() << endl;
+	c->setReserveQueue(reserUser);
+
+
 }
 
 
@@ -238,13 +261,14 @@ void Reader::deleteCopy(int enteri, vector<Copy>& copies) {
 
 	int pos = 0;
 	bool found = false;
-	vector<Copy> bor = getBorrow();
+	//vector<Copy> bor = getBorrow();
 //	borrowed
 	//finds position of where to remove book
 	for (int i = 0; i < borrowed.size(); i++) {
 		if (copies.at(i).getID() == enteri){
-			pos = (i - 1);
-			bor.erase(bor.begin() + pos);
+		
+			pos = (i);
+			borrowed.erase(borrowed.begin() + pos);
 			//decreases number of books borrowed
 			int currentAmount = getBook();
 			setBook(currentAmount - 1);
@@ -274,6 +298,11 @@ void Reader::deleteCopy(int enteri, vector<Copy>& copies) {
 		}
 	}
 	queue<string> reserUser = temp.getReserveQueue();
+	
+	//if no one reserving, signify book is not borrowed currently
+	if (reserUser.size() == 0) {
+		temp.resetStart();
+	}
 	//time for first reserver of book to borrow books starts now
 	if (reserUser.size() > 0) {
 		temp.setSince((int)clock());

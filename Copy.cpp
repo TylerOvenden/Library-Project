@@ -11,15 +11,21 @@ Copy::Copy() {
 Copy::Copy(Book b, int id) {
 	this->book = b;
 	this->id = id;
+	this->start = -1;
 	vector<int> temp = b.getIDs();
 	temp.push_back(id);
 	b.setIDs(temp);
+	setAvail(true);
 }
 Book Copy::getBook() {
 	return book;
 }
 void Copy::setStart() {
 	this->start = (int)clock();        //set borrowStartTime to when the book is taken out in seconds
+}
+void Copy::resetStart() {
+	this->start = -1;
+
 }
 int Copy::getStart() {
 
@@ -90,9 +96,9 @@ int Copy::getID() {
 queue<string> Copy::getReserveQueue() {
 	return reserved;
 }
-void  Copy::setReserveQueue(queue<string> r) {
+void  Copy::setReserveQueue(queue<string> &r) {
 
-	this->reserved = r;
+	reserved = r;
 }
 
 

@@ -52,7 +52,7 @@ public:
 	void setExpireDate(int r);
 
 	queue<string> getReserveQueue();
-	void setReserveQueue(queue<string> r);
+	void setReserveQueue(queue<string> &r);
 
 	void setStart();
 	void setEnd(int end);
@@ -62,7 +62,7 @@ public:
 	int getSince();
 	void setSince(int s);
 
-
+	void resetStart();
 
 	void setID(int id);
 	int getID();

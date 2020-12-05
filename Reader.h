@@ -39,6 +39,7 @@ public:
 	//methods for checking if books overdue
 	bool getOverdue();
 	void setOverdue(bool b);
+	Copy* c;
 
 	void addCopy( int enteri, vector<Copy>& copies);
 	void reserveCopy( int enteri, vector<Copy>& copies);

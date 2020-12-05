@@ -12,6 +12,11 @@ Book::Book(int isbn, string title, string author, string category, int copyCount
 	this->category = category;
 	this->copyCount = copyCount;
 	this->favor = favor;
+
+
+
+
+
 }
 
 int Book::getISBN() {
