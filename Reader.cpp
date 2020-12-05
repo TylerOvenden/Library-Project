@@ -37,7 +37,7 @@ void Reader::setMaxBorrowDays(int maxBorrowDays) {
 }
 
 int Reader::getMaxBorrowDays() {
-	return this->maxBorrowDays;
+	return maxBorrowDays;
 }
 
 int Reader::getBook() {
@@ -149,6 +149,7 @@ void Reader::addCopy(int enteri, vector<Copy>& copies) {
 	copies.at(pos).setReader(reader);
 	//determines the number of days the user could borrow the book
 	int mult = getMaxBorrowDays();
+	cout << "max:  " << mult << endl;
 	if (reserUser.size() > 20) {
 		mult--;
 	}
@@ -156,7 +157,9 @@ void Reader::addCopy(int enteri, vector<Copy>& copies) {
 	//starts checkout time for 
 	c->setStart();
 	int time = c->getStart();
-	c->setEnd(time + (5 * mult));
+	cout << time << endl;
+
+	c->setEnd(time + (1000 * mult));
 
 	//pushs the b to the array of borrowed books by user, represents user checking out book
 	
@@ -187,7 +190,7 @@ void Reader::findOverdue(vector<Copy>& borrow) {
 			int temp = borrow.at(i).getSince();
 			//check if time to check out book has been open for more than 5 days
 			//if so remove user from reserve list automatically
-			if ((int)clock() > temp + 25) {
+			if ((int)clock() > temp + (5*1000)) {
 				reserUser.pop();
 				if (reserUser.size() != 0) {
 					borrow.at(i).setSince((int)clock());
@@ -204,6 +207,7 @@ void Reader::findOverdue(vector<Copy>& borrow) {
 		{
 			if ((int)clock() >= borrow.at(i).getEnd()) {
 			setOverdue(true);
+			cout << "time: " << (int)clock() << "end time: " << borrow.at(i).getEnd() << endl;
 		}
 	}
 	}
@@ -266,7 +270,7 @@ void Reader::deleteCopy(int enteri, vector<Copy>& copies) {
 	//finds position of where to remove book
 	for (int i = 0; i < borrowed.size(); i++) {
 		if (copies.at(i).getID() == enteri){
-		
+			
 			pos = (i);
 			borrowed.erase(borrowed.begin() + pos);
 			//decreases number of books borrowed
@@ -287,27 +291,27 @@ void Reader::deleteCopy(int enteri, vector<Copy>& copies) {
 		cout << "book not found, can't remove" << endl;
 		return;
 	}
-	Copy temp;
+
 	//finds the book in the vector of all books & clears the reader name
 	for (int i = 0; i < copies.size(); i++) {
 		if (copies.at(i).getID() == enteri) {
 			//temp = returned book
-			temp = copies.at(i);
-			temp.setReader("");
-			temp.setAvail(true);
+			c = &copies.at(i);
+			c->setReader("");
+			c->setAvail(true);
 		}
 	}
-	queue<string> reserUser = temp.getReserveQueue();
+	queue<string> reserUser = c->getReserveQueue();
 	
 	//if no one reserving, signify book is not borrowed currently
 	if (reserUser.size() == 0) {
-		temp.resetStart();
+		c->resetStart();
 	}
 	//time for first reserver of book to borrow books starts now
 	if (reserUser.size() > 0) {
-		temp.setSince((int)clock());
+		c->setSince((int)clock());
 	}
-	temp.setReserveQueue(reserUser);
+	c->setReserveQueue(reserUser);
 
 	cout << "successfully removed!" << endl;
 }
