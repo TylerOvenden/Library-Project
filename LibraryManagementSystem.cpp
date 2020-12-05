@@ -264,6 +264,7 @@ User* LibraryManagementSystem::findUser(string username) {
 void LibraryManagementSystem::cancelReservation(int isbn) {
 	Book* book = findBook(isbn);
 	book->removeFromReservationsIfPresent(user.getUsername());
+	cout << "Successfully canceled reservation!" << endl;
 }
 
 void LibraryManagementSystem::searchForUser(string username) {
