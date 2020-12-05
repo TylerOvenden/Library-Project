@@ -94,7 +94,7 @@ public:
 		b.setFavor(favor);
 		bookStream >> id;
 		copy.setID(id);
-		copy.setBook(b)
+		copy.setBook(b);
 		return is;
 	}
 
