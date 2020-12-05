@@ -4,7 +4,6 @@
 #include <vector>
 #include <ctime>
 #include <iostream>
-#include <queue>   
 #include "Utils.h"
 
 using namespace std;
@@ -12,15 +11,11 @@ using namespace std;
 class Copy {
 private:
 	int isbn;
-	
 	int id;
 
 	string reader = "";
 	long borrowDate = 0;
 	long expirationDate = 0;
-	
-	queue<string> reserver;
-	queue<long> reserveDate;
 
 public: 
 	Copy();
@@ -29,8 +24,8 @@ public:
 	void setId(int id);
 	int getId();
 
-	void setBorrowDate(long borrowDate);
-	void setExpirationDate(long expirationDate);
+	void setBorrowDate(int borrowDate);
+	void setExpirationDate(int expirationDate);
 
 	int getISBN();
 	void setISBN(int isbn);
@@ -62,13 +57,24 @@ public:
 		copy.setId(id);
 		copyStream >> isbn;
 		copy.setISBN(isbn);
-		copyStream >> borrowDate;
-		copy.setBorrowDate(borrowDate);
-		copyStream >> expirationDate;
-		copy.setExpirationDate(expirationDate);
-		copyStream >> readerName;
-		copy.setReaderName(readerName);
-
+		
+		/* The remaining fields may or may not exist depending on if the copy
+			is currently borrowed. If borrowDate does not exist, we populate the
+			remaining fields with default values. */
+		
+		// The copy has no borrower - we hit the end of the line (literally)
+		if (!(copyStream >> borrowDate)) {
+			copy.setBorrowDate(0);
+			copy.setExpirationDate(0);
+			copy.setReaderName("");
+		} else {
+			copy.setBorrowDate(borrowDate);
+			copyStream >> expirationDate;
+			copy.setExpirationDate(expirationDate);
+			copyStream >> readerName;
+			copy.setReaderName(readerName);
+		}
+		
 		return is;
 	}
 
@@ -77,7 +83,7 @@ public:
 		os << copy.getISBN() << " ";
 		os << copy.getBorrowDate() << " ";
 		os << copy.getExpirationDate() << " ";
-		os << copy.getReaderName() << " ";
+		os << copy.getReaderName() << endl;
 		
 		return os;
 	}

@@ -2,8 +2,39 @@
 
 LibraryManagementSystem::LibraryManagementSystem() {
 	this->readers = this->loadReaders();
+	this->copies = this->loadCopies();
 	this->books = this->loadBooks();
 	this->librarians = this->loadLibrarians();
+	addCopiesToBooks();
+	addCopiesToReaders();
+}
+
+void LibraryManagementSystem::addCopiesToBooks() {
+	for (int i = 0; i < books.size(); i++) {
+		Book* book = &books.at(i);
+		for (int j = 0; j < copies.size(); j++) {
+			Copy copy = copies.at(j);
+			if (copy.getISBN() == book->getISBN()) {
+				book->loadCopyIntoBook(copy);
+			}
+		}
+	}
+}
+
+void LibraryManagementSystem::updateTime() {
+	this->currentTimeSecs = Utils::getCurrentTimeSecs();
+}
+
+void LibraryManagementSystem::addCopiesToReaders() {
+	for (int i = 0; i < readers.size(); i++) {
+		Reader* reader = &readers.at(i);
+		for (int j = 0; j < copies.size(); j++) {
+			Copy copy = copies.at(j);
+			if (copy.getReaderName() == reader->getUsername()) {
+				reader->loadCopyIntoReader(copy);
+			}
+		}
+	}
 }
 
 vector<Librarian> LibraryManagementSystem::loadLibrarians() {
@@ -67,14 +98,31 @@ vector<Book> LibraryManagementSystem::loadBooks() {
 	return books;
 }
 
+vector<Copy> LibraryManagementSystem::loadCopies() {
+	ifstream copyInput(COPY_DATA_FILE);
+	if (copyInput.fail()) {
+		cerr << endl << "Error opening copies data file!" << endl;
+		exit(1);
+	}
+
+	vector<Copy> copies;
+	Copy copy;
+
+	// Our data files always have a trailing line that we skip
+	while (copyInput.eof() == 0 && copyInput.peek() != EOF) {
+		copyInput >> copy;
+		copies.push_back(copy);
+	}
+	copyInput.close();
+
+	return copies;
+}
+
 void LibraryManagementSystem::saveReaders() {
 	ofstream readerFile(READER_DATA_FILE);
 	if (readerFile.fail()) {
 		cerr << endl << "Error opening reader data file!" << endl;
 		exit(1);
-	}
-	else {
-		cout << endl << "Successfully opened reader data file!" << endl << endl;
 	}
 
 	for (int i = 0; i < this->readers.size(); i++) {
@@ -89,14 +137,24 @@ void LibraryManagementSystem::saveBooks() {
 		cerr << endl << "Error opening book data file!" << endl;
 		exit(1);
 	}
-	else {
-		cout << endl << "Successfully opened book data file!" << endl << endl;
-	}
 
 	for (int i = 0; i < this->books.size(); i++) {
 		bookFile << this->books.at(i);
 	}
 	bookFile.close();
+}
+
+void LibraryManagementSystem::saveCopies() {
+	ofstream copiesFile(COPY_DATA_FILE);
+	if (copiesFile.fail()) {
+		cerr << endl << "Error opening copies data file!" << endl;
+		exit(1);
+	}
+	
+	for (int i = 0; i < this->copies.size(); i++) {
+		copiesFile << this->copies.at(i);
+	}
+	copiesFile.close();
 }
 
 void LibraryManagementSystem::saveLibrarians() {
@@ -105,9 +163,6 @@ void LibraryManagementSystem::saveLibrarians() {
 		cerr << endl << "Error opening librarian data file!" << endl;
 		exit(1);
 	}
-	else {
-		cout << endl << "Successfully opened librarian data file!" << endl << endl;
-	}
 
 	for (int i = 0; i < this->librarians.size(); i++) {
 		librarianFile << this->librarians.at(i);
@@ -115,12 +170,25 @@ void LibraryManagementSystem::saveLibrarians() {
 	librarianFile.close();
 }
 
+void LibraryManagementSystem::reserveBook(int isbn) {
+	Reader* reader = findReader(user.getUsername());
+	if (!reader->getOverdueCopies().empty()) {
+		cout << "You cannot reserve a book while you have overdue copies! You have ";
+		cout << reader->getOverdueCopies().size() << " overdue copies.";
+	}
+
+	Book* book = findBook(isbn);
+	book->reserveFor(user.getUsername());
+}
+
 void LibraryManagementSystem::changePassword() {
 	string newPassword;
 	cout << "Enter new password: ";
 	cin >> newPassword;
 	cout << endl;
-	this->user.setPassword(newPassword);
+	User* user = findUser(this->user.getUsername());
+	user->setPassword(newPassword);
+	this->user = *user;
 	cout << "Password changed successfully!" << endl;
 }
 
@@ -150,10 +218,8 @@ User LibraryManagementSystem::getUser() {
     return this->user;
 }
 
-// todo get this working
 bool LibraryManagementSystem::compareBooksByPopularity(Book& book1, Book& book2) {
-	// return book1.getresCount() < book2.getresCount();
-	return false;
+	return book1.getReservers() < book2.getReservers();
 }
 
 vector<Reader> LibraryManagementSystem::getReaders() {
@@ -180,14 +246,24 @@ vector<User> LibraryManagementSystem::getAllUsers() {
 }
 
 User* LibraryManagementSystem::findUser(string username) {
-	vector<User> users = getAllUsers();
-	for (int i = 0; i < users.size(); i++) {
-		User user = users.at(i);
-		if (user.getUsername() == username) {
-			return &user;
+	for (int i = 0; i < this->readers.size(); i++) {
+		if (this->readers.at(i).getUsername() == username) {
+			return &this->readers.at(i);
 		}
 	}
+
+	for (int i = 0; i < this->librarians.size(); i++) {
+		if (this->librarians.at(i).getUsername() == username) {
+			return &this->librarians.at(i);
+		}
+	}
+
 	return nullptr;
+}
+
+void LibraryManagementSystem::cancelReservation(int isbn) {
+	Book* book = findBook(isbn);
+	book->removeFromReservationsIfPresent(user.getUsername());
 }
 
 void LibraryManagementSystem::searchForUser(string username) {
@@ -196,11 +272,11 @@ void LibraryManagementSystem::searchForUser(string username) {
 		user = users.at(i);
 		if (user.getUsername() == username) {
 			cout << "Username: " << user.getUsername() << ", ";
-			cout << "Password: " << user.getPassword();
+			cout << "Password: " << user.getPassword() << ", ";
+			cout << "Type: " << user.getUserTypeDisplay();
 			if (user.isReader()) {
 				Reader* reader = findReader(username);
-				cout << ", Type: " << user.getUserTypeDisplay() << endl;
-				cout << "User Copies: " << endl;
+				cout << ", User Copies: " << endl;
 				for (int i = 0; i < reader->getBorrowedCopies().size(); i++) {
 					reader->getBorrowedCopies().at(i).print();
 				}
@@ -214,9 +290,19 @@ void LibraryManagementSystem::searchForUser(string username) {
 
 Book* LibraryManagementSystem::findBook(int isbn) {
 	for (int i = 0; i < books.size(); i++) {
-		Book book = books.at(i);
-		if (isbn == book.getISBN()) {
-			return &book;
+		Book* book = &books.at(i);
+		if (isbn == book->getISBN()) {
+			return book;
+		}
+	}
+	return nullptr;
+}
+
+Copy* LibraryManagementSystem::findCopy(int copyId) {
+	for (int i = 0; i < copies.size(); i++) {
+		Copy* copy = &copies.at(i);
+		if (copyId == copy->getId()) {
+			return copy;
 		}
 	}
 	return nullptr;
@@ -228,9 +314,9 @@ vector<Book> LibraryManagementSystem::getBooks() {
 
 Reader* LibraryManagementSystem::findReader(string username) {
 	for (int i = 0; i < this->readers.size(); i++) {
-		Reader reader = this->readers.at(i);
-		if (reader.getUsername() == username) {
-			return &reader;
+		Reader* reader = &this->readers.at(i);
+		if (reader->getUsername() == username) {
+			return reader;
 		}
 	}
 	return nullptr;
@@ -280,8 +366,7 @@ vector<Book> LibraryManagementSystem::searchBooks(LMSBookSearchOption searchOpti
 		}
 	}
 
-	// todo: figure out why this isn't compiling
-	// sort(result.begin(), result.end(), compareBooksByPopularity);
+	sort(result.begin(), result.end(), compareBooksByPopularity);
 	return result;
 }
 
@@ -293,33 +378,36 @@ void LibraryManagementSystem::displayGreeting() {
 	cout << endl << endl << "Welcome back, " << user.getUserTypeDisplay() << endl << endl;
 }
 
-LMSStudentMenuOption LibraryManagementSystem::promptReaderMenuScreen() {
+LMSReaderMenuOption LibraryManagementSystem::promptReaderMenuScreen() {
 	cout << "Please choose:" << endl;
-	cout << "\t\t" << LMSStudentMenuOption::SEARCH_BOOKS			<< " -- Search Books" << endl;
-	cout << "\t\t" << LMSStudentMenuOption::BORROW_BOOKS			<< " -- Borrow Books" << endl;
-	cout << "\t\t" << LMSStudentMenuOption::RETURN_BOOKS			<< " -- Return Books" << endl;
-	cout << "\t\t" << LMSStudentMenuOption::RESERVE_BOOKS			<< " -- Reserve Books" << endl;
-	cout << "\t\t" << LMSStudentMenuOption::CANCEL_RESERVATION		<< " -- Cancel Reservations" << endl;
-	cout << "\t\t" << LMSStudentMenuOption::MY_INFORMATION			<< " -- My Information" << endl;
-	cout << "\t\t" << LMSStudentMenuOption::CHANGE_PASSWORD			<< " -- Change Password" << endl;
-	cout << "\t\t" << LMSStudentMenuOption::LOG_OUT					<< " -- Log Out" << endl;
-}
-
-LMSLibrarianMenuOption LibraryManagementSystem::promptLibrarianMenuScreen() {
-	cout << "\t\t" << LMSLibrarianMenuOption::SEARCH_BOOKS			<< " -- Search Books" << endl;
-	cout << "\t\t" << LMSLibrarianMenuOption::ADD_BOOK				<< " -- Add Books" << endl;
-	cout << "\t\t" << LMSLibrarianMenuOption::DELETE_BOOK			<< " -- Delete Books" << endl;
-	cout << "\t\t" << LMSLibrarianMenuOption::SEARCH_USERS			<< " -- Search Users" << endl;
-	cout << "\t\t" << LMSLibrarianMenuOption::ADD_USER				<< " -- Add Users" << endl;
-	cout << "\t\t" << LMSLibrarianMenuOption::DELETE_USER			<< " -- Delete Users" << endl;
-	cout << "\t\t" << LMSLibrarianMenuOption::MY_INFORMATION		<< " -- My Information" << endl;
-	cout << "\t\t" << LMSLibrarianMenuOption::CHANGE_PASSWORD		<< " -- Change Password" << endl;
-	cout << "\t\t" << LMSLibrarianMenuOption::LOG_OUT				<< " -- Log Out" << endl;
+	cout << "\t\t" << LMSReaderMenuOption::READER_SEARCH_BOOKS			<< " -- Search Books" << endl;
+	cout << "\t\t" << LMSReaderMenuOption::READER_BORROW_BOOK			<< " -- Borrow Books" << endl;
+	cout << "\t\t" << LMSReaderMenuOption::READER_RETURN_BOOK			<< " -- Return Books" << endl;
+	cout << "\t\t" << LMSReaderMenuOption::READER_RESERVE_BOOK			<< " -- Reserve Books" << endl;
+	cout << "\t\t" << LMSReaderMenuOption::READER_CANCEL_RESERVATION	<< " -- Cancel Reservations" << endl;
+	cout << "\t\t" << LMSReaderMenuOption::READER_CHANGE_PASSWORD		<< " -- Change Password" << endl;
+	cout << "\t\t" << LMSReaderMenuOption::READER_LOG_OUT				<< " -- Log Out" << endl;
 
 	int option;
 	cout << "Please select an option: ";
 	cin >> option;
-	return (LMSLibrarianMenuOption)option;
+	return (LMSReaderMenuOption)option;
+}
+
+LMSLibrarianMenuOption LibraryManagementSystem::promptLibrarianMenuScreen() {
+	cout << "\t\t" << LMSLibrarianMenuOption::LIBRARIAN_SEARCH_BOOKS		<< " -- Search Books" << endl;
+	cout << "\t\t" << LMSLibrarianMenuOption::LIBRARIAN_ADD_BOOK			<< " -- Add Books" << endl;
+	cout << "\t\t" << LMSLibrarianMenuOption::LIBRARIAN_DELETE_BOOK			<< " -- Delete Books" << endl;
+	cout << "\t\t" << LMSLibrarianMenuOption::LIBRARIAN_SEARCH_USERS		<< " -- Search Users" << endl;
+	cout << "\t\t" << LMSLibrarianMenuOption::LIBRARIAN_ADD_USER			<< " -- Add Users" << endl;
+	cout << "\t\t" << LMSLibrarianMenuOption::LIBRARIAN_DELETE_USER			<< " -- Delete Users" << endl;
+	cout << "\t\t" << LMSLibrarianMenuOption::LIBRARIAN_CHANGE_PASSWORD		<< " -- Change Password" << endl;
+	cout << "\t\t" << LMSLibrarianMenuOption::LIBRARIAN_LOG_OUT				<< " -- Log Out" << endl;
+
+	int option;
+	cout << "Please select an option: ";
+	cin >> option;
+	return (LMSLibrarianMenuOption) option;
 }
 
 LMSBookSearchOption LibraryManagementSystem::promptBookSearchTypeScreen() {
@@ -339,14 +427,13 @@ void LibraryManagementSystem::saveAll() {
 	saveReaders();
 	saveLibrarians();
 	saveBooks();
-	// todo: saveCopies();
+	saveCopies();
 }
 
 void LibraryManagementSystem::deleteUser(string username) {
-	// Make sure the user exists
 	User* user = findUser(username);
-	if (user != nullptr) {
-		cout << "A user with username \"" << username << "\" already exists." << endl;
+	if (user == nullptr) {
+		cout << "No user exists with username \"" << username << "\"" << endl;
 		return;
 	}
 
@@ -370,7 +457,7 @@ void LibraryManagementSystem::deleteUser(string username) {
 		for (int i = 0; i < reader->getReservedISBNs().size(); i++) {
 			int reservedISBN = reader->getReservedISBNs().at(i);
 			Book* book = findBook(reservedISBN);
-			book->deleteReservationFor(reader->getUsername());
+			book->removeFromReservationsIfPresent(reader->getUsername());
 		}
 
 		// Remove the reader from the system
@@ -396,7 +483,79 @@ void LibraryManagementSystem::deleteUser(string username) {
 		}
 		this->librarians = librarians;
 	}
+	cout << "Successfully deleted user!" << endl << endl;
+}
 
+void LibraryManagementSystem::deleteCopyFromLibrary(int copyId) {
+	Copy* copy = findCopy(copyId);
+	if (copy == nullptr) {
+		cout << "The provided copy ID does not exist." << endl;
+		return;
+	}
+
+	if (!copy->isAvailable()) {
+		cout << "The copy is already lent out and therefore unavailable." << endl;
+		return;
+	}
+
+	int isbn = copy->getISBN();
+	Book* book = findBook(isbn);
+	book->removeCopy(copyId);
+
+	vector<Copy> updatedCopies;
+	for (int i = 0; i < copies.size(); i++) {
+		// Remove the copy with this ID from the list
+		if (copies.at(i).getId() == copyId) {
+			continue;
+		}
+		updatedCopies.push_back(copies.at(i));
+	}
+	this->copies = updatedCopies;
+
+	// Delete this book from the system
+	if (book->getCopyCount() == 0) {
+		vector<Book> updatedBooks;
+		for (int i = 0; i < books.size(); i++) {
+			if (books.at(i).getISBN() == isbn) {
+				continue;
+			}
+			updatedBooks.push_back(books.at(i));
+		}
+		this->books = updatedBooks;
+	}
+	cout << "Successfully deleted copy from library!" << endl << endl;
+}
+
+void LibraryManagementSystem::addCopyToLibrary() {
+	int isbn;
+	string title, author, category;
+	cout << "\nEnter the ISBN: ";
+	cin >> isbn;
+
+	Book* existingBook = findBook(isbn);
+	// If the book doesn't exist, create it
+	if (existingBook = nullptr) {
+		Book newBook;
+		newBook.setISBN(isbn);
+
+		cout << "\nEnter the title: ";
+		cin >> title;
+		newBook.setTitle(title);
+
+		cout << "\nEnter the author: ";
+		cin >> author;
+		newBook.setAuthor(author);
+
+		cout << "\nEnter the category: ";
+		cin >> category;
+		newBook.setCategory(category);
+		this->books.push_back(newBook);
+	}
+
+	Book* book = findBook(isbn);
+	Copy copy = book->addCopy();
+	this->copies.push_back(copy);
+	cout << "Successfully added copy to library!" << endl << endl;
 }
 
 void LibraryManagementSystem::addUser(string username, string password) {
@@ -432,17 +591,120 @@ void LibraryManagementSystem::addUser(string username, string password) {
 		readers.push_back(*teacher);
 	}
 	}
+	cout << "Successfully created new user!" << endl << endl;
 }
 
 int LibraryManagementSystem::getUniqueCopyId() {
-	/*int maxId = 0;
+	int maxId = 0;
 	for (int i = 0; i < this->copies.size(); i++) {
 		Copy copy = copies.at(i);
 		maxId = max(maxId, copy.getId());
 	}
-	return maxId + 1;*/
+	return maxId + 1;
+}
+
+void LibraryManagementSystem::renewCopy(int copyId) {
+	// if the book is overdue, you cant renew it
+	Copy* copy = findCopy(copyId);
+	if (copy == nullptr) {
+		cout << "You cannot renew a book that does not exist!" << endl;
+		return;
+	}
+
+	if (copy->getReaderName() != this->user.getUsername()) {
+		cout << "You cannot renew a copy you do not have checked out!" << endl;
+	}
+
+	Reader* reader = findReader(user.getUsername());
+	if (!reader->getOverdueCopies().empty()) {
+		cout << "You cannot renew a copy while you have overdue copies!" << endl;
+		return;
+	}
+
+	Book* book = findBook(copy->getISBN());
+	if (!book->getReservers().empty()) {
+		cout << "You cannot renew a book that has reservations!" << endl;
+		return;
+	}
+
+	// To renew the copy, simply return and re-borrow it
+	returnCopy(copyId);
+	borrowCopy(copyId);
+}
+
+void LibraryManagementSystem::returnCopy(int copyId) {
+	Reader* reader = findReader(user.getUsername());
+	
+	bool hasCopy = false;
+	for (int i = 0; i < reader->getBorrowedCopies().size(); i++) {
+		if (reader->getBorrowedCopies().at(i).getId() == copyId) {
+			hasCopy = true;
+		}
+	}
+
+	if (!hasCopy) {
+		cout << "You cannot return a copy you do not have!" << endl;
+		return;
+	}
+
+	reader->deleteCopy(copyId);
+	Copy* copy = findCopy(copyId);
+
+	reader->increasePenaltyIfOverdue(copy);
+
+	copy->resetReaderFields();
+	findBook(copy->getISBN())->returnCopyToLibrary(copyId);
+	cout << "\nReturned copy " << copyId << "!" << endl;
+
 }
 
 void LibraryManagementSystem::borrowCopy(int copyId) {
+	Reader* reader = findReader(user.getUsername());
+	
+	// Don't allow users with overdue copies to borrow another copy
+	if (reader->getOverdueCopies().size() > 0) {
+		cout << "\nYou cannot borrow a copy while you have overdue copies! You have ";
+		cout << reader->getOverdueCopies().size() << "overdue copies." << endl;
+		return;
+	}
 
+	// Don't let the user borrow a book if they have max copies already
+	if (reader->getBorrowedCopies().size() == reader->getMaxCopies()) {
+		cout << "\nYou already have the maximum amount of copies borrowed! You have ";
+		cout << reader->getBorrowedCopies().size() << " borrowed copies." << endl;
+		return;
+	}
+
+	Copy* copy = findCopy(copyId);
+	if (copy == nullptr) {
+		cout << "No copy exists with ID " << copyId << "!" << endl;
+		return;
+	}
+
+	if (!copy->isAvailable()) {
+		cout << "This copy is currently checked out." << endl;
+		return;
+	}
+
+	Book* book = findBook(copy->getISBN());
+	if (!book->isBorrowableFor(reader->getUsername())) {
+		cout << "This copy has already been reserved." << endl;
+		return;
+	}
+
+	// Max borrow days is reduced by 1 day for every 20 reservations on the book being borrowed
+	int borrowDaysReservationOffset = book->getReservers().size() / 20;
+	// Use max(1, val) to prevent negative values
+	int maxBorrowDays = max(1, reader->getMaxBorrowDays() - borrowDaysReservationOffset);
+	
+	copy->setReaderName(reader->getUsername());
+	int currentTime = Utils::getCurrentTimeSecs();
+	copy->setBorrowDate(currentTime);
+	copy->setExpirationDate(currentTime + (5 * maxBorrowDays)); // Each day is 5 seconds
+	book->borrowCopyFor(reader, copy);
+	book->removeFromReservationsIfPresent(reader->getUsername());
+	cout << "\nSuccessfully borrowed copy ID " << copyId << " of book: " << endl;
+	cout << "\t";
+	book->print();
+	cout << endl;
 }

@@ -16,16 +16,20 @@ int Copy::getId() {
 	return this->id;
 }
 
-void Copy::setBorrowDate(long borrowDate)
-{
+void Copy::setBorrowDate(int borrowDate) {
+	this->borrowDate = borrowDate;
 }
 
-void Copy::setExpirationDate(long expirationDate)
-{
+void Copy::setExpirationDate(int expirationDate) {
+	this->expirationDate = expirationDate;
 }
 
 int Copy::getISBN() {
 	return this->isbn;
+}
+
+void Copy::setISBN(int isbn) {
+	this->isbn = isbn;
 }
 
 void Copy::print() {
@@ -53,15 +57,13 @@ bool Copy::isAvailable() {
 }
 
 bool Copy::isOverdue() {
-	// todo implement timestamp comparison
-	return false;
+	return this->expirationDate <= Utils::getCurrentTimeSecs();
 }
 
 long Copy::getBorrowDate() {
 	return this->borrowDate;
 }
 
-// todo: find better name
 void Copy::resetReaderFields() {
 	this->setReaderName("");
 	this->setBorrowDate(0);
@@ -71,9 +73,9 @@ void Copy::resetReaderFields() {
 void Copy::borrowFor(string username, int maxBorrowDays) {
 	this->reader = username;
 	
-	long currentTimeMs = Utils::getCurrentTimeMs();
-	this->borrowDate = currentTimeMs;
-	this->expirationDate = currentTimeMs + (maxBorrowDays * 24 * 60 * 60 * 1000);
+	int now = Utils::getCurrentTimeSecs();
+	this->borrowDate = now;
+	this->expirationDate = now + (maxBorrowDays * 5); // Each day is 5 seconds
 }
 
 long Copy::getExpirationDate() {

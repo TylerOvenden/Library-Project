@@ -1,9 +1,10 @@
 #pragma once
 #include <sstream>
 #include <iostream>
+#include <vector>
 #include "User.h"
 #include "Reader.h"
-#include <vector>
+
 using namespace std;
 
 class Librarian: public User {

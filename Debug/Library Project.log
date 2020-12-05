@@ -1,36 +1,43 @@
-﻿  Book.cpp
-C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(69,13): warning C4101: 'copyCount': unreferenced local variable
-C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.cpp(50,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.cpp(59,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.cpp(104,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.cpp(120,20): warning C4018: '<': signed/unsigned mismatch
-  Copy.cpp
-C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(52,16): error C2079: 'copyStream' uses undefined class 'std::basic_stringstream<char,std::char_traits<char>,std::allocator<char>>'
-C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(52,1): error C2440: 'initializing': cannot convert from 'std::string' to 'int'
-C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(52,26): message : No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
-C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(58,14): warning C4552: '>>': result of expression not used
-C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(60,14): warning C4552: '>>': result of expression not used
-C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(62,14): warning C4552: '>>': result of expression not used
-C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(64,14): warning C4552: '>>': result of expression not used
-C:\Users\Avery\OneDrive\Desktop\Library-Project\Copy.h(66,14): error C2677: binary '>>': no global operator found which takes type 'std::string' (or there is no acceptable conversion)
-  LibraryManagementSystem.cpp
-C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(69,13): warning C4101: 'copyCount': unreferenced local variable
-C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(79,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(94,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(109,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(116,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(142,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(156,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(168,20): warning C4018: '<': signed/unsigned mismatch
-  Reader.cpp
-  Student.cpp
-  Teacher.cpp
+﻿  LibraryManagementSystem.cpp
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(84,13): warning C4101: 'copyCount': unreferenced local variable
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(116,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(126,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(13,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(15,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(29,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(31,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(128,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(141,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(154,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(167,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(197,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(206,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(239,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(242,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(249,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(255,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(271,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(280,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(292,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(302,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(317,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(331,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(343,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(459,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(467,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(479,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(508,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(520,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(601,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(641,20): warning C4018: '<': signed/unsigned mismatch
   main.cpp
-C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(69,13): warning C4101: 'copyCount': unreferenced local variable
-C:\Users\Avery\OneDrive\Desktop\Library-Project\main.cpp(48,7): error C2374: 'copy': redefinition; multiple initialization
-C:\Users\Avery\OneDrive\Desktop\Library-Project\main.cpp(38): message : see declaration of 'copy'
-C:\Users\Avery\OneDrive\Desktop\Library-Project\main.cpp(50,10): error C2374: 'testFile': redefinition; multiple initialization
-C:\Users\Avery\OneDrive\Desktop\Library-Project\main.cpp(32): message : see declaration of 'testFile'
-C:\Users\Avery\OneDrive\Desktop\Library-Project\main.cpp(56,11): error C2088: '<<': illegal for class
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(84,13): warning C4101: 'copyCount': unreferenced local variable
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(116,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Book.h(126,21): warning C4018: '<': signed/unsigned mismatch
+  Reader.cpp
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Reader.cpp(67,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Avery\OneDrive\Desktop\Library-Project\Reader.cpp(78,20): warning C4018: '<': signed/unsigned mismatch
   Generating Code...
-C:\Users\Avery\OneDrive\Desktop\Library-Project\LibraryManagementSystem.cpp(145): warning C4172: returning address of local variable or temporary: reader
+C:\Users\Avery\OneDrive\Desktop\Library-Project\main.cpp(66): warning C4715: 'runLMSForReader': not all control paths return a value
+C:\Users\Avery\OneDrive\Desktop\Library-Project\main.cpp(114): warning C4715: 'runLMSForLibrarian': not all control paths return a value
+  Library Project.vcxproj -> C:\Users\Avery\OneDrive\Desktop\Library-Project\Debug\Library Project.exe

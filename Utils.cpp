@@ -1,8 +1,7 @@
 #include "Utils.h"
 
-// todo change time to be int starting at 0
-long Utils::getCurrentTimeMs() {
-	return 0;
+int Utils::getCurrentTimeSecs() {
+	return (int) (clock() / 1000);
 }
 
 string Utils::promptForInput(string prompt) {
@@ -21,6 +20,10 @@ vector<string> Utils::extractStringsFromBracketString(string bracketString) {
 		if (current == '[') {
 			continue;
 		} else if (current == ',' || current == ']') {
+			// Don't insert if the current string is empty
+			if (currentStr == "") {
+				continue;
+			}
 			result.push_back(currentStr);
 			currentStr = "";
 		} else {

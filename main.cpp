@@ -1,19 +1,116 @@
 #include <iostream>
 #include <vector>
-#include "Utils.h"
 #include "LibraryManagementSystem.h"
 
 using namespace std;
 
-//1 Lode students with all exspected data
-//2 lode books with all exspected data File Operation overlode
-//3 user auth
-//4 borrow book
-//5 return book
-//6 user accessors
-//7 lode last accesses date
-//8 date counter
-//9 store date counter
+int logOut(LibraryManagementSystem* lms) {
+    lms->saveAll();
+    cout << "Logging out!";
+    return 0;
+}
+
+void searchBooks(LibraryManagementSystem* lms) {
+    LMSBookSearchOption searchOption = lms->promptBookSearchTypeScreen();
+    string searchValue = Utils::promptForInput("Enter your search value: ");
+    lms->displayBookSearchResultsFor(searchOption, searchValue);
+}
+
+int runLMSForReader(LibraryManagementSystem* lms) {
+    LMSReaderMenuOption menuOption = LMSReaderMenuOption::READER_START;
+
+
+    while (menuOption != LMSReaderMenuOption::READER_LOG_OUT) {
+        lms->updateTime();
+        menuOption = lms->promptReaderMenuScreen();
+
+        switch (menuOption) {
+        case LMSReaderMenuOption::READER_SEARCH_BOOKS: {
+            searchBooks(lms);
+            break;
+        }
+        case LMSReaderMenuOption::READER_BORROW_BOOK: {
+            int copyId = atoi(Utils::promptForInput("Enter the ID of the copy you'd like to borrow: ").c_str());
+            lms->borrowCopy(copyId);
+            break;
+        }
+        case LMSReaderMenuOption::READER_RETURN_BOOK: {
+            int copyId = atoi(Utils::promptForInput("Enter the ID of the copy you'd like to return: ").c_str());
+            lms->returnCopy(copyId);
+            break;
+        }
+        case LMSReaderMenuOption::READER_RENEW_BOOK: {
+            int copyId = atoi(Utils::promptForInput("Enter the ID of the copy you'd like to renew: ").c_str());
+            lms->renewCopy(copyId);
+            break;
+        }
+        case LMSReaderMenuOption::READER_RESERVE_BOOK: {
+            int isbn = atoi(Utils::promptForInput("Enter the ISBN of the book you'd like to reserve: ").c_str());
+            lms->reserveBook(isbn);
+            break;
+        }
+        case LMSReaderMenuOption::READER_CANCEL_RESERVATION: {
+            int isbn = atoi(Utils::promptForInput("Enter the ISBN of the book you'd like to cancel your reservation for: ").c_str());
+            lms->cancelReservation(isbn);
+            break;
+        }
+        case LMSReaderMenuOption::READER_CHANGE_PASSWORD:
+            lms->changePassword();
+            break;
+        case LMSReaderMenuOption::READER_LOG_OUT:
+            return logOut(lms);
+        default:
+            cout << "Entered option is not allowed!" << endl;
+        }
+    }
+}
+
+int runLMSForLibrarian(LibraryManagementSystem* lms) {
+    LMSLibrarianMenuOption menuOption = LMSLibrarianMenuOption::LIBRARIAN_START;
+
+    while (menuOption != LMSLibrarianMenuOption::LIBRARIAN_LOG_OUT) {
+        lms->updateTime();
+        menuOption = lms->promptLibrarianMenuScreen();
+
+        switch (menuOption) {
+        case LMSLibrarianMenuOption::LIBRARIAN_SEARCH_BOOKS: {
+            searchBooks(lms);
+            break;
+        }
+        case LMSLibrarianMenuOption::LIBRARIAN_ADD_BOOK:
+            lms->addCopyToLibrary();
+            break;
+        case LMSLibrarianMenuOption::LIBRARIAN_DELETE_BOOK: {
+            int copyId = atoi(Utils::promptForInput("Enter the ID of the copy you'd like to delete: ").c_str());
+            lms->deleteCopyFromLibrary(copyId);
+            break;
+        }
+        case LMSLibrarianMenuOption::LIBRARIAN_SEARCH_USERS: {
+            string username = Utils::promptForInput("Enter username to search for: ");
+            lms->searchForUser(username);
+            break;
+        }
+        case LMSLibrarianMenuOption::LIBRARIAN_ADD_USER: {
+            string username = Utils::promptForInput("Enter username: ");
+            string password = Utils::promptForInput("Enter password: ");
+            lms->addUser(username, password);
+            break;
+        }
+        case LMSLibrarianMenuOption::LIBRARIAN_DELETE_USER: {
+            string username = Utils::promptForInput("Enter username: ");
+            lms->deleteUser(username);
+            break;
+        }
+        case LMSLibrarianMenuOption::LIBRARIAN_CHANGE_PASSWORD:
+            lms->changePassword();
+            break;
+        case LMSLibrarianMenuOption::LIBRARIAN_LOG_OUT:
+            return logOut(lms);
+        default:
+            cout << "Entered option is not allowed!" << endl;
+        }
+    }
+}
 
 int main() {
     LibraryManagementSystem* lms = new LibraryManagementSystem();
@@ -33,98 +130,4 @@ int main() {
     } else {
         return runLMSForLibrarian(lms);
     }
-}
-
-int runLMSForReader(LibraryManagementSystem* lms) {
-    LMSStudentMenuOption menuOption = LMSStudentMenuOption::START;
-
-    while (menuOption != LMSStudentMenuOption::LOG_OUT) {
-        menuOption = lms->promptReaderMenuScreen();
-
-        switch (menuOption) {
-        case LMSStudentMenuOption::SEARCH_BOOKS: {
-            searchBooks(lms);
-            break;
-        }
-        case LMSStudentMenuOption::BORROW_BOOKS: {
-            int copyId = atoi(Utils::promptForInput("Enter the ID of the copy you'd like to borrow: ").c_str());
-            lms->borrowCopy(copyId);
-        }
-        case LMSStudentMenuOption::RETURN_BOOKS:
-            break;
-        case LMSStudentMenuOption::RESERVE_BOOKS:
-            break;
-        case LMSStudentMenuOption::CANCEL_RESERVATION:
-            break;
-        case LMSStudentMenuOption::MY_INFORMATION:
-            break;
-        case LMSStudentMenuOption::CHANGE_PASSWORD:
-            lms->changePassword();
-            break;
-        case LMSStudentMenuOption::LOG_OUT:
-            return logOut(lms);
-        default:
-            cout << "Entered option is not allowed!" << endl;
-        }
-    }
-}
-
-int runLMSForLibrarian(LibraryManagementSystem* lms) {
-    LMSLibrarianMenuOption menuOption = LMSLibrarianMenuOption::START;
-
-    while (menuOption != LMSLibrarianMenuOption::LOG_OUT) {
-        menuOption = lms->promptLibrarianMenuScreen();
-
-        switch (menuOption) {
-        case LMSLibrarianMenuOption::SEARCH_BOOKS: {
-            // todo - sort by popularity
-            searchBooks(lms);
-            break;
-        }
-        case LMSLibrarianMenuOption::ADD_BOOK:
-            // todo
-            break;
-        case LMSLibrarianMenuOption::DELETE_BOOK:
-            // todo
-            break;
-        case LMSLibrarianMenuOption::SEARCH_USERS: {
-            string username = Utils::promptForInput("Enter username to search for: ");
-            lms->searchForUser(username);
-            break;
-        }
-        case LMSLibrarianMenuOption::ADD_USER: {
-            string username = Utils::promptForInput("Enter username: ");
-            string password = Utils::promptForInput("Enter password: ");
-            lms->addUser(username, password);
-            break;
-        }
-        case LMSLibrarianMenuOption::DELETE_USER: {
-            string username = Utils::promptForInput("Enter username: ");
-            lms->deleteUser(username);
-            break;
-        }
-        case LMSLibrarianMenuOption::MY_INFORMATION:
-            // todo
-            break;
-        case LMSLibrarianMenuOption::CHANGE_PASSWORD:
-            lms->changePassword();
-            break;
-        case LMSLibrarianMenuOption::LOG_OUT:
-            return logOut(lms);
-        default:
-            cout << "Entered option is not allowed!" << endl;
-        }
-    }
-}
-
-int logOut(LibraryManagementSystem* lms) {
-    lms->saveAll();
-    cout << "Logging out!";
-    return 0;
-}
-
-void searchBooks(LibraryManagementSystem* lms) {
-    LMSBookSearchOption searchOption = lms->promptBookSearchTypeScreen();
-    string searchValue = Utils::promptForInput("Enter your search value: ");
-    lms->displayBookSearchResultsFor(searchOption, searchValue);
 }

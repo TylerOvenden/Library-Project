@@ -19,8 +19,12 @@ Reader::Reader(int type, string username, string password, int maxCopies, int ma
 void Reader::setPenalty(int penalty) {
 	this->penalty = penalty;
 }
-void Reader::increasePenalty() {
-	this->penalty++;
+void Reader::increasePenaltyIfOverdue(Copy* copy) {
+	if (copy->isOverdue()) {
+		this->penalty++;
+		// Students start at 30 borrow days
+		this->maxCopies = 30 - (int) (penalty / 5);
+	}
 }
 
 int Reader::getPenalty() {
@@ -43,22 +47,40 @@ int Reader::getMaxBorrowDays() {
 	return this->maxBorrowDays;
 }
 std::vector<Copy> Reader::getBorrowedCopies() {
-	return std::vector<Copy>();
+	return this->borrowed;
 }
 
 std::vector<int> Reader::getReservedISBNs() {
 	return std::vector<int>();
 }
 
-void Reader::addCopy(Copy copy) {
+void Reader::loadCopyIntoReader(Copy copy) {
+	this->borrowed.push_back(copy);
+}
 
+void Reader::borrow(Copy copy) {
+	this->borrowed.push_back(copy);
 }
 
 void Reader::deleteCopy(int copyId) {
+	vector<Copy> copies;
+	for (int i = 0; i < borrowed.size(); i++) {
+		if (borrowed.at(i).getId() == copyId) {
+			continue;
+		}
+		copies.push_back(borrowed.at(i));
+	}
+	this->borrowed = copies;
 }
 
 vector<Copy> Reader::getOverdueCopies() {
-	return vector<Copy>();
+	vector<Copy> overdue;
+	for (int i = 0; i < borrowed.size(); i++) {
+		if (borrowed.at(i).isOverdue()) {
+			overdue.push_back(borrowed.at(i));
+		}
+	}
+	return overdue;
 }
 
 /*

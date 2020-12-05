@@ -45,13 +45,18 @@ void Book::setCategory(string category) {
 	this->category = category;
 }
 
-void Book::addCopy() {
+void Book::loadCopyIntoBook(Copy copy) {
+	this->copies.push_back(copy);
+}
+
+Copy Book::addCopy() {
 	int maxId = 0;
 	for (int i = 0; i < copies.size(); i++) {
 		maxId = max(maxId, copies.at(i).getId());
 	}
 	Copy* newCopy = new Copy(maxId + 1, this->isbn);
 	this->copies.push_back(*newCopy);
+	return *newCopy;
 }
 
 void Book::removeCopy(int copyIdToRemove) {
@@ -81,22 +86,18 @@ void Book::setFavor(int favor) {
 	this->favor = favor;
 }
 
-queue<Reader> Book::getReservations() {
-	return this->reservations;
+void Book::reserveFor(string username) {
+	int currentTime = Utils::getCurrentTimeSecs();
+	this->reservers.push_back(username);
+	this->reservationDates.push_back(currentTime);
 }
 
-void Book::addReservations(Reader reader) {
-	this->reservations.push(reader);
-}
-
-void Book::reserveFor(Reader reader) {
-	long currentTimeMs = Utils::getCurrentTimeMs();
-	this->reservations.push(reader);
-	this->reservationTimes.push(currentTimeMs);
-}
-
-void Book::returnCopyToLibrary(Copy copy) {
-	copy.resetReaderFields();
+void Book::returnCopyToLibrary(int copyId) {
+	for (int i = 0; i < this->copies.size(); i++) {
+		if (this->copies.at(i).getId() == copyId) {
+			this->copies.at(i).resetReaderFields();
+		}
+	}
 }
 
 Copy* Book::borrowCopy(Reader reader) {
@@ -123,9 +124,9 @@ string Book::getFormattedCopyIds() {
 			continue;
 		}
 
-		copyIds += copy.getId();
+		copyIds += to_string(copy.getId());
 		if (i != this->copies.size() - 1) {
-			cout << ", ";
+			copyIds += ", ";
 		}
 	}
 	return copyIds;
@@ -140,30 +141,82 @@ void Book::print() {
 	cout << "Available Copy Ids: " << this->getFormattedCopyIds() << endl;
 }
 
-void Book::deleteReservationFor(string username) {
-	vector<long> reservationTimes;
-	vector<Reader> reservations;
+void Book::removeFromReservationsIfPresent(string username) {
+	vector<int> reservationDates;
+	vector<string> reservers;
 
-	for (int i = 0; i < this->reservations.size(); i++) {
+	for (int i = 0; i < this->reservers.size(); i++) {
 		// Remove the reservation from the system if it belongs to the provided user
-		if (this->reservations.at(i).getUsername() == username) {
+		if (this->reservers.at(i) == username) {
 			continue;
 		}
-		reservations.push_back(this->reservations.at(i));
-		reservationTimes.push_back(this->reservationTimes.at(i));
+		reservers.push_back(this->reservers.at(i));
+		reservationDates.push_back(this->reservationDates.at(i));
 	}
-	this->reservations = reservations;
-	this->reservationTimes = reservationTimes;
+	this->reservers = reservers;
+	this->reservationDates = reservationDates;
+}
+
+vector<string> Book::getReservers() {
+	return this->reservers;
 }
 
 void Book::setReservers(vector<string> reservers) {
 	this->reservers = reservers;
 }
 
+bool Book::isBorrowableFor(string username) {
+	vector<Copy> available = this->getAvailableCopies();
+	if (available.size() > reservers.size()) {
+		return true;
+	}
+	
+	bool isReserver = false;
+	for (int i = 0; i < reservers.size(); i++) {
+		if (reservers.at(i) == username) {
+			isReserver = true;
+		}
+	}
+
+	if (!isReserver) {
+		return false;
+	} else {
+		for (int i = 0; i < available.size(); i++) {
+			if (reservers.at(i) == username) {
+				return true;
+			}
+		}
+		return false;
+	}
+}
+
+void Book::borrowCopyFor(Reader* reader, Copy* copy) {
+	reader->borrow(*copy);
+	for (int i = 0; i < copies.size(); i++) {
+		if (copy->getId() == copies.at(i).getId()) {
+			copies[i] = *copy;
+			break;
+		}
+	}
+}
+
+vector<int> Book::getReservationDates(){
+	return this->reservationDates;
+}
+
 void Book::setReservationDates(vector<int> reservationDates) {
 	this->reservationDates = reservationDates;
 }
 
-// 1. Read/write book with the [] fields
+vector<Copy> Book::getAvailableCopies() {
+	vector<Copy> available;
+	for (int i = 0; i < copies.size(); i++) {
+		if (copies.at(i).isAvailable()) {
+			available.push_back(copies.at(i));
+		}
+	}
+	return available;
+}
+
 // 2. Time system with integer
 // 3. Various features

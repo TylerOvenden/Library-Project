@@ -25,6 +25,7 @@ public:
 	Reader(int type, string username, string password, int maxCopies, int maxBorrowDays);
 	void increasePenalty();
 	void setPenalty(int penalty);
+	void increasePenaltyIfOverdue(Copy* copy);
 	int getPenalty();
 	void setMaxCopies(int maxCopies);
 	int getMaxCopies();
@@ -32,10 +33,11 @@ public:
 	int getMaxBorrowDays();
 	std::vector<Copy> getBorrowedCopies();
 	std::vector<int> getReservedISBNs();
-	void setBorrow(std::vector<Copy> borrow);
-	void setReserve(std::vector<Copy> reserve);
 
-	void addCopy(Copy copy);
+	void loadCopyIntoReader(Copy copy);
+
+	void borrow(Copy copy);
+
 	void deleteCopy(int copyId);
 	vector<Copy> getOverdueCopies();
 
@@ -57,7 +59,6 @@ public:
 		reader.setMaxCopies(maxCopies);
 		readerStream >> maxBorrowDays;
 		reader.setMaxBorrowDays(maxBorrowDays);
-		// todo: Add book id parsing here ~ [1,2,3]
 		return is;
 	}
 
@@ -67,7 +68,6 @@ public:
 		os << reader.getPassword() << " ";
 		os << reader.getMaxCopies() << " ";
 		os << reader.getMaxBorrowDays() << endl;
-		// todo: Add book id parsing here ~ [1,2,3]
 		return os;
 	}
 };

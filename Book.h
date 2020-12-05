@@ -4,9 +4,7 @@
 #include <string>
 #include <vector>
 #include <sstream>
-#include <queue>
 #include "Reader.h"
-#include "Copy.h"
 
 using namespace std;
 
@@ -15,7 +13,6 @@ private:
 	vector<Copy> copies;
 
 	vector<string> reservers;
-	// todo: change every fking instance of date to time for consistency's sake
 	vector<int> reservationDates;
 
 	string title;
@@ -30,7 +27,7 @@ public:
 	Book(int isbn, string title, string author, string category, int favor);
 
 	int getISBN();
-	void setISBN(int ISBN);
+	void setISBN(int isbn);
 
 	string getTitle();
 	void setTitle(string title);
@@ -41,7 +38,9 @@ public:
 	string getCategory();
 	void setCategory(string category);
 
-	void addCopy();
+	void loadCopyIntoBook(Copy copy);
+
+	Copy addCopy();
 	void removeCopy(int id);
 
 	int getCopyCount();
@@ -51,10 +50,11 @@ public:
 	int getFavor();
 	void setFavor(int favor);
 	
-	void reserveFor(Reader reader);
 	void returnCopyToLibrary(Copy copy);
-	void addReservations(Reader reader);
-	queue<Reader> getReservations();
+
+	void reserveFor(string username);
+
+	void returnCopyToLibrary(int copyId);
 	
 	Copy* borrowCopy(Reader reader);
 
@@ -62,11 +62,19 @@ public:
 
 	void print();
 
-	void deleteReservationFor(string username);
-
+	vector<string> getReservers();
 	void setReservers(vector<string> reservers);
 
+	bool isBorrowableFor(string username);
+
+	void borrowCopyFor(Reader* reader, Copy* copy);
+
+	void removeFromReservationsIfPresent(string username);
+
+	vector<int> getReservationDates();
 	void setReservationDates(vector<int> reservationDates);
+
+	vector<Copy> getAvailableCopies();
 
 	friend istream& operator>>(istream& is, Book& book) {
 		string line;
@@ -77,7 +85,6 @@ public:
 		string title, author, category;
 		string reserversBracketString, reservationDatesBracketString;
 		
-		// 123 My_Favorite_Title Jeff_Dezos Horror 420 [] []
 		bookStream >> isbn;
 		book.setISBN(isbn);
 		bookStream >> title;
@@ -103,7 +110,28 @@ public:
 		os << book.getTitle() << " ";
 		os << book.getAuthor() << " ";
 		os << book.getCategory() << " ";
-		os << book.getFavor() << endl;
+		os << book.getFavor() << " ";
+		// Reservers
+		os << "[";
+		for (int i = 0; i < book.reservers.size(); i++) {
+			os << book.reservers.at(i);
+			if (i != book.reservers.size() - 1) {
+				os << ",";
+			}
+		}
+		os << "] ";
+
+		// Reservation Dates
+		os << "[";
+		for (int i = 0; i < book.reservationDates.size(); i++) {
+			os << book.reservationDates.at(i);
+			if (i != book.reservationDates.size() - 1) {
+				os << ",";
+			}
+		}
+		os << "] ";
+
+		os << endl;
 		return os;
 	}
 };
