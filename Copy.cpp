@@ -16,6 +16,7 @@ Copy::Copy(Book b, int id) {
 	temp.push_back(id);
 	b.setIDs(temp);
 	setAvail(true);
+
 }
 Book Copy::getBook() {
 	return book;
@@ -98,10 +99,10 @@ int Copy::getID() {
 	return id;
 }
 
-queue<string> Copy::getReserveQueue() {
+deque<string> Copy::getReserveQueue() {
 	return reserved;
 }
-void  Copy::setReserveQueue(queue<string> &r) {
+void  Copy::setReserveQueue(deque<string> &r) {
 
 	reserved = r;
 }

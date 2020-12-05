@@ -90,6 +90,12 @@ vector<Copy> LibraryManagementSystem::loadCopies() {
 	}
 	copyInput.close();
 	
+	for (int i = 0; i < copies.size(); i++) {
+		copies.at(i).getBook().print();
+		cout << " " << copies.at(i).getID() << endl;
+
+
+	}
 
 
 	return copies;
@@ -213,6 +219,7 @@ bool LibraryManagementSystem::loginUser(string username, string password) {
 			for (int i = 0; i < tem.size(); i++)
 			{
 				tem.at(i).getBook().print();
+
 			}
 
 			return true;
@@ -289,6 +296,7 @@ vector<Book> LibraryManagementSystem::searchBooks(LMSBookSearchOption searchOpti
 		case LMSBookSearchOption::SEARCH_BY_TITLE:
 			if (searchValue == book.getTitle()) {
 				result.push_back(book);
+				
 			}
 			break;
 		}
@@ -327,7 +335,7 @@ LMSMenuOption LibraryManagementSystem::promptMenuScreen() {
 	cin >> option;
 	if (option == BORROW_BOOKS) {
 	
-		cout << "enter the id of copy";
+		cout << "enter the id of copy ";
 		cin >> id;
 
 		currentReader.addCopy(id, copies);
@@ -335,12 +343,13 @@ LMSMenuOption LibraryManagementSystem::promptMenuScreen() {
 		for (int i = 0; i < tem.size(); i++)
 		{
 			tem.at(i).getBook().print();
+			cout << " " << copies.at(i).getID() << endl;
 		}
 
 	}
 	else if (option == RETURN_BOOKS) {
 
-		cout << "enter the id of copy";
+		cout << "enter the id of copy ";
 		cin >> id;
 
 		currentReader.deleteCopy(id, copies);
@@ -348,12 +357,13 @@ LMSMenuOption LibraryManagementSystem::promptMenuScreen() {
 		for (int i = 0; i < tem.size(); i++)
 		{
 			tem.at(i).getBook().print();
+			cout << " " << copies.at(i).getID() << endl;
 		}
 
 	}
 	else if (option == RESERVE_BOOKS) {
 
-		cout << "enter the id of copy";
+		cout << "enter the id of copy ";
 		cin >> id;
 
 		currentReader.reserveCopy(id, copies);
@@ -361,9 +371,22 @@ LMSMenuOption LibraryManagementSystem::promptMenuScreen() {
 		for (int i = 0; i < tem.size(); i++)
 		{
 			tem.at(i).getBook().print();
+			cout << " " << copies.at(i).getID() << endl;
 		}
 
 
+	}
+
+	if (option == CANCEL_RESERVATION) {
+		cout << "enter the id of copy ";
+		cin >> id;
+		currentReader.removeReserve(id, copies);
+		vector<Copy> tem = currentReader.getReserve();
+		for (int i = 0; i < tem.size(); i++)
+		{
+			tem.at(i).getBook().print();
+			cout << " " << copies.at(i).getID() << endl;
+		}
 	}
 	return (LMSMenuOption)option;
 }

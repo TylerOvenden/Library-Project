@@ -99,7 +99,7 @@ void Reader::addCopy(int enteri, vector<Copy>& copies) {
 			b = copies.at(i);
 			//b = copies.at(i);
 			//check if this copy is available
-			if (c->getAvail() == true && c->getReader() == "" )
+			if (c->getReader() == "" )
 			{
 				pos = i;
 				search = true;
@@ -123,7 +123,7 @@ void Reader::addCopy(int enteri, vector<Copy>& copies) {
 	}
 	
 	
-	queue<string> reserUser = c->getReserveQueue();
+	deque<string> reserUser = c->getReserveQueue();
 
 	
 	if (reserUser.size() != 0) {
@@ -136,7 +136,7 @@ void Reader::addCopy(int enteri, vector<Copy>& copies) {
 			return;
 		}
 		//user is at front of reservations
-		reserUser.pop();
+		reserUser.pop_front();
 
 	}
 
@@ -185,13 +185,13 @@ void Reader::addCopy(int enteri, vector<Copy>& copies) {
 void Reader::findOverdue(vector<Copy>& borrow) {
 	
 	for (int i = 0; i < borrow.size(); i++) {
-		queue<string> reserUser = borrow.at(i).getReserveQueue();
+		deque<string> reserUser = borrow.at(i).getReserveQueue();
 		if (reserUser.size() != 0) {
 			int temp = borrow.at(i).getSince();
 			//check if time to check out book has been open for more than 5 days
 			//if so remove user from reserve list automatically
 			if ((int)clock() > temp + (5*1000)) {
-				reserUser.pop();
+				reserUser.pop_front();
 				if (reserUser.size() != 0) {
 					borrow.at(i).setSince((int)clock());
 				}
@@ -232,9 +232,9 @@ void Reader::reserveCopy(int enteri, vector<Copy>& copies) {
 			search = true;
 			c = &copies.at(i);
 			b = copies.at(i);
-			queue<string> reserUser = c->getReserveQueue();
+			deque<string> reserUser = c->getReserveQueue();
 		//	new string(getUsername())
-			reserUser.push(getUsername());
+			reserUser.push_back(getUsername());
 			reserved.push_back(b);
 			cout << "size: " << reserUser.size() << endl;
 			c->setReserveQueue(reserUser);
@@ -251,7 +251,7 @@ void Reader::reserveCopy(int enteri, vector<Copy>& copies) {
 	
 	
 	cout << "copy reserved" << endl;
-	queue<string> reserUser = c->getReserveQueue();
+	deque<string> reserUser = c->getReserveQueue();
 	cout << "size: " << reserUser.size() << endl;
 	c->setReserveQueue(reserUser);
 
@@ -262,15 +262,16 @@ void Reader::reserveCopy(int enteri, vector<Copy>& copies) {
 //returns copy, removing it from user's vector of borrowed copies
 void Reader::deleteCopy(int enteri, vector<Copy>& copies) {
 
-
+	//	cout << "size: " << copies.size() << endl;
 	int pos = 0;
 	bool found = false;
+
 	//vector<Copy> bor = getBorrow();
 //	borrowed
 	//finds position of where to remove book
 	for (int i = 0; i < borrowed.size(); i++) {
-		if (copies.at(i).getID() == enteri){
-			
+
+		if (borrowed.at(i).getID() == enteri) {
 			pos = (i);
 			borrowed.erase(borrowed.begin() + pos);
 			//decreases number of books borrowed
@@ -301,8 +302,8 @@ void Reader::deleteCopy(int enteri, vector<Copy>& copies) {
 			c->setAvail(true);
 		}
 	}
-	queue<string> reserUser = c->getReserveQueue();
-	
+	deque<string> reserUser = c->getReserveQueue();
+
 	//if no one reserving, signify book is not borrowed currently
 	if (reserUser.size() == 0) {
 		c->resetStart();
@@ -314,4 +315,56 @@ void Reader::deleteCopy(int enteri, vector<Copy>& copies) {
 	c->setReserveQueue(reserUser);
 
 	cout << "successfully removed!" << endl;
+}
+
+
+/*cancels the reserved book by searching for it in user's reserved books
+also removes from queue the remove reserver from the queue for that book
+*/
+void Reader::removeReserve(int enteri, vector<Copy>& copies) {
+
+	int pos = 0;
+	bool found = false;
+	for (int i = 0; i < reserved.size(); i++) {
+
+		if (reserved.at(i).getID() == enteri) {
+			pos = (i);
+			reserved.erase(reserved.begin() + pos);
+			//decreases number of books borrowed
+			found = true;
+			break;
+		}
+	}
+	//if book was not found, nothing is removed
+	if (!found)
+	{
+		cout << "book not reserved" << endl;
+		return;
+	}
+
+	for (int i = 0; i < copies.size(); i++) {
+		if (copies.at(i).getID() == enteri) {
+			//temp = returned book
+			c = &copies.at(i);
+			c->setReader("");
+			c->setAvail(true);
+			break;
+		}
+	}
+	
+	int i = 0;
+	//gets reserved users for the specific book
+	deque<string> reserUser = c->getReserveQueue();
+	for (string s : reserUser) { 
+		if (s == getUsername()) {
+			reserUser.erase(reserUser.begin()+i);
+			
+		}
+
+		i++;
+	
+	}
+
+	c->setReserveQueue(reserUser);
+
 }

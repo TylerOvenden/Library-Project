@@ -3,6 +3,8 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <deque>
+
 #include <vector>
 #include "Copy.h"
 #include "User.h"
@@ -45,7 +47,7 @@ public:
 	void reserveCopy( int enteri, vector<Copy>& copies);
 	void deleteCopy( int enteri, vector<Copy>& copies);
 	void findOverdue( vector<Copy>& borrow);
-
+	void removeReserve(int enteri, vector<Copy>& copies);
 
 
 

@@ -4,7 +4,7 @@
 #include <ctime>
 #include <iostream>
 #include <queue>   
-
+#include <deque>
 #include "Book.h"
 
 
@@ -31,7 +31,7 @@ private:
 	int borrowdate;
 	int expiredate;
 
-	queue<string> reserved;
+	deque<string> reserved;
 
 public:
 	Copy(); 
@@ -52,8 +52,8 @@ public:
 	void setBorrowDate(int r);
 	void setExpireDate(int r);
 
-	queue<string> getReserveQueue();
-	void setReserveQueue(queue<string> &r);
+	deque<string> getReserveQueue();
+	void setReserveQueue(deque<string> &r);
 
 	void setStart();
 	void setEnd(int end);
