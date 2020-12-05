@@ -4,6 +4,9 @@
 #include "Book.h"
 #include "Reader.h"
 #include "Librarian.h"
+#include "Student.h"
+#include "Teacher.h"
+
 
 static const string READER_DATA_FILE = "reader.txt";
 static const string LIBRARIAN_DATA_FILE = "librarian.txt";

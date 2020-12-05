@@ -70,7 +70,36 @@ vector<Book> LibraryManagementSystem::loadBooks() {
 
 	return books;
 }
+
+
+vector<Copy> LibraryManagementSystem::loadCopies() {
+	ifstream copyInput(COPIES_DATA_FILE);
+	if (copyInput.fail()) {
+		cerr << endl << "Error opening book data file!" << endl;
+		exit(1);
+	}
+
+
+	Copy copy;
+
+	// Our data files always have a trailing line that we skip
+	while (copyInput.eof() == 0 && copyInput.peek() != EOF) {
+		copyInput >> copy;
+
+		copies.push_back(copy);
+	}
+	copyInput.close();
+	
+
+
+	return copies;
+}
+
+
+
+
 //temp created of copies manually, delete when fixed
+/*
 vector<Copy> LibraryManagementSystem::loadCopies() { 
 	Copy c1 = Copy(books.at(0), 945);
 	Copy c2 = Copy(books.at(1), 1245);
@@ -85,60 +114,10 @@ vector<Copy> LibraryManagementSystem::loadCopies() {
 	return copies;
 
 
-}
-//uncomment this 
-/*
-vector<Copy> LibraryManagementSystem::loadCopies() {
-	ifstream copyInput(COPIES_DATA_FILE);
-	if (copyInput.fail()) {
-		cerr << endl << "Error opening book data file!" << endl;
-		exit(1);
-	}
-
-
-	Book book;
-	while (copyInput.eof() == 0 && copyInput.peek() != EOF) {
-		int isbn;
-		string title;
-		string author;
-		string category;
-		int copyCount;
-		int favor;
-		int id;
-		copyInput >> isbn >> title >> author >> category >> copyCount >> favor >> id;
-		book.setISBN(isbn);
-		book.setTitle(title);
-		book.setAuthor(author);
-		book.setCategory(category);
-		book.setCopyCount(copyCount);
-		book.setFavor(favor);
-		for (int i = 0; i < books.size(); i++) {
-			if (isbn = books.at(i).getISBN()) {
-				book = books.at(i);
-			}
-
-		}
-		Copy c = Copy(book, id);
-		copies.push_back(c);
-		// Our data files always have a trailing line that we skip
-
-	}
-		copyInput.close();
-
-		cout << "size: " << copies.size() << endl;
-		for (int i = 0; i < copies.size(); i++)
-		{
-			copies.at(i).getBook().print();
-			cout << copies.at(i).getID();
-		}
-
-		return copies;
-	
-}
-
-
-
+} 
 */
+
+
 void LibraryManagementSystem::saveReaders() {
 	ofstream readerFile(READER_DATA_FILE);
 	if (readerFile.fail()) {
@@ -170,6 +149,24 @@ void LibraryManagementSystem::saveReaders() {
 		}
 		bookFile.close();
 	}
+	/*
+	void LibraryManagementSystem::saveCopies() {
+		ofstream bookFile(BOOK_DATA_FILE);
+		if (bookFile.fail()) {
+			cerr << endl << "Error opening book data file!" << endl;
+			exit(1);
+		}
+		else {
+			cout << endl << "Successfully opened book data file!" << endl << endl;
+		}
+
+		for (int i = 0; i < this->books.size(); i++) {
+			bookFile << this->books.at(i);
+		}
+		bookFile.close();
+	}
+
+	*/
 
 	void LibraryManagementSystem::saveLibrarians() {
 		ofstream librarianFile(LIBRARIAN_DATA_FILE);
@@ -201,6 +198,18 @@ bool LibraryManagementSystem::loginUser(string username, string password) {
 			//r.addCopy(113, copies);
 			vector<Copy> tem = r.getBorrow();
 			currentReader = readers.at(i);
+			if (currentReader.getUserType() == 0) {
+				//Student s = Student();
+				currentReader.setMaxCopies(5);
+				currentReader.setMaxBorrowDays(30);
+				
+			}
+			if (currentReader.getUserType() == 1) {
+				currentReader.setMaxCopies(10);
+				currentReader.setMaxBorrowDays(50);
+			}
+
+
 			for (int i = 0; i < tem.size(); i++)
 			{
 				tem.at(i).getBook().print();
@@ -312,7 +321,7 @@ LMSMenuOption LibraryManagementSystem::promptMenuScreen() {
 	int option;
 	//check if any books are overdue, comment this out if it makes it hard to test code 
 	//time it takes for a book to be overdue very fast
-	currentReader.findOverdue(copies);
+	//currentReader.findOverdue(copies);
 	cout << "time: "  <<  (int)clock() << endl;
 	cout << "Please select an option: ";
 	cin >> option;
