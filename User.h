@@ -29,5 +29,8 @@ public:
 	string getUserTypeDisplay();
 
 	UserType getUserType();
+	string getUserTypeString();
 	void setUserType(UserType type);
+
+	bool isReader();
 };

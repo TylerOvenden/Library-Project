@@ -25,8 +25,12 @@ string User::getUserTypeDisplay() {
 	}
 }
 
+bool User::isReader() {
+	return this->type == STUDENT || this->type == TEACHER;
+}
+
 UserType User::getUserType() {
-	return this->type;
+    return this->type;
 }
 
 string User::getUsername() {

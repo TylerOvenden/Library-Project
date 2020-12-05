@@ -36,6 +36,7 @@ vector<Reader> LibraryManagementSystem::loadReaders() {
 
 	vector<Reader> readers;
 	Reader reader;
+	int i = 0;
 	// Our data files always have a trailing line that we skip
 	while (readerFile.eof() == 0 && readerFile.peek() != EOF) {
 		readerFile >> reader;
@@ -77,8 +78,9 @@ void LibraryManagementSystem::saveReaders() {
 	}
 
 	for (int i = 0; i < this->readers.size(); i++) {
-		readerFile << this->readers.at(i);
+        readerFile << this->readers.at(i);
 	}
+	readerFile.close();
 }
 
 void LibraryManagementSystem::saveBooks() {
@@ -94,37 +96,61 @@ void LibraryManagementSystem::saveBooks() {
 	for (int i = 0; i < this->books.size(); i++) {
 		bookFile << this->books.at(i);
 	}
+	bookFile.close();
 }
 
 void LibraryManagementSystem::saveLibrarians() {
 	ofstream librarianFile(LIBRARIAN_DATA_FILE);
 	if (librarianFile.fail()) {
-		cerr << endl << "Error opening book data file!" << endl;
+		cerr << endl << "Error opening librarian data file!" << endl;
 		exit(1);
 	}
 	else {
-		cout << endl << "Successfully opened book data file!" << endl << endl;
+		cout << endl << "Successfully opened librarian data file!" << endl << endl;
 	}
 
 	for (int i = 0; i < this->librarians.size(); i++) {
 		librarianFile << this->librarians.at(i);
 	}
+	librarianFile.close();
+}
+
+void LibraryManagementSystem::changePassword() {
+	string newPassword;
+	cout << "Enter new password: ";
+	cin >> newPassword;
+	cout << endl;
+	this->user.setPassword(newPassword);
+	cout << "Password changed successfully!" << endl;
 }
 
 bool LibraryManagementSystem::loginUser(string username, string password) {
-	// Compare username and password to all in file
+	// Compare username and password of all students and teachers
 	for (int i = 0; i < readers.size(); i++) {
-		// todo: Include librarians in this check
 		User reader = readers.at(i);
 		if ((reader.getUsername() == username) &&
 			(reader.getPassword() == password)) {
-			user = reader;
+			this->user = reader;
 			return true;
 		}
+	}
+	// Compare username and password of all librarians
+	for (int i = 0; i < this->librarians.size(); i++){
+	    User librarian = this->librarians.at(i);
+	    if(librarian.getUsername() == username &&
+	       librarian.getPassword() == password){
+	        this->user = librarian;
+	        return true;
+	    }
 	}
 	return false;
 }
 
+User LibraryManagementSystem::getUser() {
+    return this->user;
+}
+
+// todo get this working
 bool LibraryManagementSystem::compareBooksByPopularity(Book& book1, Book& book2) {
 	// return book1.getresCount() < book2.getresCount();
 	return false;
@@ -132,6 +158,68 @@ bool LibraryManagementSystem::compareBooksByPopularity(Book& book1, Book& book2)
 
 vector<Reader> LibraryManagementSystem::getReaders() {
 	return this->readers;
+}
+
+void LibraryManagementSystem::setReaders(vector<Reader> readers){
+	this->readers = readers;
+}
+
+vector<Librarian> LibraryManagementSystem::getLibrarian() {
+    return this->librarians;
+}
+
+vector<User> LibraryManagementSystem::getAllUsers() {
+	vector<User> users;
+    for(int i = 0; i < readers.size(); i++){
+        users.push_back(readers.at(i));
+    }
+    for(int i = 0; i < librarians.size(); i++){
+        users.push_back(librarians.at(i));
+    }
+    return users;
+}
+
+User* LibraryManagementSystem::findUser(string username) {
+	vector<User> users = getAllUsers();
+	for (int i = 0; i < users.size(); i++) {
+		User user = users.at(i);
+		if (user.getUsername() == username) {
+			return &user;
+		}
+	}
+	return nullptr;
+}
+
+void LibraryManagementSystem::searchForUser(string username) {
+	vector<User> users = getAllUsers();
+	for (int i = 0; i < users.size(); i++) {
+		user = users.at(i);
+		if (user.getUsername() == username) {
+			cout << "Username: " << user.getUsername() << ", ";
+			cout << "Password: " << user.getPassword();
+			if (user.isReader()) {
+				Reader* reader = findReader(username);
+				cout << ", Type: " << user.getUserTypeDisplay() << endl;
+				cout << "User Copies: " << endl;
+				for (int i = 0; i < reader->getBorrowedCopies().size(); i++) {
+					reader->getBorrowedCopies().at(i).print();
+				}
+			}
+			cout << endl;
+			return;
+		}
+	}
+	cout << "Username \"" << username << "\" doesn't exist!" << endl;
+}
+
+Book* LibraryManagementSystem::findBook(int isbn) {
+	for (int i = 0; i < books.size(); i++) {
+		Book book = books.at(i);
+		if (isbn == book.getISBN()) {
+			return &book;
+		}
+	}
+	return nullptr;
 }
 
 vector<Book> LibraryManagementSystem::getBooks() {
@@ -205,21 +293,33 @@ void LibraryManagementSystem::displayGreeting() {
 	cout << endl << endl << "Welcome back, " << user.getUserTypeDisplay() << endl << endl;
 }
 
-LMSMenuOption LibraryManagementSystem::promptMenuScreen() {
+LMSStudentMenuOption LibraryManagementSystem::promptReaderMenuScreen() {
 	cout << "Please choose:" << endl;
-	cout << "\t\t" << LMSMenuOption::SEARCH_BOOKS			<< " -- Search Books" << endl;
-	cout << "\t\t" << LMSMenuOption::BORROW_BOOKS			<< " -- Borrow Books" << endl;
-	cout << "\t\t" << LMSMenuOption::RETURN_BOOKS			<< " -- Return Books" << endl;
-	cout << "\t\t" << LMSMenuOption::RESERVE_BOOKS			<< " -- Reserve Books" << endl;
-	cout << "\t\t" << LMSMenuOption::CANCEL_RESERVATION		<< " -- Cancel Reservations" << endl;
-	cout << "\t\t" << LMSMenuOption::INFO					<< " -- My Information" << endl;
-	cout << "\t\t" << LMSMenuOption::CHANGE_PASS			<< " -- Change Password" << endl;
-	cout << "\t\t" << LMSMenuOption::LOG_OUT				<< " -- Log Out" << endl;
+	cout << "\t\t" << LMSStudentMenuOption::SEARCH_BOOKS			<< " -- Search Books" << endl;
+	cout << "\t\t" << LMSStudentMenuOption::BORROW_BOOKS			<< " -- Borrow Books" << endl;
+	cout << "\t\t" << LMSStudentMenuOption::RETURN_BOOKS			<< " -- Return Books" << endl;
+	cout << "\t\t" << LMSStudentMenuOption::RESERVE_BOOKS			<< " -- Reserve Books" << endl;
+	cout << "\t\t" << LMSStudentMenuOption::CANCEL_RESERVATION		<< " -- Cancel Reservations" << endl;
+	cout << "\t\t" << LMSStudentMenuOption::MY_INFORMATION			<< " -- My Information" << endl;
+	cout << "\t\t" << LMSStudentMenuOption::CHANGE_PASSWORD			<< " -- Change Password" << endl;
+	cout << "\t\t" << LMSStudentMenuOption::LOG_OUT					<< " -- Log Out" << endl;
+}
+
+LMSLibrarianMenuOption LibraryManagementSystem::promptLibrarianMenuScreen() {
+	cout << "\t\t" << LMSLibrarianMenuOption::SEARCH_BOOKS			<< " -- Search Books" << endl;
+	cout << "\t\t" << LMSLibrarianMenuOption::ADD_BOOK				<< " -- Add Books" << endl;
+	cout << "\t\t" << LMSLibrarianMenuOption::DELETE_BOOK			<< " -- Delete Books" << endl;
+	cout << "\t\t" << LMSLibrarianMenuOption::SEARCH_USERS			<< " -- Search Users" << endl;
+	cout << "\t\t" << LMSLibrarianMenuOption::ADD_USER				<< " -- Add Users" << endl;
+	cout << "\t\t" << LMSLibrarianMenuOption::DELETE_USER			<< " -- Delete Users" << endl;
+	cout << "\t\t" << LMSLibrarianMenuOption::MY_INFORMATION		<< " -- My Information" << endl;
+	cout << "\t\t" << LMSLibrarianMenuOption::CHANGE_PASSWORD		<< " -- Change Password" << endl;
+	cout << "\t\t" << LMSLibrarianMenuOption::LOG_OUT				<< " -- Log Out" << endl;
 
 	int option;
 	cout << "Please select an option: ";
 	cin >> option;
-	return (LMSMenuOption)option;
+	return (LMSLibrarianMenuOption)option;
 }
 
 LMSBookSearchOption LibraryManagementSystem::promptBookSearchTypeScreen() {
@@ -233,4 +333,116 @@ LMSBookSearchOption LibraryManagementSystem::promptBookSearchTypeScreen() {
 	cout << "Please select an option: ";
 	cin >> option;
 	return (LMSBookSearchOption)option;
+}
+
+void LibraryManagementSystem::saveAll() {
+	saveReaders();
+	saveLibrarians();
+	saveBooks();
+	// todo: saveCopies();
+}
+
+void LibraryManagementSystem::deleteUser(string username) {
+	// Make sure the user exists
+	User* user = findUser(username);
+	if (user != nullptr) {
+		cout << "A user with username \"" << username << "\" already exists." << endl;
+		return;
+	}
+
+	// Check that the user is not deleting themselves
+	if (this->user.getUsername() == user->getUsername()) {
+		cout << "You cannot delete yourself!" << endl;
+		return;
+	}
+
+	if (user->isReader()) {
+		Reader* reader = findReader(username);
+		
+		// Don't delete if they have any copies
+		if (!reader->getBorrowedCopies().empty()) {
+			cout << "You cannot delete a user that still has copies - user has ";
+			cout << reader->getBorrowedCopies().size() << " copies!";
+			return;
+		}
+		
+		// When deleting, remove all reservations
+		for (int i = 0; i < reader->getReservedISBNs().size(); i++) {
+			int reservedISBN = reader->getReservedISBNs().at(i);
+			Book* book = findBook(reservedISBN);
+			book->deleteReservationFor(reader->getUsername());
+		}
+
+		// Remove the reader from the system
+		vector<Reader> readers;
+		for (int i = 0; i < this->readers.size(); i++) {
+			// If the reader is the one we're deleting then skip them
+			if (reader->getUsername() == this->readers.at(i).getUsername()) {
+				continue;
+			}
+			readers.push_back(this->readers.at(i));
+		}
+		this->readers = readers;
+
+	} else {
+		// Remove the librarian from the system
+		vector<Librarian> librarians;
+		for (int i = 0; i < this->librarians.size(); i++) {
+			// If the librarian is the one we're deleting then skip them
+			if (username == this->librarians.at(i).getUsername()) {
+				continue;
+			}
+			librarians.push_back(this->librarians.at(i));
+		}
+		this->librarians = librarians;
+	}
+
+}
+
+void LibraryManagementSystem::addUser(string username, string password) {
+	cout << "\n\nPlease choose the user-type you would like to create:" << endl;
+	cout << "\t\t" << UserType::STUDENT << " - Student" << endl;
+	cout << "\t\t" << UserType::TEACHER << " - Teacher" << endl;
+	cout << "\t\t" << UserType::LIBRARIAN << " - Librarian" << endl;
+	
+	int type;
+	cin >> type;
+	if (type != STUDENT && type != TEACHER && type != LIBRARIAN) {
+		cout << type << " is not a valid user-type!";
+		return;
+	}
+
+	if (findUser(username) != nullptr) {
+		cout << "A user with username \"" << username << "\" already exists." << endl;
+		return;
+	}
+
+	switch (type) {
+	case LIBRARIAN: {
+		Librarian* librarian = new Librarian(username, password);
+		librarians.push_back(*librarian);
+		break;
+	}
+	case STUDENT: {
+		Student* student = new Student(username, password);
+		readers.push_back(*student);
+	}
+	case TEACHER: {
+		Teacher* teacher = new Teacher(username, password);
+		readers.push_back(*teacher);
+	}
+	}
+}
+
+int LibraryManagementSystem::getUniqueCopyId() {
+	/*int maxId = 0;
+	for (int i = 0; i < this->copies.size(); i++) {
+		Copy copy = copies.at(i);
+		maxId = max(maxId, copy.getId());
+	}
+	return maxId + 1;*/
+}
+
+void LibraryManagementSystem::borrowCopy(int copyId) {
+
 }

@@ -2,8 +2,18 @@
 
 Reader::Reader() {
 
+}
 
+Reader::Reader(string username, string password)
+{
+}
 
+Reader::Reader(int type, string username, string password, int maxCopies, int maxBorrowDays) {
+	this->setUserType(static_cast<UserType>(type));
+	this->setUsername(username);
+	this->setPassword(password);
+	this->setMaxCopies(maxCopies);
+	this->setMaxBorrowDays(maxBorrowDays);
 }
 
 void Reader::setPenalty(int penalty) {
@@ -32,117 +42,233 @@ void Reader::setMaxBorrowDays(int maxBorrowDays) {
 int Reader::getMaxBorrowDays() {
 	return this->maxBorrowDays;
 }
+std::vector<Copy> Reader::getBorrowedCopies() {
+	return std::vector<Copy>();
+}
 
-int Reader::getBook() {
-	return this->books;
+std::vector<int> Reader::getReservedISBNs() {
+	return std::vector<int>();
 }
-void Reader::increaseBook() {
-	this->books++;
+
+void Reader::addCopy(Copy copy) {
 
 }
-void Reader::setBook(int num) {
 
-	this->books = num;
+void Reader::deleteCopy(int copyId) {
 }
-std::vector<Copy> Reader::getBorrow() {
-	return borrowed;
-}
-std::vector<Copy> Reader::getReserve() {
-	return reserved;
-}
-void Reader::setBorrow(std::vector<Copy> borrow) {
-	this->borrowed = borrow;
-}
-void Reader::setReserve(std::vector<Copy> reserve) {
-	this->reserved = reserve;
-}
-//parameters: student, the current student borrowing the book
-//id represents the unique id used to identify the book
-//books is a vector of all books in the system
-//borrow is a vector of the user's books borrowed
-//void Book::addCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow) {
-//	//if user has overdue books, cannot check any more out
-//	if (s.getLate()) {
-//		cout << "you have overdue books, cannot add any more" << endl;
-//		return;
-//	}
-//	Book b;
-//	bool search = false;
-//	//searchs vector of available books for book to be borrowed
-//	//breaks when book is found
-//	int pos;
-//	for (int i = 0; i < books.size(); i++) {
-//		if (books.at(i).getID() == id) {
-//			search = true;
-//			b = books.at(i);
-//			pos = i;
-//			break;
-//			}
-//
-//	}
-//	//if book was not found ends ends method
-//	if (search == false)
-//	{
-//		cout << "book not found, can't borrow" << endl;
-//		return;
-//	}
-//
-//	//if user is borrowing 5 books already, ends because it cannot borrow more
-//	int currentAmount = s.getBook();
-//	if (currentAmount == 5) {
-//		cout << "too many books " << endl;
-//		return;
-//	}
-//
-//	//checks if book already has a reader, therefore already borrowed
-//	if (b.getRead() != "") {
-//		cout << "book is already borrowed" << endl;
-//		return;
-//	}
-//	//sets attributes for book based on the reader & time
-//	string reader = s.getUser();
-//	b.setRead(reader);
-//	//also sets the reader of the book in the vector of all books
-//	books.at(pos).setRead(reader);
-//	b.setStart();
-//	//pushs the b to the array of borrowed books by user
-//	borrow.push_back(b);
-//	//increases number of books borrowed
-//	s.setBook(currentAmount+1);
-//
-//	cout << "successfully added!" << endl;
-//}
 
-//removes copy of book from vector of user's borrowed books by searching for id
-//void Book::removeCopy(Student s, int id, vector<Book>& books, vector<Book>& borrow) {
-//	int pos = 0;
-//	bool found = false;
-//	//finds position of where to remove book
-//	for (int i = 0; i < borrow.size(); i++) {
-//		if (books.at(i).getID() == id) {
-//			pos = (i-1);
-//			borrow.erase(borrow.begin()+pos);
+vector<Copy> Reader::getOverdueCopies() {
+	return vector<Copy>();
+}
+
+/*
+//method for user to borrow copy, adding it to their vector of borrowed books 
 //
-//	//decreases number of books borrowed
-//			int currentAmount = s.getBook();
-//			s.setBook(currentAmount - 1);
-//			found = true;
-//			break;
-//		}
-//	}
+void Reader::addCopy(int enteri, vector<Copy>& copies) {
+	//can't borrow copies if book is overdue
+	if (getOverdue() == true) {
+		cout << "you have overdue books" << endl;
+		return;
+	}
+	//can't borrow books if too many books
+	if (getBook() == getMaxCopies()) {
+		cout << "you have too many books, cannot borrow more" << endl;
+		return;
+	}
+	Copy b;
+	bool search = false;
+	//searchs vector of available books for book to be borrowed
+		//breaks when book is found
+	int pos;
+	for (int i = 0; i < copies.size(); i++) {
+		//if this copy exists
+		if (copies.at(i).getID() == enteri) {
+
+			b = copies.at(i);
+			//check if this copy is available
+			if (b.getAvail() == true)
+			{
+				pos = i;
+				search = true;
+				break; 
+			}
+			//if there are no reserved readers for the copy
+			else {
+				cout << "this copy is not available currently" << endl;
+				return;
+			}
+
+		}
+	}
+	//if copy was not found ends ends method
+	if (search == false)
+	{
+		cout << "copy not found, can't borrow" << endl;
+		return;
+	}
+	
+	queue<string> reserUser = b.getReserveQueue();
+	//checks if someone else reserved the book first
+	if (reserUser.size() != 0) {
+		string temp = reserUser.front();
+		if (getUsername() != temp) {
+			cout << "someone else reserved the book" << endl;
+			return;
+		}
+		//user is at front of reservations
+		reserUser.pop();
+
+	}
+
+	//sets book's reader to the username
+	string reader = getUsername();
+	b.setReader(reader);
+
+
+	//also sets the reader of the book in the vector of all books
+	copies.at(pos).setReader(reader);
+	//determines the number of days the user could borrow the book
+	int mult = getMaxBorrowDays();
+	if (reserUser.size() > 20) {
+		mult--;
+	}
+
+	//starts checkout time for 
+	b.setStart();
+	int time = b.getStart();
+	b.setEnd(time + (5 * mult));
+
+	//pushs the b to the array of borrowed books by user, represents user checking out book
+	borrowed.push_back(b);
+	
+
+	//book borrowed & spot not opened anymore
+	b.setAvail(false);
+	b.setSince(-1);
+	b.setReserveQueue(reserUser);
+	//	//increases number of books borrowed
+
+}
+
+
+
+ //loops through vector of borrowed books
+//if current time is found to be greater than one of the expiration dates of any of the books
+//increases number of pentalites for reader
+
+void Reader::findOverdue(vector<Copy>& borrow) {
+	
+	for (int i = 0; i < borrow.size(); i++) {
+		queue<string> reserUser = borrow.at(i).getReserveQueue();
+		if (reserUser.size() != 0) {
+			int temp = borrow.at(i).getSince();
+			//check if time to check out book has been open for more than 5 days
+			//if so remove user from reserve list automatically
+			if ((int)clock() > temp + 25) {
+				reserUser.pop();
+
+				if (reserUser.size() != 0) {
+					borrow.at(i).setSince((int)clock());
+				}
+				else {
+					borrow.at(i).setSince(-1);
+				}
+				borrow.at(i).setReserveQueue(reserUser);
+					
+			}
+		}
+		//current time is after the book's expiration date
+		if ((int)clock() >= borrow.at(i).getEnd()) {
+			setOverdue(true);
+		}
+
+	}
+}
+//reserve copy of book for user if copy exists
 //
-//	//if book was not found, nothing is removed
-//	if (!found)
-//	{
-//		cout << "book not found, can't remove" << endl;
-//		return;
-//	}
-//	//finds the book in the vector of all books & clears the reader name
-//	for (int i = 0; i < books.size(); i++) {
-//		if (books.at(i).getID() == id) {
-//			books.at(i).setRead("");
-//		}
-//	}
-//	
-//	cout << "successfully removed!" << endl;
-//}
+void Reader::reserveCopy(int enteri, vector<Copy>& copies) {
+	//can't reserve books if have an overdue book
+	if (getOverdue() == true) {
+		cout << "you have overdue books" << endl;
+		return;
+	}
+	Copy b;
+	bool search = false;
+	//searchs vector of available books for book to be borrowed
+		//breaks when book is found
+	int pos;
+	for (int i = 0; i < copies.size(); i++) {
+		if (copies.at(i).getID() == enteri) {
+			search = true;
+			b = copies.at(i);
+			queue<string> reserUser = b.getReserveQueue();
+			reserUser.push(getUsername());
+			reserved.push_back(b);
+			b.setReserveQueue(reserUser);
+			break;
+		}
+	}
+	//if book was not found ends ends method
+	if (search == false)
+	{
+		cout << "copy not found, can't reserve" << endl;
+		return;
+	}
+
+	
+	
+	cout << "copy reserved" << endl;
+}
+
+
+//returns copy, removing it from user's vector of borrowed copies
+void Reader::deleteCopy(int enteri, vector<Copy>& copies) {
+
+
+	int pos = 0;
+	bool found = false;
+	vector<Copy> bor = getBorrow();
+//	borrowed
+	//finds position of where to remove book
+	for (int i = 0; i < borrowed.size(); i++) {
+		if (copies.at(i).getID() == enteri){
+			pos = (i - 1);
+			bor.erase(bor.begin() + pos);
+			//decreases number of books borrowed
+			int currentAmount = getBook();
+			setBook(currentAmount - 1);
+			found = true;
+			//checks if the found book is overdue
+			if (getOverdue() == true) {
+				cout << "you have overdue books" << endl;
+				increasePenalty();
+			}
+			break;
+		}
+	}
+	//if book was not found, nothing is removed
+	if (!found)
+	{
+		cout << "book not found, can't remove" << endl;
+		return;
+	}
+	Copy temp;
+	//finds the book in the vector of all books & clears the reader name
+	for (int i = 0; i < copies.size(); i++) {
+		if (copies.at(i).getID() == enteri) {
+			//temp = returned book
+			temp = copies.at(i);
+			temp.setReader("");
+			temp.setAvail(true);
+		}
+	}
+	queue<string> reserUser = temp.getReserveQueue();
+	//time for first reserver of book to borrow books starts now
+	if (reserUser.size() > 0) {
+		temp.setSince((int)clock());
+	}
+	temp.setReserveQueue(reserUser);
+
+	cout << "successfully removed!" << endl;
+}
+*/

@@ -140,3 +140,30 @@ void Book::print() {
 	cout << "Available Copy Ids: " << this->getFormattedCopyIds() << endl;
 }
 
+void Book::deleteReservationFor(string username) {
+	vector<long> reservationTimes;
+	vector<Reader> reservations;
+
+	for (int i = 0; i < this->reservations.size(); i++) {
+		// Remove the reservation from the system if it belongs to the provided user
+		if (this->reservations.at(i).getUsername() == username) {
+			continue;
+		}
+		reservations.push_back(this->reservations.at(i));
+		reservationTimes.push_back(this->reservationTimes.at(i));
+	}
+	this->reservations = reservations;
+	this->reservationTimes = reservationTimes;
+}
+
+void Book::setReservers(vector<string> reservers) {
+	this->reservers = reservers;
+}
+
+void Book::setReservationDates(vector<int> reservationDates) {
+	this->reservationDates = reservationDates;
+}
+
+// 1. Read/write book with the [] fields
+// 2. Time system with integer
+// 3. Various features

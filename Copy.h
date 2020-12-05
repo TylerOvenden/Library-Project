@@ -1,4 +1,5 @@
 #pragma once
+#include <sstream>
 #include <string>
 #include <vector>
 #include <ctime>
@@ -29,10 +30,12 @@ public:
 	int getId();
 
 	void setBorrowDate(long borrowDate);
-	void setExpiration(long expirationDate);
+	void setExpirationDate(long expirationDate);
 
 	int getISBN();
 	void setISBN(int isbn);
+
+	void print();
 
 	void setReaderName(string reader);
 	string getReaderName();
@@ -53,30 +56,30 @@ public:
 
 		long borrowDate, expirationDate;
 		int isbn, id;
-		string  readerName;
+		string readerName;
 
+		copyStream >> id;
+		copy.setId(id);
 		copyStream >> isbn;
 		copy.setISBN(isbn);
 		copyStream >> borrowDate;
 		copy.setBorrowDate(borrowDate);
 		copyStream >> expirationDate;
-		copy.setExpiration(expirationDate);
-		copyStream >> id;
-		copy.setId(id);
+		copy.setExpirationDate(expirationDate);
 		copyStream >> readerName;
 		copy.setReaderName(readerName);
+
 		return is;
 	}
 
 	friend ostream& operator<<(ostream& os, Copy& copy) {
-		os << copy.getReaderName() << " ";
 		os << copy.getId() << " ";
 		os << copy.getISBN() << " ";
 		os << copy.getBorrowDate() << " ";
 		os << copy.getExpirationDate() << " ";
+		os << copy.getReaderName() << " ";
 		
 		return os;
 	}
 };
-
 

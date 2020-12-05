@@ -1,7 +1,6 @@
 #include <iostream>
-#include <iomanip>
 #include <vector>
-#include <sstream>
+#include "Utils.h"
 #include "LibraryManagementSystem.h"
 
 using namespace std;
@@ -16,75 +15,116 @@ using namespace std;
 //8 date counter
 //9 store date counter
 
-// Prompt for user input
-string promptForInput(string prompt) {
-	cout << prompt;
-	string input;
-	cin >> input;
-	return input;
+int main() {
+    LibraryManagementSystem* lms = new LibraryManagementSystem();
+
+    string username = Utils::promptForInput("Enter your username: ");
+    string password = Utils::promptForInput("Enter your password: ");
+
+    bool loginSuccess = lms->loginUser(username, password);
+    if (!loginSuccess) {
+        cout << "The username or password was incorrect" << endl;
+        return 1;
+    }
+
+    lms->displayGreeting();
+    if (lms->getUser().isReader()) {
+        return runLMSForReader(lms);
+    } else {
+        return runLMSForLibrarian(lms);
+    }
 }
 
-int main() {
-	// COMMENT ALL HIHGLIGHTED: ctrl + k + c
-	// UNCOMMENT ALL HIHGLIGHTED: ctrl + k + u
+int runLMSForReader(LibraryManagementSystem* lms) {
+    LMSStudentMenuOption menuOption = LMSStudentMenuOption::START;
 
-	vector<Copy> copies;
-	fstream testFile("testing.txt");
-	if (testFile.fail()) {
-		cout << "Failed";
-		exit(1);
-	}
+    while (menuOption != LMSStudentMenuOption::LOG_OUT) {
+        menuOption = lms->promptReaderMenuScreen();
 
-	Copy copy;
-	while (testFile.eof() == 0 && testFile.peek() != EOF) {
-		testFile >> copy;
-		copies.push_back(copy);
-	}
-	// DEBUG HERE AND LOOK AT COPIES vvvvv
-	exit(0);
+        switch (menuOption) {
+        case LMSStudentMenuOption::SEARCH_BOOKS: {
+            searchBooks(lms);
+            break;
+        }
+        case LMSStudentMenuOption::BORROW_BOOKS: {
+            int copyId = atoi(Utils::promptForInput("Enter the ID of the copy you'd like to borrow: ").c_str());
+            lms->borrowCopy(copyId);
+        }
+        case LMSStudentMenuOption::RETURN_BOOKS:
+            break;
+        case LMSStudentMenuOption::RESERVE_BOOKS:
+            break;
+        case LMSStudentMenuOption::CANCEL_RESERVATION:
+            break;
+        case LMSStudentMenuOption::MY_INFORMATION:
+            break;
+        case LMSStudentMenuOption::CHANGE_PASSWORD:
+            lms->changePassword();
+            break;
+        case LMSStudentMenuOption::LOG_OUT:
+            return logOut(lms);
+        default:
+            cout << "Entered option is not allowed!" << endl;
+        }
+    }
+}
 
+int runLMSForLibrarian(LibraryManagementSystem* lms) {
+    LMSLibrarianMenuOption menuOption = LMSLibrarianMenuOption::START;
 
-	// test writing to file
-	Copy copy = *new Copy(444, 987);
-	copy.borrowFor("avery", 30);
-	fstream testFile("testing.txt");
-	if (testFile.fail()) {
-		cout << "Failed";
-		exit(1);
-	}
+    while (menuOption != LMSLibrarianMenuOption::LOG_OUT) {
+        menuOption = lms->promptLibrarianMenuScreen();
 
-	testFile << copy;
-	exit(0);
-	// test end
+        switch (menuOption) {
+        case LMSLibrarianMenuOption::SEARCH_BOOKS: {
+            // todo - sort by popularity
+            searchBooks(lms);
+            break;
+        }
+        case LMSLibrarianMenuOption::ADD_BOOK:
+            // todo
+            break;
+        case LMSLibrarianMenuOption::DELETE_BOOK:
+            // todo
+            break;
+        case LMSLibrarianMenuOption::SEARCH_USERS: {
+            string username = Utils::promptForInput("Enter username to search for: ");
+            lms->searchForUser(username);
+            break;
+        }
+        case LMSLibrarianMenuOption::ADD_USER: {
+            string username = Utils::promptForInput("Enter username: ");
+            string password = Utils::promptForInput("Enter password: ");
+            lms->addUser(username, password);
+            break;
+        }
+        case LMSLibrarianMenuOption::DELETE_USER: {
+            string username = Utils::promptForInput("Enter username: ");
+            lms->deleteUser(username);
+            break;
+        }
+        case LMSLibrarianMenuOption::MY_INFORMATION:
+            // todo
+            break;
+        case LMSLibrarianMenuOption::CHANGE_PASSWORD:
+            lms->changePassword();
+            break;
+        case LMSLibrarianMenuOption::LOG_OUT:
+            return logOut(lms);
+        default:
+            cout << "Entered option is not allowed!" << endl;
+        }
+    }
+}
 
+int logOut(LibraryManagementSystem* lms) {
+    lms->saveAll();
+    cout << "Logging out!";
+    return 0;
+}
 
-	LibraryManagementSystem* lms = new LibraryManagementSystem();
-
-	string username = promptForInput("Enter your username: ");
-	string password = promptForInput("Enter your password: ");
-
-	bool loginSuccess = lms->loginUser(username, password);
-	if (!loginSuccess) {
-		cout << "The username or password was incorrect" << endl;
-		return 0;
-	}
-
-	lms->displayGreeting();
-
-	LMSMenuOption menuOption = LMSMenuOption::START;
-	while (menuOption != LMSMenuOption::LOG_OUT) {
-		menuOption = lms->promptMenuScreen();
-
-		switch (menuOption) {
-		case LMSMenuOption::SEARCH_BOOKS: {
-			LMSBookSearchOption searchOption = lms->promptBookSearchTypeScreen();
-			string searchValue = promptForInput("Enter your search value: ");
-			lms->displayBookSearchResultsFor(searchOption, searchValue);
-		}
-		case LMSMenuOption::BORROW_BOOKS: {
-			int isbn = atoi(promptForInput("Enter the ISBN: ").c_str());
-			
-		}
-		}
-	}
+void searchBooks(LibraryManagementSystem* lms) {
+    LMSBookSearchOption searchOption = lms->promptBookSearchTypeScreen();
+    string searchValue = Utils::promptForInput("Enter your search value: ");
+    lms->displayBookSearchResultsFor(searchOption, searchValue);
 }

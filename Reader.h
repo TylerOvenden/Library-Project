@@ -12,16 +12,17 @@ using namespace std;
 class Reader : public User {
 private:
 	int penalty = 0;
-	int books = 0;
 	int maxCopies;
 	int maxBorrowDays;
-
+	bool overdue;
 	vector<Copy> borrowed;
-	vector<Copy> reserved;
+	vector<int> reservedISBNs;
 
 public:
 	Reader();
+	Reader(string username, string password);
 
+	Reader(int type, string username, string password, int maxCopies, int maxBorrowDays);
 	void increasePenalty();
 	void setPenalty(int penalty);
 	int getPenalty();
@@ -29,14 +30,14 @@ public:
 	int getMaxCopies();
 	void setMaxBorrowDays(int maxBorrowDays);
 	int getMaxBorrowDays();
-	std::vector<Copy> getBorrow();
-	std::vector<Copy> getReserve();
+	std::vector<Copy> getBorrowedCopies();
+	std::vector<int> getReservedISBNs();
 	void setBorrow(std::vector<Copy> borrow);
 	void setReserve(std::vector<Copy> reserve);
-	int getBook();
-	void setBook(int num);
-	void increaseBook();
 
+	void addCopy(Copy copy);
+	void deleteCopy(int copyId);
+	vector<Copy> getOverdueCopies();
 
 	friend istream& operator>>(istream& is, Reader& reader) {
 		string line;

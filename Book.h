@@ -14,8 +14,9 @@ class Book {
 private:
 	vector<Copy> copies;
 
-	queue<Reader> reservations;
-	queue<long> reservationTimes;
+	vector<string> reservers;
+	// todo: change every fking instance of date to time for consistency's sake
+	vector<int> reservationDates;
 
 	string title;
 	string author;
@@ -61,6 +62,12 @@ public:
 
 	void print();
 
+	void deleteReservationFor(string username);
+
+	void setReservers(vector<string> reservers);
+
+	void setReservationDates(vector<int> reservationDates);
+
 	friend istream& operator>>(istream& is, Book& book) {
 		string line;
 		getline(is, line);
@@ -68,7 +75,9 @@ public:
 
 		int isbn, copyCount, favor;
 		string title, author, category;
-
+		string reserversBracketString, reservationDatesBracketString;
+		
+		// 123 My_Favorite_Title Jeff_Dezos Horror 420 [] []
 		bookStream >> isbn;
 		book.setISBN(isbn);
 		bookStream >> title;
@@ -79,6 +88,13 @@ public:
 		book.setCategory(category);
 		bookStream >> favor;
 		book.setFavor(favor);
+		bookStream >> reserversBracketString;
+		vector<string> reservers = Utils::extractStringsFromBracketString(reserversBracketString);
+		book.setReservers(reservers);
+		bookStream >> reservationDatesBracketString;
+		vector<int> reservationDates = Utils::extractIntegersFromBracketString(reservationDatesBracketString);
+		book.setReservationDates(reservationDates);
+
 		return is;
 	}
 

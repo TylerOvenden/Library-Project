@@ -20,12 +20,20 @@ void Copy::setBorrowDate(long borrowDate)
 {
 }
 
-void Copy::setExpiration(long expirationDate)
+void Copy::setExpirationDate(long expirationDate)
 {
 }
 
 int Copy::getISBN() {
 	return this->isbn;
+}
+
+void Copy::print() {
+	cout << this->isbn << ", ";
+	cout << this->id << ", ";
+	cout << this->reader << ", ";
+	cout << this->borrowDate << ", ";
+	cout << this->expirationDate << endl;
 }
 
 void Copy::setReaderName(string reader) {
@@ -57,7 +65,7 @@ long Copy::getBorrowDate() {
 void Copy::resetReaderFields() {
 	this->setReaderName("");
 	this->setBorrowDate(0);
-	this->setExpiration(0);
+	this->setExpirationDate(0);
 }
 
 void Copy::borrowFor(string username, int maxBorrowDays) {

@@ -1,10 +1,15 @@
 #pragma once
-#include <chrono>
+#include <iostream>
+#include <string>
+#include <vector>
 
-using namespace std::chrono;
+using namespace std;
 
 class Utils {
 public:
 	static long getCurrentTimeMs();
+	static string promptForInput(string prompt);
+	static vector<string> extractStringsFromBracketString(std::string bracketString);
+	static vector<int> extractIntegersFromBracketString(std::string bracketString);
 };
 
